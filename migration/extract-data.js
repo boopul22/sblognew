@@ -10,6 +10,7 @@ class WordPressDataExtractor {
       categories: [],
       tags: [],
       posts: [],
+      attachments: [],
       postMeta: [],
       postCategories: [],
       postTags: []
@@ -28,17 +29,20 @@ class WordPressDataExtractor {
     
     console.log('Extracting posts...');
     this.extractPosts(sqlContent);
-    
+
+    console.log('Extracting attachments...');
+    this.extractAttachments(sqlContent);
+
     console.log('Extracting post metadata...');
     this.extractPostMeta(sqlContent);
-    
+
     console.log('Extracting term relationships...');
     this.extractTermRelationships(sqlContent);
     
     await this.saveExtractedData();
     
     console.log('Data extraction completed!');
-    console.log(`Extracted: ${this.data.users.length} users, ${this.data.categories.length} categories, ${this.data.tags.length} tags, ${this.data.posts.length} posts`);
+    console.log(`Extracted: ${this.data.users.length} users, ${this.data.categories.length} categories, ${this.data.tags.length} tags, ${this.data.posts.length} posts, ${this.data.attachments.length} attachments`);
   }
 
   extractUsers(sqlContent) {
@@ -192,6 +196,88 @@ class WordPressDataExtractor {
     });
   }
 
+  extractAttachments(sqlContent) {
+    console.log('Looking for wp_posts INSERT statements for attachments...');
+
+    // Split the content into lines and find INSERT INTO wp_posts statements
+    const lines = sqlContent.split('\n');
+    let currentInsert = '';
+    let inPostsInsert = false;
+    let insertStatements = [];
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+
+      if (line.includes('INSERT INTO `wp_posts` VALUES')) {
+        inPostsInsert = true;
+        currentInsert = line;
+        continue;
+      }
+
+      if (inPostsInsert) {
+        currentInsert += '\n' + line;
+
+        // Check if this line ends the INSERT statement
+        if (line.endsWith(';') || (i + 1 < lines.length && lines[i + 1].trim().startsWith('INSERT INTO'))) {
+          insertStatements.push(currentInsert);
+          currentInsert = '';
+          inPostsInsert = false;
+        }
+      }
+    }
+
+    if (!insertStatements.length) {
+      console.log('No wp_posts INSERT statements found for attachments');
+      return;
+    }
+
+    console.log(`Found ${insertStatements.length} wp_posts INSERT statements, checking for attachments...`);
+
+    insertStatements.forEach((insertStatement, index) => {
+      // Extract the values part - everything after VALUES
+      const valuesIndex = insertStatement.indexOf('VALUES');
+      if (valuesIndex === -1) {
+        return;
+      }
+
+      const valuesString = insertStatement.substring(valuesIndex + 6).replace(/;$/, '').trim();
+      const postValues = this.parseInsertValues(valuesString);
+
+      postValues.forEach((values, rowIndex) => {
+        if (values.length >= 23) {
+          const postType = this.cleanString(values[20]); // post_type is at index 20
+          const status = this.cleanString(values[7]);
+          const mimeType = this.cleanString(values[21]); // post_mime_type is at index 21
+
+          // Extract attachments (images and other media)
+          if (postType === 'attachment' && (status === 'inherit' || status === 'publish')) {
+            const title = this.cleanString(values[5]);
+            const content = this.cleanString(values[4]);
+            const excerpt = this.cleanString(values[6]);
+
+            console.log(`Adding attachment: ${title} (${mimeType})`);
+
+            this.data.attachments.push({
+              wp_id: parseInt(values[0]),
+              title: title,
+              slug: this.cleanString(values[11]), // post_name is at index 11
+              content: content, // Often contains alt text or description
+              excerpt: excerpt, // Often contains caption
+              mime_type: mimeType,
+              status: status,
+              author_wp_id: parseInt(values[1]),
+              parent_wp_id: parseInt(values[10]) || null, // post_parent - which post this is attached to
+              created_at: this.parseDate(values[2]),
+              updated_at: this.parseDate(values[14])
+            });
+          }
+        }
+      });
+    });
+
+    console.log(`Extracted ${this.data.attachments.length} attachments`);
+  }
+
   extractPostMeta(sqlContent) {
     const metaInsertMatch = sqlContent.match(/INSERT INTO `wp_postmeta` VALUES\s*(.*?);/s);
     if (!metaInsertMatch) return;
@@ -202,8 +288,9 @@ class WordPressDataExtractor {
       if (values.length >= 4) {
         const metaKey = this.cleanString(values[2]);
         
-        // Only extract useful meta keys
-        if (['_wp_attached_file', '_thumbnail_id', '_yoast_wpseo_title', '_yoast_wpseo_metadesc'].includes(metaKey)) {
+        // Extract useful meta keys including image-related ones
+        if (['_wp_attached_file', '_thumbnail_id', '_yoast_wpseo_title', '_yoast_wpseo_metadesc',
+             '_wp_attachment_metadata', '_wp_attachment_image_alt'].includes(metaKey)) {
           this.data.postMeta.push({
             post_wp_id: parseInt(values[1]),
             meta_key: metaKey,

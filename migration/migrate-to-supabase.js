@@ -23,6 +23,7 @@ class SupabaseMigrator {
       const categories = await this.loadData('categories.json');
       const tags = await this.loadData('tags.json');
       const posts = await this.loadData('posts.json');
+      const attachments = await this.loadData('attachments.json');
       const postMeta = await this.loadData('postMeta.json');
       const postCategories = await this.loadData('postCategories.json');
       const postTags = await this.loadData('postTags.json');
@@ -39,13 +40,16 @@ class SupabaseMigrator {
       
       console.log('Migrating posts...');
       const postIdMap = await this.migratePosts(posts, userIdMap);
-      
+
+      console.log('Migrating attachments...');
+      const attachmentIdMap = await this.migrateAttachments(attachments, userIdMap, postIdMap);
+
       console.log('Applying post metadata...');
       await this.migratePostMeta(postMeta, postIdMap);
-      
+
       console.log('Linking posts to categories...');
       await this.migratePostCategories(postCategories, postIdMap, categoryIdMap);
-      
+
       console.log('Linking posts to tags...');
       await this.migratePostTags(postTags, postIdMap, tagIdMap);
       
@@ -227,6 +231,52 @@ class SupabaseMigrator {
     }
 
     console.log(`Migrated ${posts.length} posts`);
+    return idMap;
+  }
+
+  async migrateAttachments(attachments, userIdMap, postIdMap) {
+    const idMap = {};
+
+    if (this.dryRun) {
+      console.log(`Would migrate ${attachments.length} attachments`);
+      attachments.forEach(attachment => {
+        idMap[attachment.wp_id] = `fake-uuid-${attachment.wp_id}`;
+      });
+      return idMap;
+    }
+
+    for (let i = 0; i < attachments.length; i += this.batchSize) {
+      const batch = attachments.slice(i, i + this.batchSize);
+
+      const { data, error } = await this.supabase
+        .from('attachments')
+        .insert(batch.map(attachment => ({
+          wp_id: attachment.wp_id,
+          title: attachment.title,
+          slug: attachment.slug,
+          content: attachment.content,
+          excerpt: attachment.excerpt,
+          mime_type: attachment.mime_type,
+          status: attachment.status,
+          author_id: userIdMap[attachment.author_wp_id],
+          parent_post_id: attachment.parent_wp_id ? postIdMap[attachment.parent_wp_id] : null,
+          created_at: attachment.created_at,
+          updated_at: attachment.updated_at
+        })))
+        .select('id, wp_id');
+
+      if (error) {
+        console.error('Error inserting attachments:', error);
+        throw error;
+      }
+
+      // Build ID mapping
+      data.forEach(attachment => {
+        idMap[attachment.wp_id] = attachment.id;
+      });
+    }
+
+    console.log(`Migrated ${attachments.length} attachments`);
     return idMap;
   }
 
