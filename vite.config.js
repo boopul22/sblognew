@@ -40,7 +40,6 @@ export default defineConfig({
     chunkSizeWarningLimit: 500, // Warn if chunks exceed 500KB
     // Additional build optimizations
     reportCompressedSize: true,
-    minify: 'esbuild',
     cssMinify: true
   },
   base: '/',
