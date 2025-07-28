@@ -11,7 +11,7 @@ const PostCard = memo(({ post, featured = false, priority = false }) => {
   }
 
   if (featured) {
-    const thumbnailUrl = getThumbnailImage(post.content)
+    const thumbnailUrl = getThumbnailImage(post.content, post.featured_image_url)
 
     return (
       <Link to={`/${post.slug}`} className="featured">
@@ -41,7 +41,7 @@ const PostCard = memo(({ post, featured = false, priority = false }) => {
     )
   }
 
-  const thumbnailUrl = getThumbnailImage(post.content)
+  const thumbnailUrl = getThumbnailImage(post.content, post.featured_image_url)
 
   return (
     <Link to={`/${post.slug}`} className="poem-card">

@@ -6,8 +6,8 @@
 import { supabase } from './supabase.js'
 
 // Base query configurations to reduce data transfer
-const BASE_POST_FIELDS = 'id, title, slug, excerpt, published_at, status'
-const FULL_POST_FIELDS = 'id, title, slug, content, excerpt, author_id, published_at, status'
+const BASE_POST_FIELDS = 'id, title, slug, excerpt, published_at, status, featured_image_url, content'
+const FULL_POST_FIELDS = 'id, title, slug, content, excerpt, author_id, published_at, status, featured_image_url'
 const AUTHOR_FIELDS = 'id, username, display_name, bio'
 
 /**

@@ -37,11 +37,17 @@ export const getExcerpt = (content, maxLength = 150) => {
 }
 
 /**
- * Extract the first image URL from HTML content
+ * Extract the first image URL from HTML content or featured image
  * @param {string} content - HTML content
+ * @param {string} featuredImageUrl - Featured image URL from database
  * @returns {string|null} First image URL or null
  */
-export const getThumbnailImage = (content) => {
+export const getThumbnailImage = (content, featuredImageUrl = null) => {
+  // First, check if there's a featured image URL
+  if (featuredImageUrl) {
+    return featuredImageUrl
+  }
+
   if (!content) return null
 
   // Extract the first image from the content

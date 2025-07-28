@@ -1,14 +1,9 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { criticalPathOptimizer, serviceWorkerOptimizer } from './vite-plugins/critical-path-optimizer.js'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    criticalPathOptimizer(),
-    serviceWorkerOptimizer()
-  ],
+  plugins: [react()],
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
