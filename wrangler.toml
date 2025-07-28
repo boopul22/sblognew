@@ -1,0 +1,14 @@
+# Cloudflare Pages Configuration
+name = "sayari-blog"
+compatibility_date = "2024-01-01"
+
+[build]
+command = "npm run build"
+publish = "dist"
+
+[env.production]
+# Environment variables for production
+# These should be set in Cloudflare Pages dashboard
+
+[env.preview]
+# Environment variables for preview deployments

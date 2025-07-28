@@ -20,6 +20,8 @@
 - [ ] `vite.config.js` has correct base path (`base: '/'`)
 - [ ] `_redirects` file exists for SPA routing (`/* /index.html 200`)
 - [ ] Build output directory is correct (`dist`)
+- [ ] `wrangler.toml` is configured with correct build settings
+- [ ] No JSX files exist in the `dist` directory after build
 
 ## Deployment Steps
 
@@ -69,9 +71,17 @@ git push origin main
 
 ## Common Issues & Solutions
 
+### MIME Type Error for JSX Files
+**Cause**: Deploying source files instead of built files, or JSX files being served directly
+**Solution**:
+1. Ensure you're deploying the `dist` directory, not the root directory
+2. Remove JSX MIME type configuration from `_headers` file
+3. Verify `npm run build` completes successfully
+4. Check that no `.jsx` files exist in the `dist` directory
+
 ### Blank White Page
 **Cause**: Missing or incorrect environment variables
-**Solution**: 
+**Solution**:
 1. Check environment variables are set correctly
 2. Verify variable names match exactly
 3. Check browser console for errors
