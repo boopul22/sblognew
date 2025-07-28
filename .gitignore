@@ -5,7 +5,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # Production builds
-dist/
+# dist/ - COMMENTED OUT: Cloudflare Pages needs dist/ folder
 build/
 
 # Environment variables
