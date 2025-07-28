@@ -13,22 +13,58 @@ export default defineConfig({
     cssCodeSplit: true, // Split CSS into separate files
     rollupOptions: {
       output: {
-        // Manual chunk splitting for better caching
-        manualChunks: {
-          // Vendor chunks
-          'react-vendor': ['react', 'react-dom'],
-          'router-vendor': ['react-router-dom'],
-          'supabase-vendor': ['@supabase/supabase-js'],
+        // Manual chunk splitting for better caching and reduced unused code
+        manualChunks: (id) => {
+          // Vendor chunks - split by usage patterns
+          if (id.includes('node_modules')) {
+            // React core - always needed
+            if (id.includes('react') || id.includes('react-dom')) {
+              return 'react-vendor'
+            }
 
-          // Page chunks
-          'pages': [
-            './src/pages/Home.jsx',
-            './src/pages/SinglePost.jsx',
-            './src/pages/Author.jsx',
-            './src/pages/Authors.jsx',
-            './src/pages/Category.jsx',
-            './src/pages/Tag.jsx'
-          ]
+            // Router - only loaded when navigating
+            if (id.includes('react-router-dom')) {
+              return 'router-vendor'
+            }
+
+            // Supabase - split into smaller chunks based on usage
+            if (id.includes('@supabase/supabase-js')) {
+              return 'supabase-vendor'
+            }
+
+            // Other vendor libraries
+            return 'vendor'
+          }
+
+          // Page-specific chunks - each page gets its own chunk
+          if (id.includes('/pages/Home.jsx')) {
+            return 'page-home'
+          }
+          if (id.includes('/pages/SinglePost.jsx')) {
+            return 'page-post'
+          }
+          if (id.includes('/pages/Authors.jsx')) {
+            return 'page-authors'
+          }
+          if (id.includes('/pages/Author.jsx')) {
+            return 'page-author'
+          }
+          if (id.includes('/pages/Category.jsx')) {
+            return 'page-category'
+          }
+          if (id.includes('/pages/Tag.jsx')) {
+            return 'page-tag'
+          }
+
+          // Component chunks - group related components
+          if (id.includes('/components/')) {
+            return 'components'
+          }
+
+          // Utils and lib chunks
+          if (id.includes('/lib/') || id.includes('/utils/')) {
+            return 'utils'
+          }
         },
         // Optimize chunk file names
         chunkFileNames: 'assets/js/[name]-[hash].js',
@@ -45,8 +81,17 @@ export default defineConfig({
   base: '/',
   // Ensure public files are copied
   publicDir: 'public',
-  // Optimize dependencies
+  // Optimize dependencies and enable aggressive tree shaking
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom', '@supabase/supabase-js']
+    include: ['react', 'react-dom', 'react-router-dom', '@supabase/supabase-js'],
+    exclude: ['@supabase/auth-js', '@supabase/realtime-js'] // Exclude unused Supabase modules
+  },
+  // Enable aggressive tree shaking
+  define: {
+    'process.env.NODE_ENV': JSON.stringify('production')
+  },
+  esbuild: {
+    drop: ['console', 'debugger'], // Remove console logs and debugger statements
+    pure: ['console.log', 'console.warn'] // Mark as pure functions for tree shaking
   }
 })

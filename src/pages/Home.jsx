@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from 'react'
-import { supabase } from '../lib/supabase'
+import { useState, useEffect, useCallback, memo } from 'react'
+import { fetchHomePosts } from '../lib/queries'
 import PostCard from '../components/PostCard'
 import SkeletonLoader from '../components/SkeletonLoader'
 
@@ -15,30 +15,17 @@ const Home = ({ searchQuery }) => {
     fetchPosts(true) // Reset when search changes
   }, [searchQuery])
 
-  const fetchPosts = async (reset = false) => {
+  const fetchPosts = useCallback(async (reset = false) => {
     try {
       setLoading(true)
+      setError(null)
       const currentPage = reset ? 0 : page
-      const from = currentPage * POSTS_PER_PAGE
-      const to = from + POSTS_PER_PAGE - 1
 
-      let query = supabase
-        .from('posts')
-        .select('id, title, slug, excerpt, author_id, published_at, status, content')
-        .eq('status', 'published')
-        .order('published_at', { ascending: false })
-        .range(from, to)
-
-      // Apply search filter if searchQuery exists
-      if (searchQuery && searchQuery.trim()) {
-        query = query.or(`title.ilike.%${searchQuery}%,content.ilike.%${searchQuery}%`)
-      }
-
-      const { data, error } = await query
-
-      if (error) throw error
-
-      const newPosts = data || []
+      const { posts: newPosts, hasMore: moreAvailable } = await fetchHomePosts(
+        currentPage,
+        POSTS_PER_PAGE,
+        searchQuery
+      )
 
       if (reset) {
         setPosts(newPosts)
@@ -48,14 +35,14 @@ const Home = ({ searchQuery }) => {
         setPage(prev => prev + 1)
       }
 
-      setHasMore(newPosts.length === POSTS_PER_PAGE)
+      setHasMore(moreAvailable)
     } catch (err) {
       console.error('Error fetching posts:', err)
       setError('Failed to load posts')
     } finally {
       setLoading(false)
     }
-  }
+  }, [page, searchQuery])
 
   if (loading && posts.length === 0) {
     return (
@@ -124,4 +111,4 @@ const Home = ({ searchQuery }) => {
   )
 }
 
-export default Home
+export default memo(Home)

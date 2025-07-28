@@ -11,4 +11,19 @@ if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error('Missing Supabase environment variables. Check your .env file and ENVIRONMENT_VARIABLES.md')
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+// Create optimized Supabase client with minimal configuration
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    persistSession: false, // Disable auth session persistence to reduce bundle size
+    autoRefreshToken: false, // Disable auto refresh since we're not using auth
+    detectSessionInUrl: false // Disable URL session detection
+  },
+  db: {
+    schema: 'public' // Explicitly set schema to reduce overhead
+  },
+  global: {
+    headers: {
+      'X-Client-Info': 'sayari-blog@1.0.0' // Custom client identifier
+    }
+  }
+})
