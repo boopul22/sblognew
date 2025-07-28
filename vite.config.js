@@ -7,7 +7,7 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
-    sourcemap: false,
+    sourcemap: true, // Enable sourcemaps for debugging
     minify: 'esbuild',
     rollupOptions: {
       output: {
@@ -15,5 +15,5 @@ export default defineConfig({
       },
     },
   },
-  base: './',
+  base: '/',
 })
