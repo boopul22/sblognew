@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom'
+import { memo } from 'react'
 import OptimizedImage from './OptimizedImage'
 import { getExcerpt, getThumbnailImage, formatDate } from '../utils/contentUtils'
 
-const PostCard = ({ post, featured = false }) => {
-
-
-  const getAuthorName = (authorId) => {
+const PostCard = memo(({ post, featured = false }) => {
+  // Get author name - simplified for now
+  const getAuthorName = () => {
     // For now, return a placeholder. In a real app, you'd fetch author data
     return 'Admin'
   }
@@ -35,7 +35,7 @@ const PostCard = ({ post, featured = false }) => {
           {getExcerpt(post.content, 200)}
         </div>
         <div className="featured-author">
-          By {getAuthorName(post.author_id)}
+          By {getAuthorName()}
         </div>
       </Link>
     )
@@ -65,11 +65,19 @@ const PostCard = ({ post, featured = false }) => {
         {getExcerpt(post.content)}
       </div>
       <div className="poem-meta">
-        <div className="author">By {getAuthorName(post.author_id)}</div>
+        <div className="author">By {getAuthorName()}</div>
         <div className="date">{formatDate(post.published_at)}</div>
       </div>
     </Link>
   )
-}
+}, (prevProps, nextProps) => {
+  // Custom comparison function for React.memo
+  return (
+    prevProps.post.id === nextProps.post.id &&
+    prevProps.featured === nextProps.featured
+  )
+})
+
+PostCard.displayName = 'PostCard'
 
 export default PostCard

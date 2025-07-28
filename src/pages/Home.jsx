@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '../lib/supabase'
 import PostCard from '../components/PostCard'
+import SkeletonLoader from '../components/SkeletonLoader'
 
 const Home = ({ searchQuery }) => {
   const [posts, setPosts] = useState([])
@@ -59,10 +60,7 @@ const Home = ({ searchQuery }) => {
   if (loading && posts.length === 0) {
     return (
       <div className="main-grid">
-        <div className="loading">
-          <div className="spinner"></div>
-          Loading posts...
-        </div>
+        <SkeletonLoader type="post" count={6} />
       </div>
     )
   }

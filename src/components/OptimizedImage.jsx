@@ -1,15 +1,16 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, memo } from 'react'
 
-const OptimizedImage = ({ 
-  src, 
-  alt, 
-  width, 
-  height, 
-  className = '', 
+const OptimizedImage = memo(({
+  src,
+  alt,
+  width,
+  height,
+  className = '',
   style = {},
   lazy = true,
   priority = false,
-  sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+  sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
+  aspectRatio = null // New prop for aspect ratio
 }) => {
   const [isLoaded, setIsLoaded] = useState(false)
   const [isInView, setIsInView] = useState(!lazy || priority)
@@ -49,29 +50,59 @@ const OptimizedImage = ({
   }, [lazy, priority, isInView])
 
   // Generate optimized image URLs for Supabase storage
-  const getOptimizedImageUrl = (originalUrl, width, quality = 80) => {
+  const getOptimizedImageUrl = (originalUrl, targetWidth, quality = 80) => {
     if (!originalUrl) return null
-    
+
     // Check if it's a Supabase storage URL
     if (originalUrl.includes('supabase.co/storage/v1/object/public/')) {
-      // For Supabase, we can add transformation parameters
-      const url = new URL(originalUrl)
-      url.searchParams.set('width', width)
-      url.searchParams.set('quality', quality)
-      url.searchParams.set('format', 'webp')
-      return url.toString()
+      try {
+        const url = new URL(originalUrl)
+        url.searchParams.set('width', targetWidth.toString())
+        url.searchParams.set('quality', quality.toString())
+        url.searchParams.set('format', 'webp')
+        return url.toString()
+      } catch (error) {
+        console.warn('Failed to optimize image URL:', error)
+        return originalUrl
+      }
     }
-    
+
     return originalUrl
   }
 
+  // Generate WebP version of image
+  const getWebPUrl = (originalUrl) => {
+    if (!originalUrl) return null
+    return originalUrl.replace(/\.(jpg|jpeg|png)$/i, '.webp')
+  }
+
   // Generate srcSet for responsive images
-  const generateSrcSet = (src) => {
+  const generateSrcSet = (src, format = 'original') => {
     if (!src) return ''
-    
-    const widths = [320, 640, 768, 1024, 1280, 1920]
-    return widths
-      .map(w => `${getOptimizedImageUrl(src, w)} ${w}w`)
+
+    const widths = [320, 480, 640, 768, 1024, 1280, 1920]
+    const relevantWidths = widths.filter(w => !width || w <= width * 2)
+
+    return relevantWidths
+      .map(w => {
+        let optimizedUrl = getOptimizedImageUrl(src, w)
+        if (format === 'webp') {
+          // For Supabase URLs, add webp format parameter
+          if (optimizedUrl.includes('supabase.co/storage/v1/object/public/')) {
+            try {
+              const url = new URL(optimizedUrl)
+              url.searchParams.set('format', 'webp')
+              optimizedUrl = url.toString()
+            } catch (error) {
+              console.warn('Failed to create WebP URL:', error)
+            }
+          } else {
+            // For other URLs, try to replace extension
+            optimizedUrl = optimizedUrl.replace(/\.(jpg|jpeg|png)$/i, '.webp')
+          }
+        }
+        return `${optimizedUrl} ${w}w`
+      })
       .join(', ')
   }
 
@@ -114,27 +145,37 @@ const OptimizedImage = ({
 
   return (
     <div className={`optimized-image-container ${className}`} style={style} ref={imgRef}>
-      <img
-        src={getOptimizedImageUrl(src, width)}
-        srcSet={generateSrcSet(src)}
-        sizes={sizes}
-        alt={alt}
-        width={width}
-        height={height}
-        loading={lazy && !priority ? 'lazy' : 'eager'}
-        decoding="async"
-        onLoad={handleLoad}
-        onError={handleError}
-        style={{
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          transition: 'opacity 0.3s ease',
-          opacity: isLoaded ? 1 : 0
-        }}
-      />
+      <picture>
+        {/* WebP source for modern browsers */}
+        <source
+          srcSet={generateSrcSet(src, 'webp')}
+          sizes={sizes}
+          type="image/webp"
+        />
+        {/* Fallback for older browsers */}
+        <img
+          src={getOptimizedImageUrl(src, width)}
+          srcSet={generateSrcSet(src)}
+          sizes={sizes}
+          alt={alt}
+          width={width}
+          height={height}
+          loading={lazy && !priority ? 'lazy' : 'eager'}
+          decoding="async"
+          onLoad={handleLoad}
+          onError={handleError}
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            transition: 'opacity 0.3s ease',
+            opacity: isLoaded ? 1 : 0,
+            display: 'block'
+          }}
+        />
+      </picture>
       {!isLoaded && (
-        <div 
+        <div
           style={{
             position: 'absolute',
             top: 0,
@@ -149,11 +190,29 @@ const OptimizedImage = ({
             fontSize: '14px'
           }}
         >
-          Loading...
+          <div style={{
+            width: '16px',
+            height: '16px',
+            border: '2px solid #f3f3f3',
+            borderTop: '2px solid #333',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite'
+          }}></div>
         </div>
       )}
     </div>
   )
-}
+}, (prevProps, nextProps) => {
+  // Custom comparison for React.memo
+  return (
+    prevProps.src === nextProps.src &&
+    prevProps.width === nextProps.width &&
+    prevProps.height === nextProps.height &&
+    prevProps.lazy === nextProps.lazy &&
+    prevProps.priority === nextProps.priority
+  )
+})
+
+OptimizedImage.displayName = 'OptimizedImage'
 
 export default OptimizedImage

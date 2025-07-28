@@ -1,7 +1,8 @@
-import { useState, Suspense, lazy } from 'react'
+import { useState, Suspense, lazy, useCallback, memo } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import SkeletonLoader from './components/SkeletonLoader'
 
 // Lazy load page components for code splitting
 const Home = lazy(() => import('./pages/Home'))
@@ -19,23 +20,27 @@ const PageLoader = () => (
   </div>
 )
 
-function App() {
+const App = memo(() => {
   const [searchQuery, setSearchQuery] = useState('')
 
-  const handleSearch = (query) => {
+  const handleSearch = useCallback((query) => {
     setSearchQuery(query)
-  }
+  }, [])
+
+  const handleSetSearchQuery = useCallback((query) => {
+    setSearchQuery(query)
+  }, [])
 
   return (
     <Router>
       <div className="container">
-        <Header 
+        <Header
           onSearch={handleSearch}
           searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
+          setSearchQuery={handleSetSearchQuery}
         />
         
-        <Suspense fallback={<PageLoader />}>
+        <Suspense fallback={<SkeletonLoader type="post" count={3} />}>
           <Routes>
             <Route
               path="/"
@@ -69,6 +74,8 @@ function App() {
       </div>
     </Router>
   )
-}
+})
+
+App.displayName = 'App'
 
 export default App
