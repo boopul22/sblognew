@@ -60,11 +60,16 @@ npm install
 ```
 
 3. Set up environment variables:
-Create a `.env` file in the root directory and add your Supabase credentials:
+```bash
+cp .env.example .env
+```
+Then edit `.env` with your actual Supabase credentials:
 ```env
 VITE_SUPABASE_URL=your_supabase_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
+
+⚠️ **Important**: See [ENVIRONMENT_VARIABLES.md](./ENVIRONMENT_VARIABLES.md) for detailed setup instructions and security best practices.
 
 4. Start the development server:
 ```bash
@@ -102,15 +107,20 @@ The application uses the following Supabase tables:
 
 ## 🚀 Deployment
 
-The application can be deployed to various platforms:
+### Environment Variables Setup
+**⚠️ CRITICAL**: Before deploying, you MUST set up environment variables on your hosting platform.
 
-### Vercel (Recommended)
-```bash
-npm run build
-# Deploy to Vercel
-```
+1. **Cloudflare Pages** (Current deployment):
+   - Go to your project dashboard → Settings → Environment variables
+   - Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`
+   - See [ENVIRONMENT_VARIABLES.md](./ENVIRONMENT_VARIABLES.md) for detailed instructions
 
-### Netlify
+2. **Other Platforms**:
+   - **Vercel**: Add environment variables in project settings
+   - **Netlify**: Add in Site settings → Environment variables
+   - **GitHub Pages**: Use GitHub Secrets for Actions
+
+### Build Commands
 ```bash
 npm run build
 # Deploy dist/ folder to Netlify
