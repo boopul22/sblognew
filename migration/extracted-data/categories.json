@@ -1,0 +1,135 @@
+[
+  {
+    "wp_id": 1,
+    "name": "Uncategorized",
+    "slug": "uncategorized",
+    "description": "",
+    "parent_wp_id": null
+  },
+  {
+    "wp_id": 2,
+    "name": "English",
+    "slug": "english",
+    "description": "<p class=\"\" data-start=\"212\" data-end=\"363\">Zayotech पर पाएं English में motivational, love, friendship और life से जुड़े best quotes, status और captions — social media और daily inspiration के लिए।</p>",
+    "parent_wp_id": null
+  },
+  {
+    "wp_id": 3,
+    "name": "Hindi",
+    "slug": "hindi",
+    "description": "<p class=\"\" data-start=\"532\" data-end=\"653\">यहां आपको मिलेगा हिंदी में लिखी बेहतरीन शायरी, कोट्स, स्टेटस और शुभकामनाएं — हर emotion और खास मौके के लिए कुछ न कुछ खास।</p>",
+    "parent_wp_id": null
+  },
+  {
+    "wp_id": 5,
+    "name": "Images",
+    "slug": "images",
+    "description": "HD Hindi status images का ऐसा collection जो emotions को words से नहीं, visuals से बयां करे — WhatsApp, Instagram और Facebook पर शेयर करने के लिए perfect।",
+    "parent_wp_id": null
+  },
+  {
+    "wp_id": 6,
+    "name": "Jokes",
+    "slug": "jokes",
+    "description": "हंसी चाहिए? यहां पाएं हिंदी में सबसे मजेदार jokes और chutkule — जो हर उम्र के लिए हैं, WhatsApp और दोस्तों के बीच viral होने लायक।",
+    "parent_wp_id": null
+  },
+  {
+    "wp_id": 7,
+    "name": "Poetries",
+    "slug": "poetries",
+    "description": "प्रेम, प्रेरणा, अकेलापन और जीवन की गहराइयों से जुड़ी हिंदी poetries का सुंदर संग्रह — दिल को छू लेने वाली कविताएं जो एहसास जगा दें।",
+    "parent_wp_id": null
+  },
+  {
+    "wp_id": 8,
+    "name": "Quotes",
+    "slug": "quotes",
+    "description": "पाएं life, love, motivation, friendship और sadness से जुड़ी inspiring quotes का बेहतरीन collection — हिंदी और English दोनों में express करने के लिए।",
+    "parent_wp_id": null
+  },
+  {
+    "wp_id": 9,
+    "name": "Shayari",
+    "slug": "shayari",
+    "description": "पाएं मोहब्बत, दर्द, दोस्ती और अकेलेपन से जुड़ी दिल को छू जाने वाली हिंदी Shayari — हर एहसास को बयां करने वाली खास लाइनों का कलेक्शन।",
+    "parent_wp_id": null
+  },
+  {
+    "wp_id": 10,
+    "name": "Status",
+    "slug": "status",
+    "description": "WhatsApp, Instagram और Facebook के लिए पाएं stylish, emotional और attitude भरे हिंदी status — हर mood और feeling के लिए कुछ खास लाइनों का collection।",
+    "parent_wp_id": null
+  },
+  {
+    "wp_id": 11,
+    "name": "Stories",
+    "slug": "stories",
+    "description": "[web_stories title=\"true\" excerpt=\"false\" author=\"false\" date=\"false\" archive_link=\"false\" archive_link_label=\"\" circle_size=\"150\" sharp_corners=\"false\" image_alignment=\"left\" number_of_columns=\"1\" number_of_stories=\"5\" order=\"DESC\" orderby=\"post_title\" view=\"list\" /]",
+    "parent_wp_id": null
+  },
+  {
+    "wp_id": 12,
+    "name": "Wishes",
+    "slug": "wishes",
+    "description": "Zayotech पर पाएँ Birthday, Anniversary और Festival जैसे खास मौकों के लिए दिल से निकली शुभकामनाएँ और emotional wishes – सब कुछ हिंदी में।",
+    "parent_wp_id": null
+  },
+  {
+    "wp_id": 207,
+    "name": "Hindi Grammar",
+    "slug": "hindi-grammar",
+    "description": "<p class=\"\" data-start=\"683\" data-end=\"826\">हिंदी व्याकरण के topics जैसे संज्ञा, सर्वनाम, वचन, मुहावरे और विलोम शब्द को आसान भाषा में समझिए — छात्रों और प्रतियोगी परीक्षाओं के लिए उपयोगी।</p>",
+    "parent_wp_id": null
+  },
+  {
+    "wp_id": 208,
+    "name": "Paryayvachi Shabd",
+    "slug": "paryayvachi-shabd",
+    "description": "<p class=\"\" data-start=\"982\" data-end=\"1090\">सभी महत्वपूर्ण शब्दों के पर्यायवाची शब्दों की लिस्ट — vocabulary सुधारने और हिंदी भाषा समझने के लिए उपयुक्त।</p>",
+    "parent_wp_id": 207
+  },
+  {
+    "wp_id": 209,
+    "name": "Vilom Shabd",
+    "slug": "vilom-shabd",
+    "description": "<p class=\"\" data-start=\"190\" data-end=\"357\">यहां पाएं हिंदी के प्रमुख विलोम शब्द (विपरीतार्थक शब्द) का संग्रह — छात्रों, प्रतियोगी परीक्षा देने वालों और लेखन अभ्यास के लिए विशेष रूप से उपयोगी।</p>",
+    "parent_wp_id": 207
+  },
+  {
+    "wp_id": 210,
+    "name": "Vachan",
+    "slug": "vachan",
+    "description": "हिंदी व्याकरण में वचन शब्दों की संख्या को दर्शाता है। यहां जानिए वचन के प्रकार (एकवचन और बहुवचन), उनकी परिभाषा और आसान उदाहरण।",
+    "parent_wp_id": 207
+  },
+  {
+    "wp_id": 211,
+    "name": "Sangya",
+    "slug": "sangya",
+    "description": "Sangya (संज्ञा) हिंदी व्याकरण का एक मुख्य भाग है। यहां जानिए संज्ञा की परिभाषा, प्रकार और आसान उदाहरण — छात्रों और प्रतियोगी परीक्षाओं के लिए उपयोगी जानकारी।",
+    "parent_wp_id": 207
+  },
+  {
+    "wp_id": 212,
+    "name": "Muhavare",
+    "slug": "muhavare",
+    "description": "<p class=\"\" data-start=\"851\" data-end=\"948\">मुहावरे का अर्थ, उदाहरण और दैनिक जीवन में उपयोग जानें — स्कूल प्रोजेक्ट्स और exams के लिए मददगार।</p>",
+    "parent_wp_id": 207
+  },
+  {
+    "wp_id": 213,
+    "name": "Visheshan",
+    "slug": "visheshan",
+    "description": "<p class=\"\" data-start=\"141\" data-end=\"295\">हिंदी व्याकरण में विशेषण वह शब्द होता है जो संज्ञा या सर्वनाम की विशेषता बताता है। यहां जानिए विशेषण के प्रकार, परिभाषा और आसान उदाहरण।</p>",
+    "parent_wp_id": 207
+  },
+  {
+    "wp_id": 214,
+    "name": "Samas",
+    "slug": "samas",
+    "description": "<p class=\"\" data-start=\"293\" data-end=\"458\">हिंदी व्याकरण में समास का अर्थ, उसके भेद और उदाहरणों के साथ सरल व्याख्या पाएं — प्रतियोगी परीक्षाओं और स्कूल पाठ्यक्रम के लिए बेहद उपयोगी जानकारी।</p>",
+    "parent_wp_id": 207
+  }
+]
