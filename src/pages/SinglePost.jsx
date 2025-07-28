@@ -93,22 +93,25 @@ const SinglePost = () => {
 
   const formatContent = (content) => {
     if (!content) return ''
-    
+
     // Remove WordPress block comments but keep the content
     let formatted = content.replace(/<!-- wp:.*? -->/g, '')
     formatted = formatted.replace(/<!-- \/wp:.*? -->/g, '')
-    
-    // Convert basic HTML to readable format
-    formatted = formatted.replace(/<p>/g, '\n\n')
-    formatted = formatted.replace(/<\/p>/g, '')
-    formatted = formatted.replace(/<br\s*\/?>/g, '\n')
-    formatted = formatted.replace(/<[^>]*>/g, '')
-    
-    // Decode HTML entities
-    const textarea = document.createElement('textarea')
-    textarea.innerHTML = formatted
-    formatted = textarea.value
-    
+
+    // Clean up WordPress-specific classes and attributes while preserving essential HTML
+    formatted = formatted.replace(/class="[^"]*wp-[^"]*"/g, '')
+    formatted = formatted.replace(/class="[^"]*has-[^"]*"/g, '')
+    formatted = formatted.replace(/style="[^"]*text-transform:[^"]*"/g, '')
+
+    // Ensure images have proper styling
+    formatted = formatted.replace(/<img([^>]*)>/g, '<img$1 style="max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px;">')
+
+    // Add spacing around headings
+    formatted = formatted.replace(/<h([1-6])([^>]*)>/g, '<h$1$2 style="margin: 30px 0 20px 0;">')
+
+    // Style blockquotes
+    formatted = formatted.replace(/<blockquote([^>]*)>/g, '<blockquote$1 style="margin: 20px 0; padding: 15px 20px; border-left: 4px solid #ddd; background: #f9f9f9; font-style: italic;">')
+
     return formatted.trim()
   }
 
@@ -138,9 +141,10 @@ const SinglePost = () => {
             {formatDate(post.published_at)}
           </div>
         </div>
-        <div className="poem-text">
-          {formatContent(post.content)}
-        </div>
+        <div
+          className="poem-text"
+          dangerouslySetInnerHTML={{ __html: formatContent(post.content) }}
+        />
       </div>
 
       <div className="poem-sidebar">
