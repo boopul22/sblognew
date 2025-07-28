@@ -10,7 +10,34 @@ A modern React application for Hindi Shayari, Quotes, and Wishes, migrated from 
 - **Responsive Design**: Mobile-first approach with CSS Grid and Flexbox
 - **Search Functionality**: Search across posts, authors, categories, and tags
 - **Pagination**: "Load More" functionality for better user experience
-- **Performance Optimized**: Efficient database queries and parallel data fetching
+- **Performance Optimized**: Comprehensive performance optimizations for Core Web Vitals
+
+## ⚡ Performance Optimizations
+
+### Image Optimization
+- **Lazy Loading**: Images load only when entering viewport
+- **Modern Formats**: WebP/AVIF support with fallbacks
+- **Responsive Images**: Multiple sizes with `srcset` and `sizes`
+- **Optimized Loading**: Intersection Observer API for efficient lazy loading
+- **Layout Stability**: Aspect ratio containers prevent CLS
+
+### Code Splitting & Bundling
+- **Route-based Splitting**: Dynamic imports for page components
+- **Vendor Chunking**: Separate chunks for React, Router, and Supabase
+- **Tree Shaking**: Unused code elimination
+- **Bundle Analysis**: Performance budgets and size monitoring
+
+### Caching & Offline Support
+- **Service Worker**: Cache-first strategy for static assets
+- **Network-first**: API requests with offline fallbacks
+- **PWA Ready**: Web App Manifest and offline capabilities
+- **Browser Caching**: Optimized cache headers
+
+### Core Web Vitals
+- **LCP Optimization**: Preloading critical resources, font optimization
+- **FID Improvement**: Code splitting reduces main thread blocking
+- **CLS Prevention**: Layout stability with aspect ratios and placeholders
+- **Performance Monitoring**: Real-time Core Web Vitals tracking
 
 ## 🛠️ Tech Stack
 
@@ -77,6 +104,34 @@ npm run dev
 ```
 
 5. Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+## 📊 Performance Testing
+
+### Run Performance Tests
+```bash
+# Build and test performance
+npm run perf:build
+
+# Test specific URL
+npm run perf:test http://localhost:4173
+
+# Analyze bundle size
+npm run build:analyze
+```
+
+### Performance Metrics
+The performance testing suite measures:
+- **Core Web Vitals**: LCP, FID, CLS, FCP
+- **Bundle Size**: JavaScript, CSS, and image sizes
+- **Lighthouse Scores**: Performance, Accessibility, Best Practices, SEO
+- **Load Times**: TTFB, Speed Index, Total Blocking Time
+
+### Performance Budgets
+- Total bundle size: < 1MB
+- JavaScript bundle: < 500KB
+- LCP: < 2.5s
+- CLS: < 0.1
+- FCP: < 1.8s
 
 ## 📊 Database Schema
 

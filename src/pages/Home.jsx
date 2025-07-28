@@ -23,7 +23,7 @@ const Home = ({ searchQuery }) => {
 
       let query = supabase
         .from('posts')
-        .select('id, title, slug, content, excerpt, author_id, published_at, status')
+        .select('id, title, slug, excerpt, author_id, published_at, status, content')
         .eq('status', 'published')
         .order('published_at', { ascending: false })
         .range(from, to)

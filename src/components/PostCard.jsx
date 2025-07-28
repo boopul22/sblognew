@@ -1,37 +1,9 @@
 import { Link } from 'react-router-dom'
+import OptimizedImage from './OptimizedImage'
+import { getExcerpt, getThumbnailImage, formatDate } from '../utils/contentUtils'
 
 const PostCard = ({ post, featured = false }) => {
-  const formatDate = (dateString) => {
-    const date = new Date(dateString)
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    })
-  }
 
-  const getExcerpt = (content, length = 150) => {
-    if (!content) return ''
-    
-    // Remove HTML tags and get plain text
-    const plainText = content.replace(/<[^>]*>/g, '').replace(/\n+/g, ' ').trim()
-    
-    if (plainText.length <= length) return plainText
-    
-    // Find the last complete word within the length limit
-    const truncated = plainText.substring(0, length)
-    const lastSpace = truncated.lastIndexOf(' ')
-    
-    return lastSpace > 0 ? truncated.substring(0, lastSpace) + '...' : truncated + '...'
-  }
-
-  const getThumbnailImage = (content) => {
-    if (!content) return null
-
-    // Extract the first image from the content
-    const imgMatch = content.match(/<img[^>]+src="([^"]*)"[^>]*>/i)
-    return imgMatch ? imgMatch[1] : null
-  }
 
   const getAuthorName = (authorId) => {
     // For now, return a placeholder. In a real app, you'd fetch author data
@@ -45,13 +17,13 @@ const PostCard = ({ post, featured = false }) => {
       <Link to={`/${post.slug}`} className="featured">
         {thumbnailUrl && (
           <div className="featured-image">
-            <img
+            <OptimizedImage
               src={thumbnailUrl}
               alt={post.title}
+              width={800}
+              height={200}
+              priority={true}
               style={{
-                width: '100%',
-                height: '200px',
-                objectFit: 'cover',
                 borderRadius: '8px',
                 marginBottom: '15px'
               }}
@@ -75,13 +47,13 @@ const PostCard = ({ post, featured = false }) => {
     <Link to={`/${post.slug}`} className="poem-card">
       {thumbnailUrl && (
         <div className="poem-image">
-          <img
+          <OptimizedImage
             src={thumbnailUrl}
             alt={post.title}
+            width={400}
+            height={150}
+            lazy={true}
             style={{
-              width: '100%',
-              height: '150px',
-              objectFit: 'cover',
               borderRadius: '8px',
               marginBottom: '10px'
             }}

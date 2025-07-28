@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import OptimizedImage from '../components/OptimizedImage'
 import PostCard from '../components/PostCard'
 
 const SinglePost = () => {
@@ -22,7 +23,7 @@ const SinglePost = () => {
     try {
       setLoading(true)
 
-      // Fetch the main post with minimal fields first
+      // Fetch the main post with optimized query
       const { data: postData, error: postError } = await supabase
         .from('posts')
         .select('id, title, slug, content, author_id, published_at, status')
@@ -103,8 +104,10 @@ const SinglePost = () => {
     formatted = formatted.replace(/class="[^"]*has-[^"]*"/g, '')
     formatted = formatted.replace(/style="[^"]*text-transform:[^"]*"/g, '')
 
-    // Ensure images have proper styling
-    formatted = formatted.replace(/<img([^>]*)>/g, '<img$1 style="max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px;">')
+    // Optimize images with lazy loading and responsive attributes
+    formatted = formatted.replace(/<img([^>]*)src="([^"]*)"([^>]*)>/g, (match, before, src, after) => {
+      return `<img${before}src="${src}"${after} loading="lazy" decoding="async" style="max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px;" sizes="(max-width: 768px) 100vw, 800px">`
+    })
 
     // Add spacing around headings
     formatted = formatted.replace(/<h([1-6])([^>]*)>/g, '<h$1$2 style="margin: 30px 0 20px 0;">')
