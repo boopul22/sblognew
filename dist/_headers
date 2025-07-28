@@ -1,14 +1,17 @@
-# Headers for Cloudflare Pages
 /*
   X-Frame-Options: DENY
   X-XSS-Protection: 1; mode=block
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
 
-# Ensure JavaScript files are served with correct MIME type
 /assets/*.js
   Content-Type: application/javascript
 
-# Ensure CSS files are served with correct MIME type  
 /assets/*.css
   Content-Type: text/css
+
+/*.js
+  Content-Type: application/javascript
+
+/*.jsx
+  Content-Type: application/javascript

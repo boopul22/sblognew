@@ -7,7 +7,7 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
-    sourcemap: true, // Enable sourcemaps for debugging
+    sourcemap: false, // Disable sourcemaps for production
     minify: 'esbuild',
     rollupOptions: {
       output: {
@@ -16,4 +16,6 @@ export default defineConfig({
     },
   },
   base: '/',
+  // Ensure public files are copied
+  publicDir: 'public',
 })
