@@ -90,11 +90,15 @@ const Home = ({ searchQuery }) => {
     <>
       <div className="main-grid">
         {featuredPost && !searchQuery && (
-          <PostCard post={featuredPost} featured={true} />
+          <PostCard post={featuredPost} featured={true} priority={true} />
         )}
 
-        {(searchQuery ? posts : regularPosts).map((post) => (
-          <PostCard key={post.id} post={post} />
+        {(searchQuery ? posts : regularPosts).map((post, index) => (
+          <PostCard
+            key={post.id}
+            post={post}
+            priority={index < 3} // Mark first 3 posts as priority for LCP
+          />
         ))}
       </div>
 

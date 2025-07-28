@@ -3,7 +3,7 @@ import { memo } from 'react'
 import OptimizedImage from './OptimizedImage'
 import { getExcerpt, getThumbnailImage, formatDate } from '../utils/contentUtils'
 
-const PostCard = memo(({ post, featured = false }) => {
+const PostCard = memo(({ post, featured = false, priority = false }) => {
   // Get author name - simplified for now
   const getAuthorName = () => {
     // For now, return a placeholder. In a real app, you'd fetch author data
@@ -22,7 +22,7 @@ const PostCard = memo(({ post, featured = false }) => {
               alt={post.title}
               width={800}
               height={200}
-              priority={true}
+              priority={priority || featured}
               style={{
                 borderRadius: '8px',
                 marginBottom: '15px'
@@ -52,7 +52,8 @@ const PostCard = memo(({ post, featured = false }) => {
             alt={post.title}
             width={400}
             height={150}
-            lazy={true}
+            lazy={!priority}
+            priority={priority}
             style={{
               borderRadius: '8px',
               marginBottom: '10px'
@@ -74,7 +75,8 @@ const PostCard = memo(({ post, featured = false }) => {
   // Custom comparison function for React.memo
   return (
     prevProps.post.id === nextProps.post.id &&
-    prevProps.featured === nextProps.featured
+    prevProps.featured === nextProps.featured &&
+    prevProps.priority === nextProps.priority
   )
 })
 
