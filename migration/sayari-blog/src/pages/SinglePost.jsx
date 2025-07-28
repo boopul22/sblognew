@@ -93,22 +93,34 @@ const SinglePost = () => {
 
   const formatContent = (content) => {
     if (!content) return ''
-    
+
     // Remove WordPress block comments but keep the content
     let formatted = content.replace(/<!-- wp:.*? -->/g, '')
     formatted = formatted.replace(/<!-- \/wp:.*? -->/g, '')
-    
-    // Convert basic HTML to readable format
-    formatted = formatted.replace(/<p>/g, '\n\n')
-    formatted = formatted.replace(/<\/p>/g, '')
-    formatted = formatted.replace(/<br\s*\/?>/g, '\n')
-    formatted = formatted.replace(/<[^>]*>/g, '')
-    
-    // Decode HTML entities
-    const textarea = document.createElement('textarea')
-    textarea.innerHTML = formatted
-    formatted = textarea.value
-    
+
+    // Clean up WordPress-specific classes and attributes while preserving images
+    formatted = formatted.replace(/class="[^"]*"/g, '')
+    formatted = formatted.replace(/style="[^"]*"/g, '')
+    formatted = formatted.replace(/id="[^"]*"/g, '')
+
+    // Convert blockquotes to a simpler format
+    formatted = formatted.replace(/<blockquote[^>]*>/g, '<div style="border-left: 3px solid #ccc; padding-left: 15px; margin: 20px 0; font-style: italic;">')
+    formatted = formatted.replace(/<\/blockquote>/g, '</div>')
+
+    // Style headings
+    formatted = formatted.replace(/<h2[^>]*>/g, '<h2 style="color: #333; margin: 25px 0 15px 0; font-size: 1.5em;">')
+    formatted = formatted.replace(/<h3[^>]*>/g, '<h3 style="color: #333; margin: 20px 0 10px 0; font-size: 1.3em;">')
+
+    // Style images
+    formatted = formatted.replace(/<img([^>]*)>/g, '<img$1 style="max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">')
+
+    // Style figures (WordPress image containers)
+    formatted = formatted.replace(/<figure[^>]*>/g, '<div style="text-align: center; margin: 25px 0;">')
+    formatted = formatted.replace(/<\/figure>/g, '</div>')
+
+    // Style paragraphs
+    formatted = formatted.replace(/<p>/g, '<p style="margin: 15px 0; line-height: 1.6;">')
+
     return formatted.trim()
   }
 
@@ -138,9 +150,10 @@ const SinglePost = () => {
             {formatDate(post.published_at)}
           </div>
         </div>
-        <div className="poem-text">
-          {formatContent(post.content)}
-        </div>
+        <div
+          className="poem-text"
+          dangerouslySetInnerHTML={{ __html: formatContent(post.content) }}
+        />
       </div>
 
       <div className="poem-sidebar">

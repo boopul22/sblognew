@@ -40,7 +40,7 @@ const Category = ({ searchQuery }) => {
             slug,
             content,
             excerpt,
-            author_wp_id,
+            author_id,
             published_at
           )
         `)
