@@ -1,0 +1,5 @@
+[33m7f12f08[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Remove static data files from version control - will be generated fresh on each Cloudflare build
+[33m7e3b71e[m Add admin panel functionality and update build files
+[33m15f7a9f[m Remove astro-version file
+[33m952cf3b[m Update website with new components, static data, and build files
+[33m726450a[m Fix featured/thumbnail image display issue
