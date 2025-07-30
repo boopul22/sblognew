@@ -8,6 +8,24 @@
     "type": "authors"
   },
   {
+    "path": "/instagram-bio-3-2",
+    "type": "post",
+    "slug": "instagram-bio-3-2",
+    "id": "4d33d556-65d0-4a66-9063-e77d2a7f5937"
+  },
+  {
+    "path": "/instagram-bio-3",
+    "type": "post",
+    "slug": "instagram-bio-3",
+    "id": "9fbc2f1c-c0b0-4886-ad27-462104a2cf0d"
+  },
+  {
+    "path": "/instagram-bio-3-1",
+    "type": "post",
+    "slug": "instagram-bio-3-1",
+    "id": "4b2a7924-9635-45f7-999b-dd3c325758d7"
+  },
+  {
     "path": "/latest-post",
     "type": "post",
     "slug": "latest-post",

@@ -1,0 +1,95 @@
+# GitHub Actions workflow for deploying static site when posts are published
+# Rename this file to deploy.yml to activate it
+
+name: Deploy Static Site
+
+on:
+  # Trigger on manual dispatch from the admin interface
+  workflow_dispatch:
+    inputs:
+      post_id:
+        description: 'Post ID that triggered the deployment'
+        required: false
+        type: string
+      post_slug:
+        description: 'Post slug that was published'
+        required: false
+        type: string
+      trigger:
+        description: 'Deployment trigger'
+        required: false
+        default: 'manual'
+        type: string
+
+  # Also trigger on push to main branch
+  push:
+    branches: [ main ]
+
+  # Allow manual trigger from GitHub UI
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build static site
+      run: npm run build
+      env:
+        VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+        VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./dist
+        # Optional: Custom domain
+        # cname: yourdomain.com
+
+    - name: Notify deployment status
+      if: github.event.inputs.post_id
+      run: |
+        echo "Deployment completed for post: ${{ github.event.inputs.post_slug }}"
+        echo "Post ID: ${{ github.event.inputs.post_id }}"
+        echo "Trigger: ${{ github.event.inputs.trigger }}"
+
+# Alternative workflow for other static site generators:
+
+# For Jekyll:
+# - name: Build with Jekyll
+#   run: |
+#     bundle install
+#     bundle exec jekyll build
+
+# For Hugo:
+# - name: Setup Hugo
+#   uses: peaceiris/actions-hugo@v2
+#   with:
+#     hugo-version: 'latest'
+# - name: Build with Hugo
+#   run: hugo --minify
+
+# For Gatsby:
+# - name: Build with Gatsby
+#   run: |
+#     npm install -g gatsby-cli
+#     gatsby build
+
+# For Next.js (static export):
+# - name: Build with Next.js
+#   run: |
+#     npm run build
+#     npm run export
