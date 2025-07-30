@@ -1,4 +1,6 @@
-# Sayari Blog - Hindi Shayari, Quotes & Wishes
+# Sayari Blog
+
+<!-- Force rebuild: 2025-07-30 --> - Hindi Shayari, Quotes & Wishes
 
 A modern React application for Hindi Shayari, Quotes, and Wishes, migrated from WordPress with Supabase as the backend database.
 
