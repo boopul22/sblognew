@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { supabase } from '../lib/supabase'
+import { getAuthorByUsername, getPostsByAuthor } from '../lib/staticData'
 import PostCard from '../components/PostCard'
 
 const Author = ({ searchQuery }) => {
@@ -19,35 +19,19 @@ const Author = ({ searchQuery }) => {
   const fetchAuthorPosts = async () => {
     try {
       setLoading(true)
-      
-      // First, get the author info
-      const { data: authorData, error: authorError } = await supabase
-        .from('users')
-        .select('*')
-        .eq('user_login', username)
-        .single()
 
-      if (authorError) throw authorError
-      setAuthor(authorData)
+      // Get author from static data
+      const authorData = await getAuthorByUsername(username)
 
-      // Then get posts by this author
-      let query = supabase
-        .from('posts')
-        .select('*')
-        .eq('author_id', authorData.id)
-        .eq('status', 'published')
-        .order('published_at', { ascending: false })
-
-      // Apply search filter if searchQuery exists
-      if (searchQuery && searchQuery.trim()) {
-        query = query.or(`title.ilike.%${searchQuery}%,content.ilike.%${searchQuery}%`)
+      if (!authorData) {
+        throw new Error('Author not found')
       }
 
-      const { data: postsData, error: postsError } = await query
+      setAuthor(authorData)
 
-      if (postsError) throw postsError
-
-      setPosts(postsData || [])
+      // Get posts by this author
+      const authorPosts = await getPostsByAuthor(authorData.id, searchQuery)
+      setPosts(authorPosts)
     } catch (err) {
       console.error('Error fetching author posts:', err)
       setError('Author not found')

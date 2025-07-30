@@ -1,9 +1,21 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    // Copy static data files to dist
+    viteStaticCopy({
+      targets: [
+        {
+          src: 'src/data/static/*',
+          dest: 'data/static'
+        }
+      ]
+    })
+  ],
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
@@ -88,7 +100,8 @@ export default defineConfig({
   },
   // Enable aggressive tree shaking
   define: {
-    'process.env.NODE_ENV': JSON.stringify('production')
+    'process.env.NODE_ENV': JSON.stringify('production'),
+    'import.meta.env.SSG_MODE': JSON.stringify(process.env.SSG_MODE || 'false')
   },
   esbuild: {
     drop: ['console', 'debugger'], // Remove console logs and debugger statements

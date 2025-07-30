@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { supabase } from '../lib/supabase'
+import { getPostBySlug, getAllPosts } from '../lib/staticData'
 import OptimizedImage from '../components/OptimizedImage'
 import PostCard from '../components/PostCard'
 
@@ -23,57 +23,26 @@ const SinglePost = () => {
     try {
       setLoading(true)
 
-      // Fetch the main post with optimized query
-      const { data: postData, error: postError } = await supabase
-        .from('posts')
-        .select('id, title, slug, content, author_id, published_at, status')
-        .eq('slug', slug)
-        .eq('status', 'published')
-        .single()
+      // Get post from static data
+      const postData = await getPostBySlug(slug)
 
-      if (postError) throw postError
+      if (!postData) {
+        throw new Error('Post not found')
+      }
 
       setPost(postData)
 
-      // Fetch all related data in parallel
-      const [relatedResult, categoryResult, tagResult] = await Promise.all([
-        // Fetch related posts (excluding current post)
-        supabase
-          .from('posts')
-          .select('id, title, slug, published_at')
-          .eq('status', 'published')
-          .neq('id', postData.id)
-          .order('published_at', { ascending: false })
-          .limit(3),
+      // Get all posts for related posts
+      const allPosts = await getAllPosts()
 
-        // Fetch categories for this post
-        supabase
-          .from('post_categories')
-          .select(`
-            categories (
-              id,
-              name,
-              slug
-            )
-          `)
-          .eq('post_id', postData.id),
+      // Find related posts (excluding current post)
+      const related = allPosts
+        .filter(p => p.id !== postData.id)
+        .slice(0, 3)
 
-        // Fetch tags for this post
-        supabase
-          .from('post_tags')
-          .select(`
-            tags (
-              id,
-              name,
-              slug
-            )
-          `)
-          .eq('post_id', postData.id)
-      ])
-
-      setRelatedPosts(relatedResult.data || [])
-      setCategories(categoryResult.data?.map(pc => pc.categories) || [])
-      setTags(tagResult.data?.map(pt => pt.tags) || [])
+      setRelatedPosts(related)
+      setCategories(postData.categories || [])
+      setTags(postData.tags || [])
 
     } catch (err) {
       console.error('Error fetching post:', err)

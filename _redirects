@@ -1,0 +1,8 @@
+# Redirects for Static Site Generation
+
+# Handle SPA fallback for dynamic routes (search functionality)
+# All static routes will have their own HTML files, so this only catches dynamic behavior
+/search/* /index.html 200
+
+# Fallback for any unmatched routes to the main SPA
+/* /index.html 200

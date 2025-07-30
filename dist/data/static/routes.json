@@ -1,0 +1,1988 @@
+[
+  {
+    "path": "/",
+    "type": "home"
+  },
+  {
+    "path": "/authors",
+    "type": "authors"
+  },
+  {
+    "path": "/latest-post",
+    "type": "post",
+    "slug": "latest-post",
+    "id": "f2755e5a-dae6-47eb-9838-426794f5e37c"
+  },
+  {
+    "path": "/home",
+    "type": "post",
+    "slug": "home",
+    "id": "c16ee195-17a9-49fd-862d-42d7196c0eb0"
+  },
+  {
+    "path": "/merry-christmas-wishes",
+    "type": "post",
+    "slug": "merry-christmas-wishes",
+    "id": "24b7974c-33a1-41a1-9ead-c0a84e9c702b"
+  },
+  {
+    "path": "/birthday-wishes-friend",
+    "type": "post",
+    "slug": "birthday-wishes-friend",
+    "id": "ab393e36-c3d0-424c-b72b-fea1ba61215f"
+  },
+  {
+    "path": "/swami-vivekananda-quotes",
+    "type": "post",
+    "slug": "swami-vivekananda-quotes",
+    "id": "49757c2a-6fae-4bce-bdb0-ce7387ea784e"
+  },
+  {
+    "path": "/one-side-love-shayari-in-hindi",
+    "type": "post",
+    "slug": "one-side-love-shayari-in-hindi",
+    "id": "3d7e4a98-43db-411c-9776-68e1bcb71010"
+  },
+  {
+    "path": "/attitude-shayari-for-friends",
+    "type": "post",
+    "slug": "attitude-shayari-for-friends",
+    "id": "660bcda4-702e-4ad7-8bea-6c6ece0de1a7"
+  },
+  {
+    "path": "/instagram-bio",
+    "type": "post",
+    "slug": "instagram-bio",
+    "id": "ed2d4b16-0eb4-4dd7-9944-da0bde519ff0"
+  },
+  {
+    "path": "/best-instagram-bio-with-emoji-for-girl",
+    "type": "post",
+    "slug": "best-instagram-bio-with-emoji-for-girl",
+    "id": "a477da91-fee5-4da0-82b2-1d4d3250ab1c"
+  },
+  {
+    "path": "/paisa-shayari-in-hindi",
+    "type": "post",
+    "slug": "paisa-shayari-in-hindi",
+    "id": "35a9dd86-4e2b-462a-be61-a32a08e59f0e"
+  },
+  {
+    "path": "/quotes-for-instagram-bio",
+    "type": "post",
+    "slug": "quotes-for-instagram-bio",
+    "id": "35d02e0a-659b-471a-ade9-9e0fe0e4f57f"
+  },
+  {
+    "path": "/instagram-bio-for-couple",
+    "type": "post",
+    "slug": "instagram-bio-for-couple",
+    "id": "fa2b6030-a2fe-4228-a9ca-d6d81ffb12a2"
+  },
+  {
+    "path": "/swag-bio-for-instagram-boy",
+    "type": "post",
+    "slug": "swag-bio-for-instagram-boy",
+    "id": "cd0301da-b6c8-4376-910c-0942d7056f6b"
+  },
+  {
+    "path": "/family-shayari",
+    "type": "post",
+    "slug": "family-shayari",
+    "id": "a727ca8f-6dce-4d03-8218-077205666a8e"
+  },
+  {
+    "path": "/krishna-bio-for-instagram",
+    "type": "post",
+    "slug": "krishna-bio-for-instagram",
+    "id": "abae02d6-3a76-48a8-b5a6-ed8ae63f8887"
+  },
+  {
+    "path": "/miss-you-yaad-shayari",
+    "type": "post",
+    "slug": "miss-you-yaad-shayari",
+    "id": "daabfd99-e32f-480a-96bc-f76c9cabdfce"
+  },
+  {
+    "path": "/yaad-shayari-in-hindi",
+    "type": "post",
+    "slug": "yaad-shayari-in-hindi",
+    "id": "d83c7543-053a-42a2-9c13-cd2cff960321"
+  },
+  {
+    "path": "/good-night-shayari",
+    "type": "post",
+    "slug": "good-night-shayari",
+    "id": "7281f8a6-332f-4c9e-9b0a-f566b5412e2d"
+  },
+  {
+    "path": "/attitude-shayari-for-boys",
+    "type": "post",
+    "slug": "attitude-shayari-for-boys",
+    "id": "2e049ef9-45e7-4de4-8b70-a7da94b25652"
+  },
+  {
+    "path": "/attitude-shayari-for-girls",
+    "type": "post",
+    "slug": "attitude-shayari-for-girls",
+    "id": "71489e3c-f10f-4c8b-96e5-01ddc45acea4"
+  },
+  {
+    "path": "/friendship-shayari-in-hindi",
+    "type": "post",
+    "slug": "friendship-shayari-in-hindi",
+    "id": "d0254840-8f88-451d-bdf8-57de4b3922b7"
+  },
+  {
+    "path": "/romantic-shayari-in-hindi",
+    "type": "post",
+    "slug": "romantic-shayari-in-hindi",
+    "id": "d76bd020-684f-43a7-a6dd-911c10c6fe6c"
+  },
+  {
+    "path": "/birthday-shayari-in-hindi",
+    "type": "post",
+    "slug": "birthday-shayari-in-hindi",
+    "id": "dba834be-52f4-46fe-80ec-692b05084a14"
+  },
+  {
+    "path": "/funny-hindi-shayari",
+    "type": "post",
+    "slug": "funny-hindi-shayari",
+    "id": "bf32c126-110d-492f-b2d4-e68866521143"
+  },
+  {
+    "path": "/pyar-bhari-shayari",
+    "type": "post",
+    "slug": "pyar-bhari-shayari",
+    "id": "9284cec8-3253-44ad-bcff-dbd399e553b5"
+  },
+  {
+    "path": "/birthday-caption-for-best-friend",
+    "type": "post",
+    "slug": "birthday-caption-for-best-friend",
+    "id": "377d07b5-83d5-4b71-b6e3-0535c5938559"
+  },
+  {
+    "path": "/bestie-captions-for-instagram",
+    "type": "post",
+    "slug": "bestie-captions-for-instagram",
+    "id": "dc61f896-760b-4b4b-a466-c7f05b174b76"
+  },
+  {
+    "path": "/emotional-friendship-quotes",
+    "type": "post",
+    "slug": "emotional-friendship-quotes",
+    "id": "fc1702a7-45cb-431c-8bd6-77cf6fa4ad63"
+  },
+  {
+    "path": "/funny-shayari",
+    "type": "post",
+    "slug": "funny-shayari",
+    "id": "042d2e77-84bf-4eb4-bfb3-9325a279308d"
+  },
+  {
+    "path": "/best-friend-captions",
+    "type": "post",
+    "slug": "best-friend-captions",
+    "id": "827a19c5-3767-4cf5-9f79-deb9139fdb6b"
+  },
+  {
+    "path": "/birthday-quotes-for-instagram",
+    "type": "post",
+    "slug": "birthday-quotes-for-instagram",
+    "id": "bc25ce08-47d3-44ae-b265-72cd1bd848ae"
+  },
+  {
+    "path": "/after-long-time-meet-my-friend-captions",
+    "type": "post",
+    "slug": "after-long-time-meet-my-friend-captions",
+    "id": "c458df97-b632-4d0d-86b7-fc20b31a53fc"
+  },
+  {
+    "path": "/best-quotes-for-instagram-bio",
+    "type": "post",
+    "slug": "best-quotes-for-instagram-bio",
+    "id": "3728966d-a13c-4477-87fe-109513b5748d"
+  },
+  {
+    "path": "/2-word-captions",
+    "type": "post",
+    "slug": "2-word-captions",
+    "id": "8779b091-c38e-48da-8422-578df4cacdb5"
+  },
+  {
+    "path": "/good-quotes-for-instagram-bio",
+    "type": "post",
+    "slug": "good-quotes-for-instagram-bio",
+    "id": "649223f3-f74d-4525-b50c-f1e97b8ea1c5"
+  },
+  {
+    "path": "/instagram-bio-font",
+    "type": "post",
+    "slug": "instagram-bio-font",
+    "id": "0aa26d57-9dd2-42cd-ab79-4f7e7a55eeba"
+  },
+  {
+    "path": "/sad-shayari",
+    "type": "post",
+    "slug": "sad-shayari",
+    "id": "f0b95bf7-03ff-4b64-8ad7-5ad5ba1b62bd"
+  },
+  {
+    "path": "/impressive-instagram-bio-for-boys",
+    "type": "post",
+    "slug": "impressive-instagram-bio-for-boys",
+    "id": "90b3d195-478d-4b8c-a022-e3d2a1db5e6e"
+  },
+  {
+    "path": "/best-bio-for-instagram-for-boys",
+    "type": "post",
+    "slug": "best-bio-for-instagram-for-boys",
+    "id": "b2c72e68-a7b6-424e-b999-4d4f44811998"
+  },
+  {
+    "path": "/short-bio-for-instagram",
+    "type": "post",
+    "slug": "short-bio-for-instagram",
+    "id": "00a0ff5d-5f87-4ead-bc71-0cf685a41b1e"
+  },
+  {
+    "path": "/bio-for-instagram-for-girls-attitude",
+    "type": "post",
+    "slug": "bio-for-instagram-for-girls-attitude",
+    "id": "03417a4c-4dde-409f-ad70-e9cd865859dc"
+  },
+  {
+    "path": "/facebook-bio-for-girls",
+    "type": "post",
+    "slug": "facebook-bio-for-girls",
+    "id": "9b1f4fa9-19e1-4eff-b9ab-c80305cc117d"
+  },
+  {
+    "path": "/facebook-bio-for-boys",
+    "type": "post",
+    "slug": "facebook-bio-for-boys",
+    "id": "792d4f53-6edf-460f-a285-846056be0c7e"
+  },
+  {
+    "path": "/facebook-bio",
+    "type": "post",
+    "slug": "facebook-bio",
+    "id": "828da746-20fe-4d28-a8cf-cb8568246b6a"
+  },
+  {
+    "path": "/instagram-bio-for-school-boys",
+    "type": "post",
+    "slug": "instagram-bio-for-school-boys",
+    "id": "def3595d-3a4e-4d6c-9d85-87dee2d04f75"
+  },
+  {
+    "path": "/professional-bio-for-instagram",
+    "type": "post",
+    "slug": "professional-bio-for-instagram",
+    "id": "10d4e3c8-90a3-4e6e-bb4a-94e2c9b169ff"
+  },
+  {
+    "path": "/motivational-bio-for-instagram",
+    "type": "post",
+    "slug": "motivational-bio-for-instagram",
+    "id": "002476c1-53b4-4f85-9fac-5a001237b42f"
+  },
+  {
+    "path": "/funny-instagram-bios",
+    "type": "post",
+    "slug": "funny-instagram-bios",
+    "id": "39532090-b2b8-4d72-af4e-b78f21686f63"
+  },
+  {
+    "path": "/aesthetic-instagram-bios",
+    "type": "post",
+    "slug": "aesthetic-instagram-bios",
+    "id": "422979fe-5cd0-4e05-8c41-1611333a8f14"
+  },
+  {
+    "path": "/instagram-bio-shayari",
+    "type": "post",
+    "slug": "instagram-bio-shayari",
+    "id": "5ab017c7-5c2a-4b9b-bfb5-642ccc5ee210"
+  },
+  {
+    "path": "/instagram-bio-quotes",
+    "type": "post",
+    "slug": "instagram-bio-quotes",
+    "id": "c9bd29b4-597a-4eba-9468-0ff8fafe76f0"
+  },
+  {
+    "path": "/financial-freedom-quotes",
+    "type": "post",
+    "slug": "financial-freedom-quotes",
+    "id": "7e3a77af-22fa-419b-b637-6dbfb3ec2bbd"
+  },
+  {
+    "path": "/personal-loan-status",
+    "type": "post",
+    "slug": "personal-loan-status",
+    "id": "8cae1a37-98d6-429a-8f6d-9cd425e4b7de"
+  },
+  {
+    "path": "/mahakal-status",
+    "type": "post",
+    "slug": "mahakal-status",
+    "id": "b89458d8-6b04-4b82-a52b-24ebfabc2c12"
+  },
+  {
+    "path": "/bio-for-business-account",
+    "type": "post",
+    "slug": "bio-for-business-account",
+    "id": "3031e746-b583-404b-a126-177c43ac3f3c"
+  },
+  {
+    "path": "/mahadev-bio-for-instagram",
+    "type": "post",
+    "slug": "mahadev-bio-for-instagram",
+    "id": "7912cb14-9453-40f8-8c01-e0b85faaad06"
+  },
+  {
+    "path": "/attitude-bio-for-instagram",
+    "type": "post",
+    "slug": "attitude-bio-for-instagram",
+    "id": "e1bb4d70-6d2e-4bda-9658-8a316a23812c"
+  },
+  {
+    "path": "/mahakal-bio-for-instagram",
+    "type": "post",
+    "slug": "mahakal-bio-for-instagram",
+    "id": "84a1f34a-dba8-4cf8-9bc3-0a3a8cc7c258"
+  },
+  {
+    "path": "/bio-for-instagram",
+    "type": "post",
+    "slug": "bio-for-instagram",
+    "id": "6694a180-f4a4-4639-a5ab-1e79fe1c73a0"
+  },
+  {
+    "path": "/classy-bio-for-instagram-for-girl",
+    "type": "post",
+    "slug": "classy-bio-for-instagram-for-girl",
+    "id": "3eab8e0c-0f00-4e93-80d3-1a9303eaccd9"
+  },
+  {
+    "path": "/instagram-bio-for-college-student",
+    "type": "post",
+    "slug": "instagram-bio-for-college-student",
+    "id": "904bc898-cd31-41a1-ab40-468a5587e189"
+  },
+  {
+    "path": "/gym-lover-bio-for-instagram",
+    "type": "post",
+    "slug": "gym-lover-bio-for-instagram",
+    "id": "13371562-2d14-4e7a-8bde-ae08cfb4ab03"
+  },
+  {
+    "path": "/instagram-bio-font-style-for-boy",
+    "type": "post",
+    "slug": "instagram-bio-font-style-for-boy",
+    "id": "d263a3a8-d804-46eb-bdf2-4f7d9785be8c"
+  },
+  {
+    "path": "/instagram-bio-for-boys",
+    "type": "post",
+    "slug": "instagram-bio-for-boys",
+    "id": "b75de1e7-4d9d-4860-ac39-755ebb2046e9"
+  },
+  {
+    "path": "/best-insta-bio-for-boys",
+    "type": "post",
+    "slug": "best-insta-bio-for-boys",
+    "id": "b78b27dc-7472-459a-8a56-152006ce6442"
+  },
+  {
+    "path": "/instagram-bio-in-hindi",
+    "type": "post",
+    "slug": "instagram-bio-in-hindi",
+    "id": "2b7900fa-b975-420f-954d-10808b5953c7"
+  },
+  {
+    "path": "/aag-ka-paryayvachi-shabd",
+    "type": "post",
+    "slug": "aag-ka-paryayvachi-shabd",
+    "id": "1afb45e9-0f18-4592-8b55-136238d6bc6d"
+  },
+  {
+    "path": "/royal-attitude-status-in-hindi",
+    "type": "post",
+    "slug": "royal-attitude-status-in-hindi",
+    "id": "2a9b79e9-3629-4715-96ba-935c61b1eb3f"
+  },
+  {
+    "path": "/instagram-bio-for-girls",
+    "type": "post",
+    "slug": "instagram-bio-for-girls",
+    "id": "51c2064a-b8bd-4c94-a629-70cc198f700f"
+  },
+  {
+    "path": "/instagram-vip-bio-for-boy",
+    "type": "post",
+    "slug": "instagram-vip-bio-for-boy",
+    "id": "00adbc53-da40-4abf-bbe2-55e6288e49c9"
+  },
+  {
+    "path": "/pakshi-ka-paryayvachi-shabd",
+    "type": "post",
+    "slug": "pakshi-ka-paryayvachi-shabd",
+    "id": "ca1c580e-94e2-4b88-9545-0ba1eec52692"
+  },
+  {
+    "path": "/ram-navami-quotes-in-hindi",
+    "type": "post",
+    "slug": "ram-navami-quotes-in-hindi",
+    "id": "228ad740-43e7-4f71-a7b1-02f83ecd329b"
+  },
+  {
+    "path": "/ram-navami-shayari",
+    "type": "post",
+    "slug": "ram-navami-shayari",
+    "id": "005b9f43-ab21-4511-a1e3-39ec9f63ce84"
+  },
+  {
+    "path": "/ram-navami-images-in-hindi",
+    "type": "post",
+    "slug": "ram-navami-images-in-hindi",
+    "id": "fabe9d69-6167-4a69-8fb7-0c81755b22f6"
+  },
+  {
+    "path": "/ram-navami-wishes-in-hindi",
+    "type": "post",
+    "slug": "ram-navami-wishes-in-hindi",
+    "id": "ac9bd05b-451d-41c2-8bbf-55de025d0259"
+  },
+  {
+    "path": "/geeta-shlok-in-hindi",
+    "type": "post",
+    "slug": "geeta-shlok-in-hindi",
+    "id": "36f84fdb-c852-4250-afa2-a225b4d708f8"
+  },
+  {
+    "path": "/jungle-ka-paryayvachi-shabd",
+    "type": "post",
+    "slug": "jungle-ka-paryayvachi-shabd",
+    "id": "89e0eba3-e1b8-40af-80a3-7433633be518"
+  },
+  {
+    "path": "/bhagavad-gita-quotes-in-hindi",
+    "type": "post",
+    "slug": "bhagavad-gita-quotes-in-hindi",
+    "id": "0b895f55-e3c0-4f49-8e92-f20138f927cf"
+  },
+  {
+    "path": "/happy-shayari-in-hindi",
+    "type": "post",
+    "slug": "happy-shayari-in-hindi",
+    "id": "04c1497e-b47c-4241-8733-20fbfda5c875"
+  },
+  {
+    "path": "/bhavvachak-sangya",
+    "type": "post",
+    "slug": "bhavvachak-sangya",
+    "id": "c0083954-859e-4039-85f5-bb06dca694ec"
+  },
+  {
+    "path": "/happy-holi-wishes",
+    "type": "post",
+    "slug": "happy-holi-wishes",
+    "id": "b9716854-b01e-453e-99b6-748f17952f47"
+  },
+  {
+    "path": "/life-status-in-hindi",
+    "type": "post",
+    "slug": "life-status-in-hindi",
+    "id": "632f3cfa-2f71-494f-902d-69d3bf3c3366"
+  },
+  {
+    "path": "/sad-status-in-hindi-for-life",
+    "type": "post",
+    "slug": "sad-status-in-hindi-for-life",
+    "id": "67916d67-9e32-4a59-b11f-6e733bf83570"
+  },
+  {
+    "path": "/republic-day-wishes-in-hindi",
+    "type": "post",
+    "slug": "republic-day-wishes-in-hindi",
+    "id": "dbe839f8-871c-4ab9-b4ec-bf4eb79e25ce"
+  },
+  {
+    "path": "/motivational-thoughts-in-hindi",
+    "type": "post",
+    "slug": "motivational-thoughts-in-hindi",
+    "id": "6bc18792-2b48-4b9d-a329-8abfcf3d7f9e"
+  },
+  {
+    "path": "/breakup-shayari",
+    "type": "post",
+    "slug": "breakup-shayari",
+    "id": "5ee733f9-2827-4a96-af4e-ce45eb731a69"
+  },
+  {
+    "path": "/independence-day-shayari",
+    "type": "post",
+    "slug": "independence-day-shayari",
+    "id": "bc13ba70-12d6-40db-b907-65354fb1ef00"
+  },
+  {
+    "path": "/attitude-status",
+    "type": "post",
+    "slug": "attitude-status",
+    "id": "c9debfb8-bb87-4d6e-8ea1-3a01eb02e271"
+  },
+  {
+    "path": "/shayari-to-impress-a-girl",
+    "type": "post",
+    "slug": "shayari-to-impress-a-girl",
+    "id": "19e691df-8e60-4e45-bb24-e502fd677adc"
+  },
+  {
+    "path": "/good-morning-quotes-in-hindi",
+    "type": "post",
+    "slug": "good-morning-quotes-in-hindi",
+    "id": "5073dc75-5287-400e-92a2-9dd507c41a19"
+  },
+  {
+    "path": "/hindi-poetry",
+    "type": "post",
+    "slug": "hindi-poetry",
+    "id": "a6b88bf0-7be3-4d9c-9295-3a12b65754d2"
+  },
+  {
+    "path": "/whatsapp-bio-caption-in-english",
+    "type": "post",
+    "slug": "whatsapp-bio-caption-in-english",
+    "id": "b45c75e4-7d7a-4952-9d99-7f50770937ec"
+  },
+  {
+    "path": "/love-shayari",
+    "type": "post",
+    "slug": "love-shayari",
+    "id": "332a9d6b-8398-4ab8-8e96-f53132c329b2"
+  },
+  {
+    "path": "/two-line-shayari",
+    "type": "post",
+    "slug": "two-line-shayari",
+    "id": "10250cae-a6b9-4cf6-adf9-ba1dc59ae30b"
+  },
+  {
+    "path": "/hindi-suvichar",
+    "type": "post",
+    "slug": "hindi-suvichar",
+    "id": "40b2063c-de5c-45cb-887d-d7d04058718d"
+  },
+  {
+    "path": "/life-shayari",
+    "type": "post",
+    "slug": "life-shayari",
+    "id": "9fd34e48-620b-484d-a7fd-ffb93ba7ffa8"
+  },
+  {
+    "path": "/adhure-alfaaz",
+    "type": "post",
+    "slug": "adhure-alfaaz",
+    "id": "6d72b560-3599-4568-87b6-72658134e2db"
+  },
+  {
+    "path": "/santa-banta-jokes-in-hindi",
+    "type": "post",
+    "slug": "santa-banta-jokes-in-hindi",
+    "id": "beca9b00-dcc6-4aa6-8fed-33ab766c475f"
+  },
+  {
+    "path": "/happy-holika-dahan-image",
+    "type": "post",
+    "slug": "happy-holika-dahan-image",
+    "id": "39f90564-411e-4675-b2fe-b99f0a2dff99"
+  },
+  {
+    "path": "/maa-shayari",
+    "type": "post",
+    "slug": "maa-shayari",
+    "id": "35f86e74-e546-4f67-a095-5f455d68cd0d"
+  },
+  {
+    "path": "/sad-shayari-image",
+    "type": "post",
+    "slug": "sad-shayari-image",
+    "id": "82b1263a-0c10-4f78-b04b-5702b1bc417a"
+  },
+  {
+    "path": "/pati-patni-jokes",
+    "type": "post",
+    "slug": "pati-patni-jokes",
+    "id": "a0ae5acc-d569-4f8e-a50d-392874fa1c09"
+  },
+  {
+    "path": "/republic-day-images",
+    "type": "post",
+    "slug": "republic-day-images",
+    "id": "d697047a-cc32-45f4-a263-8cf509f3bc7d"
+  },
+  {
+    "path": "/hindi-poems-on-life",
+    "type": "post",
+    "slug": "hindi-poems-on-life",
+    "id": "cc9be093-126e-4cbf-a797-80cc94fc5e64"
+  },
+  {
+    "path": "/good-night-wishes",
+    "type": "post",
+    "slug": "good-night-wishes",
+    "id": "158dce48-5535-453c-96d3-34abe67ed871"
+  },
+  {
+    "path": "/happy-valentines-day-quotes",
+    "type": "post",
+    "slug": "happy-valentines-day-quotes",
+    "id": "7571ccfa-2ec5-4b0b-b474-2093097eca4c"
+  },
+  {
+    "path": "/teacher-student-jokes-in-hindi",
+    "type": "post",
+    "slug": "teacher-student-jokes-in-hindi",
+    "id": "62f425fd-6180-49b0-b21d-f4c0c66d6e32"
+  },
+  {
+    "path": "/love-status",
+    "type": "post",
+    "slug": "love-status",
+    "id": "c63b33a9-3aea-4f31-9516-871540719f98"
+  },
+  {
+    "path": "/republic-day-quotes",
+    "type": "post",
+    "slug": "republic-day-quotes",
+    "id": "d6c107c9-200d-44e8-9571-16b4456305ce"
+  },
+  {
+    "path": "/motivational-shayari",
+    "type": "post",
+    "slug": "motivational-shayari",
+    "id": "0b9ffcf8-db19-45ae-8de5-8e63c0c8350f"
+  },
+  {
+    "path": "/imran-pratapgarhi-shayari",
+    "type": "post",
+    "slug": "imran-pratapgarhi-shayari",
+    "id": "406adfff-9901-4368-8292-fccac4cb0fa9"
+  },
+  {
+    "path": "/dosti-status",
+    "type": "post",
+    "slug": "dosti-status",
+    "id": "89244c14-737d-495d-89c7-91bd97f0423f"
+  },
+  {
+    "path": "/holika-dahan-wishes",
+    "type": "post",
+    "slug": "holika-dahan-wishes",
+    "id": "2c7ea47b-177c-41a1-878a-16b75c40c625"
+  },
+  {
+    "path": "/today-special-good-morning-images",
+    "type": "post",
+    "slug": "today-special-good-morning-images",
+    "id": "a64671c8-2e20-47e0-b55d-800d8ce431df"
+  },
+  {
+    "path": "/good-night-shayari-in-hindi",
+    "type": "post",
+    "slug": "good-night-shayari-in-hindi",
+    "id": "7d745b86-2927-47a6-93ee-58390b527474"
+  },
+  {
+    "path": "/kabir-ke-dohe",
+    "type": "post",
+    "slug": "kabir-ke-dohe",
+    "id": "cfbde070-d38b-4b53-95f3-0fca6074f27b"
+  },
+  {
+    "path": "/positive-quotes",
+    "type": "post",
+    "slug": "positive-quotes",
+    "id": "c5dc5be0-5642-4cb4-a952-2f9f4a968d83"
+  },
+  {
+    "path": "/kumar-vishwas-shayari",
+    "type": "post",
+    "slug": "kumar-vishwas-shayari",
+    "id": "c451d1cd-9559-4ed5-be4b-4dcaba9d36f9"
+  },
+  {
+    "path": "/birthday-wishes-for-sister",
+    "type": "post",
+    "slug": "birthday-wishes-for-sister",
+    "id": "83c535fd-d90c-455f-b7bf-b739ab11ecae"
+  },
+  {
+    "path": "/attitude-status-in-hindi",
+    "type": "post",
+    "slug": "attitude-status-in-hindi",
+    "id": "be0e7957-3916-4d03-9be9-9a9e16037ccd"
+  },
+  {
+    "path": "/alfaaz-shayari-in-hindi",
+    "type": "post",
+    "slug": "alfaaz-shayari-in-hindi",
+    "id": "dc626f6e-0a18-4381-8db9-75bbca50b2bc"
+  },
+  {
+    "path": "/inspirational-quotes",
+    "type": "post",
+    "slug": "inspirational-quotes",
+    "id": "f06d3e50-aaf7-41ca-b317-776b59c1a4d5"
+  },
+  {
+    "path": "/bewafa-shayari",
+    "type": "post",
+    "slug": "bewafa-shayari",
+    "id": "750b39fa-69ce-4051-b6e7-206b1b0a0077"
+  },
+  {
+    "path": "/birthday-wishes-for-brother",
+    "type": "post",
+    "slug": "birthday-wishes-for-brother",
+    "id": "e981c882-fcaa-4fa1-bb7b-8c13b4516e8e"
+  },
+  {
+    "path": "/happy-valentines-day-images",
+    "type": "post",
+    "slug": "happy-valentines-day-images",
+    "id": "066a7a75-ceb0-41f9-a446-fbe90fcbad67"
+  },
+  {
+    "path": "/saraswati-mata-images",
+    "type": "post",
+    "slug": "saraswati-mata-images",
+    "id": "ae1085a0-c339-4d45-b76b-89afd7aaa943"
+  },
+  {
+    "path": "/anmol-vachan",
+    "type": "post",
+    "slug": "anmol-vachan",
+    "id": "37632193-038f-4e6c-9f5b-d9c39e85269d"
+  },
+  {
+    "path": "/nida-fazli-poetry",
+    "type": "post",
+    "slug": "nida-fazli-poetry",
+    "id": "6d125084-68ec-4a58-bc63-16a022e4977c"
+  },
+  {
+    "path": "/happy-saraswati-puja-wishes",
+    "type": "post",
+    "slug": "happy-saraswati-puja-wishes",
+    "id": "05db3b69-441d-4226-920f-c58541d41e03"
+  },
+  {
+    "path": "/happy-valentine-day-shayari",
+    "type": "post",
+    "slug": "happy-valentine-day-shayari",
+    "id": "82ac7255-c4c3-4fe4-b2ed-ddd92967e85a"
+  },
+  {
+    "path": "/happy-new-year-wishes-in-hindi",
+    "type": "post",
+    "slug": "happy-new-year-wishes-in-hindi",
+    "id": "da5629db-bf4a-4aa9-bb48-134e0d2cbce2"
+  },
+  {
+    "path": "/happy-new-year-wishes-and-images",
+    "type": "post",
+    "slug": "happy-new-year-wishes-and-images",
+    "id": "a782d1fb-991f-4754-ae8d-4203775ac938"
+  },
+  {
+    "path": "/happy-birthday-images",
+    "type": "post",
+    "slug": "happy-birthday-images",
+    "id": "086c5507-a2fc-4284-8571-8e1504c5760c"
+  },
+  {
+    "path": "/raksha-bandhan-shayari",
+    "type": "post",
+    "slug": "raksha-bandhan-shayari",
+    "id": "2b60628e-167e-4f0a-9495-b54d9c1cd25a"
+  },
+  {
+    "path": "/firaq-gorakhpuri-shayari",
+    "type": "post",
+    "slug": "firaq-gorakhpuri-shayari",
+    "id": "31b2b148-8426-4590-bd51-bb27630683df"
+  },
+  {
+    "path": "/life-quotes",
+    "type": "post",
+    "slug": "life-quotes",
+    "id": "41432a3f-af63-4ada-89b5-5b7e61e1a029"
+  },
+  {
+    "path": "/sad-quotes",
+    "type": "post",
+    "slug": "sad-quotes",
+    "id": "bfc1b618-c477-44ec-a916-a7b3bed769e6"
+  },
+  {
+    "path": "/happy-makar-sankranti-wishes",
+    "type": "post",
+    "slug": "happy-makar-sankranti-wishes",
+    "id": "d67195b8-9432-4b25-a852-a370108ac174"
+  },
+  {
+    "path": "/allama-iqbal-shayari",
+    "type": "post",
+    "slug": "allama-iqbal-shayari",
+    "id": "8be46000-4889-4710-8240-ceacabd2b38b"
+  },
+  {
+    "path": "/dard-bhare-alfaaz",
+    "type": "post",
+    "slug": "dard-bhare-alfaaz",
+    "id": "dbd4ff42-a376-4507-b7ee-93ab25e17381"
+  },
+  {
+    "path": "/merry-christmas-wishes-and-christmas-cards",
+    "type": "post",
+    "slug": "merry-christmas-wishes-and-christmas-cards",
+    "id": "cd771b52-55a0-4b66-877c-c1d9ff7e3a5a"
+  },
+  {
+    "path": "/contact-us",
+    "type": "post",
+    "slug": "contact-us",
+    "id": "eeac6510-2a12-46f6-a2c4-dd2273698f60"
+  },
+  {
+    "path": "/disclaimer",
+    "type": "post",
+    "slug": "disclaimer",
+    "id": "2a54288f-95d3-4b4f-b45c-ed56be3bde50"
+  },
+  {
+    "path": "/terms-and-conditions",
+    "type": "post",
+    "slug": "terms-and-conditions",
+    "id": "89f5765a-1e5f-4ccd-91ad-cf9a604283b6"
+  },
+  {
+    "path": "/about-us",
+    "type": "post",
+    "slug": "about-us",
+    "id": "ccc5fbe1-9591-44f2-b170-13bf1db20864"
+  },
+  {
+    "path": "/privacy-policy",
+    "type": "post",
+    "slug": "privacy-policy",
+    "id": "2c416d79-5935-4d90-af43-38fe1b48af23"
+  },
+  {
+    "path": "/author/undefined",
+    "type": "author",
+    "id": "40f1ee43-f845-4f82-b3eb-44eb0156a012"
+  },
+  {
+    "path": "/author/undefined",
+    "type": "author",
+    "id": "47a4d9e7-e131-4770-b79c-8df62c299565"
+  },
+  {
+    "path": "/category/english",
+    "type": "category",
+    "slug": "english",
+    "id": "d1dfce0b-57fe-465f-80d6-de4ef3d4ea26"
+  },
+  {
+    "path": "/category/hindi",
+    "type": "category",
+    "slug": "hindi",
+    "id": "e5d87820-f047-408f-84f5-98f695b01131"
+  },
+  {
+    "path": "/category/hindi-grammar",
+    "type": "category",
+    "slug": "hindi-grammar",
+    "id": "2b859be4-5b3f-41c6-b1a2-be8f0ac9ee23"
+  },
+  {
+    "path": "/category/images",
+    "type": "category",
+    "slug": "images",
+    "id": "c14cc44c-34e6-4f18-aba2-1ca6bfa6f822"
+  },
+  {
+    "path": "/category/jokes",
+    "type": "category",
+    "slug": "jokes",
+    "id": "6c0e1fff-2351-4217-88e0-4bb5e55a3ee7"
+  },
+  {
+    "path": "/category/paryayvachi-shabd",
+    "type": "category",
+    "slug": "paryayvachi-shabd",
+    "id": "dcf384fa-0b9b-4142-ac41-33cbef9a5253"
+  },
+  {
+    "path": "/category/poetries",
+    "type": "category",
+    "slug": "poetries",
+    "id": "2fb1e176-4a94-451a-bf16-ee4bbcee84e4"
+  },
+  {
+    "path": "/category/quotes",
+    "type": "category",
+    "slug": "quotes",
+    "id": "f6dee1f8-b513-4256-a26a-fb4df93d3f86"
+  },
+  {
+    "path": "/category/sangya",
+    "type": "category",
+    "slug": "sangya",
+    "id": "65b6a58c-f26f-48f8-81eb-c2866b719850"
+  },
+  {
+    "path": "/category/shayari",
+    "type": "category",
+    "slug": "shayari",
+    "id": "aac0a59d-6d0d-4c5f-a4da-311ddae26cd1"
+  },
+  {
+    "path": "/category/status",
+    "type": "category",
+    "slug": "status",
+    "id": "2226b475-2f7a-4e86-a921-40ed3cc0d488"
+  },
+  {
+    "path": "/category/wishes",
+    "type": "category",
+    "slug": "wishes",
+    "id": "5f2078be-0354-4c09-87b3-591598b26fbd"
+  },
+  {
+    "path": "/tag/2-word-captions",
+    "type": "tag",
+    "slug": "2-word-captions",
+    "id": "6e100580-f4bd-46a2-9057-d85e62c7501f"
+  },
+  {
+    "path": "/tag/aag-ka-paryayvachi-shabd",
+    "type": "tag",
+    "slug": "aag-ka-paryayvachi-shabd",
+    "id": "9e397a93-290a-4b76-97ba-0ae9b8d5a3b0"
+  },
+  {
+    "path": "/tag/adhure-alfaaz",
+    "type": "tag",
+    "slug": "adhure-alfaaz",
+    "id": "94d53a0b-12ac-4ba7-9532-49bafb72a2ee"
+  },
+  {
+    "path": "/tag/adhure-alfaaz-images",
+    "type": "tag",
+    "slug": "adhure-alfaaz-images",
+    "id": "cbdadfad-eced-4c03-8f2c-bbf474e94267"
+  },
+  {
+    "path": "/tag/aesthetic-instagram-bios",
+    "type": "tag",
+    "slug": "aesthetic-instagram-bios",
+    "id": "bdee6889-d805-4811-b57a-904d192e8287"
+  },
+  {
+    "path": "/tag/after-long-time-meet-my-friend-captions",
+    "type": "tag",
+    "slug": "after-long-time-meet-my-friend-captions",
+    "id": "8f2a5fa9-cb3f-4f92-bee1-de07233fdfb6"
+  },
+  {
+    "path": "/tag/aghori-mahakal-status",
+    "type": "tag",
+    "slug": "aghori-mahakal-status",
+    "id": "29288101-d421-4772-9bed-4b06b603ae33"
+  },
+  {
+    "path": "/tag/alfaaz-shayari-in-hindi",
+    "type": "tag",
+    "slug": "alfaaz-shayari-in-hindi",
+    "id": "a74d8012-67e2-47e4-a95b-0d3b9f257e69"
+  },
+  {
+    "path": "/tag/allama-iqbal-shayari",
+    "type": "tag",
+    "slug": "allama-iqbal-shayari",
+    "id": "88d64e46-caad-460f-9191-7244e6ef9d1a"
+  },
+  {
+    "path": "/tag/anmol-vachan",
+    "type": "tag",
+    "slug": "anmol-vachan",
+    "id": "45d3675f-1c42-427c-ba9a-7ae5210b1eec"
+  },
+  {
+    "path": "/tag/attitude-bio-for-instagram",
+    "type": "tag",
+    "slug": "attitude-bio-for-instagram",
+    "id": "50f80880-d916-440e-ab22-f1cc88c2049c"
+  },
+  {
+    "path": "/tag/attitude-shayari-for-boys",
+    "type": "tag",
+    "slug": "attitude-shayari-for-boys",
+    "id": "71809e75-6a3d-4ffe-a441-3c93dcf64214"
+  },
+  {
+    "path": "/tag/attitude-shayari-for-friends",
+    "type": "tag",
+    "slug": "attitude-shayari-for-friends",
+    "id": "2795110d-5213-4bab-80c5-2612040fbd73"
+  },
+  {
+    "path": "/tag/attitude-shayari-for-girls",
+    "type": "tag",
+    "slug": "attitude-shayari-for-girls",
+    "id": "a3ceea4c-a2fe-4ea4-9c3e-4c8374cc70a7"
+  },
+  {
+    "path": "/tag/attitude-status",
+    "type": "tag",
+    "slug": "attitude-status",
+    "id": "1801d019-b508-445f-8ae5-3a6a92aa7b59"
+  },
+  {
+    "path": "/tag/attitude-status-in-hindi",
+    "type": "tag",
+    "slug": "attitude-status-in-hindi",
+    "id": "e5316999-6964-42f8-ad22-edd5b3c73b0b"
+  },
+  {
+    "path": "/tag/best-adhure-alfaaz",
+    "type": "tag",
+    "slug": "best-adhure-alfaaz",
+    "id": "fdfd8782-2c6a-48cb-8be2-afb269df8f8f"
+  },
+  {
+    "path": "/tag/best-bio-for-instagram-for-boys",
+    "type": "tag",
+    "slug": "best-bio-for-instagram-for-boys",
+    "id": "7bcaeed8-5128-4cde-97a7-c0afca14e609"
+  },
+  {
+    "path": "/tag/best-friend-captions",
+    "type": "tag",
+    "slug": "best-friend-captions",
+    "id": "619a4cf5-2070-44f6-ab63-7e2ee1e30479"
+  },
+  {
+    "path": "/tag/best-insta-bio-for-boys",
+    "type": "tag",
+    "slug": "best-insta-bio-for-boys",
+    "id": "d3a0e8c8-3aa9-4106-9fd3-8371b6e7d48f"
+  },
+  {
+    "path": "/tag/best-instagram-bio-with-emoji-for-girl",
+    "type": "tag",
+    "slug": "best-instagram-bio-with-emoji-for-girl",
+    "id": "3f9e525e-1a18-4676-8f38-71a195947af6"
+  },
+  {
+    "path": "/tag/best-quotes-for-instagram-bio",
+    "type": "tag",
+    "slug": "best-quotes-for-instagram-bio",
+    "id": "892fa9e4-95c3-4e75-8228-5eda22f3a507"
+  },
+  {
+    "path": "/tag/bestie-captions-for-instagram",
+    "type": "tag",
+    "slug": "bestie-captions-for-instagram",
+    "id": "e73f31af-b5b8-4e92-97b8-adb7516f027d"
+  },
+  {
+    "path": "/tag/bewafa-shayari",
+    "type": "tag",
+    "slug": "bewafa-shayari",
+    "id": "83457599-81cb-454c-a232-ff503ffe9ba6"
+  },
+  {
+    "path": "/tag/bhagavad-gita-quotes-in-hindi",
+    "type": "tag",
+    "slug": "bhagavad-gita-quotes-in-hindi",
+    "id": "bfcb1fc7-7e81-4ed5-a6c4-67e15acbf3fc"
+  },
+  {
+    "path": "/tag/bio-for-business-account",
+    "type": "tag",
+    "slug": "bio-for-business-account",
+    "id": "4bd81b9d-3946-4d7a-9d14-d50c15391c28"
+  },
+  {
+    "path": "/tag/bio-for-instagram",
+    "type": "tag",
+    "slug": "bio-for-instagram",
+    "id": "c2a46aa1-0075-40fc-9c32-d3db3a51487e"
+  },
+  {
+    "path": "/tag/bio-for-instagram-for-girls-attitude",
+    "type": "tag",
+    "slug": "bio-for-instagram-for-girls-attitude",
+    "id": "e111378f-eb7c-49e2-8810-906075264147"
+  },
+  {
+    "path": "/tag/birthday-caption-for-best-friend",
+    "type": "tag",
+    "slug": "birthday-caption-for-best-friend",
+    "id": "4f0a19ae-2346-40bd-8ffc-31cb5114eac6"
+  },
+  {
+    "path": "/tag/birthday-quotes-for-instagram",
+    "type": "tag",
+    "slug": "birthday-quotes-for-instagram",
+    "id": "19834059-2245-420f-8627-3bbf201e9911"
+  },
+  {
+    "path": "/tag/birthday-shayari-in-hindi",
+    "type": "tag",
+    "slug": "birthday-shayari-in-hindi",
+    "id": "de10136b-9fc3-4d38-9139-55c69fa0585b"
+  },
+  {
+    "path": "/tag/birthday-wishes-for-brother",
+    "type": "tag",
+    "slug": "birthday-wishes-for-brother",
+    "id": "ee6d87e7-6bba-4e0e-a93f-1437096768b9"
+  },
+  {
+    "path": "/tag/birthday-wishes-for-sister",
+    "type": "tag",
+    "slug": "birthday-wishes-for-sister",
+    "id": "721c844e-da6b-4452-8fc7-3b48f1939c26"
+  },
+  {
+    "path": "/tag/birthday-wishes-for-your-best-friend",
+    "type": "tag",
+    "slug": "birthday-wishes-for-your-best-friend",
+    "id": "f55e245c-15f1-47e4-b502-5eb11631c19a"
+  },
+  {
+    "path": "/tag/birthday-wishes-friend",
+    "type": "tag",
+    "slug": "birthday-wishes-friend",
+    "id": "b81b3a89-3eb6-4d58-ad98-20ca9691e9bf"
+  },
+  {
+    "path": "/tag/breakup-shayari",
+    "type": "tag",
+    "slug": "breakup-shayari",
+    "id": "a8d80d23-8301-4719-b16d-3ad91407a9c9"
+  },
+  {
+    "path": "/tag/breakup-shayari-in-hindi",
+    "type": "tag",
+    "slug": "breakup-shayari-in-hindi",
+    "id": "1788654c-8fba-4eab-9b30-ea1569524b57"
+  },
+  {
+    "path": "/tag/breakup-shayari-status",
+    "type": "tag",
+    "slug": "breakup-shayari-status",
+    "id": "4ea87303-83ac-4363-ba96-986ef891eaa2"
+  },
+  {
+    "path": "/tag/classy-bio-for-instagram-for-girl",
+    "type": "tag",
+    "slug": "classy-bio-for-instagram-for-girl",
+    "id": "7b51a612-c5a6-4ef8-a854-437ac190f5b0"
+  },
+  {
+    "path": "/tag/dard-bhare-alfaaz",
+    "type": "tag",
+    "slug": "dard-bhare-alfaaz",
+    "id": "f805cca3-ceb0-4e24-bd61-b639d57b9da5"
+  },
+  {
+    "path": "/tag/dard-bhare-alfaaz-in-hindi",
+    "type": "tag",
+    "slug": "dard-bhare-alfaaz-in-hindi",
+    "id": "e3f9c8e8-98c6-4900-867c-2bc13e995b1e"
+  },
+  {
+    "path": "/tag/dosti-status",
+    "type": "tag",
+    "slug": "dosti-status",
+    "id": "ade454a4-5360-4799-9194-1db3166ca423"
+  },
+  {
+    "path": "/tag/emotional-friendship-quotes",
+    "type": "tag",
+    "slug": "emotional-friendship-quotes",
+    "id": "3d713264-3ceb-4075-800e-9397dce3f0a1"
+  },
+  {
+    "path": "/tag/facebook-bio",
+    "type": "tag",
+    "slug": "facebook-bio",
+    "id": "077ba796-8a60-4631-8cb5-08d6892b6548"
+  },
+  {
+    "path": "/tag/facebook-bio-for-boys",
+    "type": "tag",
+    "slug": "facebook-bio-for-boys",
+    "id": "1b3ecc3c-0bde-4bd9-8d03-6a0da8be1d74"
+  },
+  {
+    "path": "/tag/facebook-bio-for-girls",
+    "type": "tag",
+    "slug": "facebook-bio-for-girls",
+    "id": "a817bcc4-8793-4238-bacc-8cf50cf48c21"
+  },
+  {
+    "path": "/tag/family-shayari",
+    "type": "tag",
+    "slug": "family-shayari",
+    "id": "d0bf525d-16fe-4e21-b37b-7cac8799172a"
+  },
+  {
+    "path": "/tag/financial-freedom-quotes",
+    "type": "tag",
+    "slug": "financial-freedom-quotes",
+    "id": "ceef2722-7fdc-423f-9b84-51632f28cdc5"
+  },
+  {
+    "path": "/tag/firaq-gorakhpuri-shayari",
+    "type": "tag",
+    "slug": "firaq-gorakhpuri-shayari",
+    "id": "f3979e4d-57e5-45f1-a259-3c66b2c21a54"
+  },
+  {
+    "path": "/tag/firaq-gorakhpuri-shayari-in-hindi",
+    "type": "tag",
+    "slug": "firaq-gorakhpuri-shayari-in-hindi",
+    "id": "d8590cfb-2bce-468f-a3ff-dc19f8793484"
+  },
+  {
+    "path": "/tag/friendship-shayari-in-hindi",
+    "type": "tag",
+    "slug": "friendship-shayari-in-hindi",
+    "id": "70121d62-d356-42c7-9a4a-9543d20dd351"
+  },
+  {
+    "path": "/tag/funny-hindi-shayari",
+    "type": "tag",
+    "slug": "funny-hindi-shayari",
+    "id": "2f0485d5-a3bf-465b-b9fb-d2df2d942842"
+  },
+  {
+    "path": "/tag/funny-instagram-bios",
+    "type": "tag",
+    "slug": "funny-instagram-bios",
+    "id": "eb00b081-c72b-48d9-99f7-db8c0c742ac6"
+  },
+  {
+    "path": "/tag/funny-shayari",
+    "type": "tag",
+    "slug": "funny-shayari",
+    "id": "e1ccef27-82e6-464b-b3b1-b5c07ce8e352"
+  },
+  {
+    "path": "/tag/funny-shayari-in-hindi",
+    "type": "tag",
+    "slug": "funny-shayari-in-hindi",
+    "id": "c9bbebc4-8e1f-4fb7-bcb6-d810bab54644"
+  },
+  {
+    "path": "/tag/geeta-shlok-in-hindi",
+    "type": "tag",
+    "slug": "geeta-shlok-in-hindi",
+    "id": "fc282a85-c5de-4b3e-b418-4c87695d1ffb"
+  },
+  {
+    "path": "/tag/good-morning-images",
+    "type": "tag",
+    "slug": "good-morning-images",
+    "id": "a48584d5-b02e-4323-b8e1-e3909a7e3b38"
+  },
+  {
+    "path": "/tag/good-morning-quotes-in-hindi",
+    "type": "tag",
+    "slug": "good-morning-quotes-in-hindi",
+    "id": "f92b57b7-3aa6-4436-9744-dc91b8d481b8"
+  },
+  {
+    "path": "/tag/good-night-shayari",
+    "type": "tag",
+    "slug": "good-night-shayari",
+    "id": "7d399cc0-9c6f-413b-8d80-c4a5fa6ef633"
+  },
+  {
+    "path": "/tag/good-night-shayari-in-hindi",
+    "type": "tag",
+    "slug": "good-night-shayari-in-hindi",
+    "id": "292d0699-0c31-4aa9-b082-ed969dac1edb"
+  },
+  {
+    "path": "/tag/good-night-wishes-and-blessings",
+    "type": "tag",
+    "slug": "good-night-wishes-and-blessings",
+    "id": "8763024d-ce55-4984-a483-aa94175f3c82"
+  },
+  {
+    "path": "/tag/good-night-wishes-card",
+    "type": "tag",
+    "slug": "good-night-wishes-card",
+    "id": "e125b32b-8f5d-498c-bb74-0ecf0ccdb2cb"
+  },
+  {
+    "path": "/tag/good-quotes-for-instagram-bio",
+    "type": "tag",
+    "slug": "good-quotes-for-instagram-bio",
+    "id": "f38c50e6-6f09-431e-acba-d6a474fab5a0"
+  },
+  {
+    "path": "/tag/gym-lover-bio-for-instagram",
+    "type": "tag",
+    "slug": "gym-lover-bio-for-instagram",
+    "id": "0a6adff1-c6f9-4c7c-ad95-fcd22d530237"
+  },
+  {
+    "path": "/tag/happy-birthday-images",
+    "type": "tag",
+    "slug": "happy-birthday-images",
+    "id": "82df99a3-d255-4171-80d5-fe7391bfbd02"
+  },
+  {
+    "path": "/tag/happy-holi-wishes",
+    "type": "tag",
+    "slug": "happy-holi-wishes",
+    "id": "547a634f-3d91-477b-a93b-74cb8516aacc"
+  },
+  {
+    "path": "/tag/happy-holika-dahan-image",
+    "type": "tag",
+    "slug": "happy-holika-dahan-image",
+    "id": "1cca0ffa-389d-4b7c-a4a5-fa8518ba04cb"
+  },
+  {
+    "path": "/tag/happy-holika-dahan-images",
+    "type": "tag",
+    "slug": "happy-holika-dahan-images",
+    "id": "87bcfe10-ebcf-4007-a347-03d1abd40ff2"
+  },
+  {
+    "path": "/tag/happy-makar-sankranti-wishes",
+    "type": "tag",
+    "slug": "happy-makar-sankranti-wishes",
+    "id": "66fe4565-eae6-48a1-a000-3f6119701a19"
+  },
+  {
+    "path": "/tag/happy-new-year-2024-wishes-and-images",
+    "type": "tag",
+    "slug": "happy-new-year-2024-wishes-and-images",
+    "id": "1e4493c0-b8ef-49ea-8434-cb37dcf2b208"
+  },
+  {
+    "path": "/tag/happy-new-year-wishes",
+    "type": "tag",
+    "slug": "happy-new-year-wishes",
+    "id": "35698222-3a7e-4468-bb4d-726c37f74fab"
+  },
+  {
+    "path": "/tag/happy-new-year-wishes-for-friends",
+    "type": "tag",
+    "slug": "happy-new-year-wishes-for-friends",
+    "id": "580d1b35-97ca-4085-9b29-4202ce6480d9"
+  },
+  {
+    "path": "/tag/happy-new-year-wishes-in-hindi",
+    "type": "tag",
+    "slug": "happy-new-year-wishes-in-hindi",
+    "id": "1008bfa6-0992-4467-8df8-d9f225558c33"
+  },
+  {
+    "path": "/tag/happy-republic-day-images",
+    "type": "tag",
+    "slug": "happy-republic-day-images",
+    "id": "d17c899e-cbe3-4090-b004-4158fcf8cdb8"
+  },
+  {
+    "path": "/tag/happy-republic-day-wishes-images",
+    "type": "tag",
+    "slug": "happy-republic-day-wishes-images",
+    "id": "233d729d-39b8-47a1-aedb-de696afc8d4d"
+  },
+  {
+    "path": "/tag/happy-saraswati-puja-wishes",
+    "type": "tag",
+    "slug": "happy-saraswati-puja-wishes",
+    "id": "cde78fae-5a35-41f8-a8fa-3c66626f6c85"
+  },
+  {
+    "path": "/tag/happy-shayari-in-hindi",
+    "type": "tag",
+    "slug": "happy-shayari-in-hindi",
+    "id": "8e383514-4310-4496-8d22-7fafff9ec4a9"
+  },
+  {
+    "path": "/tag/happy-valentine-day-shayari",
+    "type": "tag",
+    "slug": "happy-valentine-day-shayari",
+    "id": "2aa7f76c-ee54-4b32-b0ca-e03a2ef050c1"
+  },
+  {
+    "path": "/tag/happy-valentines-day-images",
+    "type": "tag",
+    "slug": "happy-valentines-day-images",
+    "id": "ceaddc98-48d4-429d-9fb8-2ec0f857a5c1"
+  },
+  {
+    "path": "/tag/happy-valentines-day-quotes",
+    "type": "tag",
+    "slug": "happy-valentines-day-quotes",
+    "id": "2a858dfd-e926-485a-b272-fc8a21372553"
+  },
+  {
+    "path": "/tag/hindi-poems-on-life",
+    "type": "tag",
+    "slug": "hindi-poems-on-life",
+    "id": "4a948a4c-00b2-4bf2-b024-afab97e4a3a8"
+  },
+  {
+    "path": "/tag/hindi-poetry",
+    "type": "tag",
+    "slug": "hindi-poetry",
+    "id": "04dbc810-ee54-47d6-9f40-54ad78398e6c"
+  },
+  {
+    "path": "/tag/hindi-suvichar",
+    "type": "tag",
+    "slug": "hindi-suvichar",
+    "id": "7e8aa8df-8eeb-4481-a214-d2694ab760e3"
+  },
+  {
+    "path": "/tag/holika-dahan-wishes",
+    "type": "tag",
+    "slug": "holika-dahan-wishes",
+    "id": "9a38ad57-ae6a-4cdc-bcd0-f884fa55e551"
+  },
+  {
+    "path": "/tag/impressive-instagram-bio-for-boys",
+    "type": "tag",
+    "slug": "impressive-instagram-bio-for-boys",
+    "id": "86f4b31a-f1db-4a63-93e1-1f778c27272e"
+  },
+  {
+    "path": "/tag/imran-pratapgarhi",
+    "type": "tag",
+    "slug": "imran-pratapgarhi",
+    "id": "2f1d9ed7-57fc-4f2e-ab1f-9deb925b788e"
+  },
+  {
+    "path": "/tag/imran-pratapgarhi-shayari",
+    "type": "tag",
+    "slug": "imran-pratapgarhi-shayari",
+    "id": "1a8ea65d-d6a8-43b1-94bc-8aa9c4c2039f"
+  },
+  {
+    "path": "/tag/independence-day",
+    "type": "tag",
+    "slug": "independence-day",
+    "id": "14b42a7d-56f4-4a77-9c59-9095f5b97c2e"
+  },
+  {
+    "path": "/tag/independence-day-shayari",
+    "type": "tag",
+    "slug": "independence-day-shayari",
+    "id": "f4eb09ad-b8dc-4243-9006-0ac99019dc1e"
+  },
+  {
+    "path": "/tag/inspirational-quotes",
+    "type": "tag",
+    "slug": "inspirational-quotes",
+    "id": "4f138b48-642a-41ba-90ed-7db48ddcb8d2"
+  },
+  {
+    "path": "/tag/instagram-bio",
+    "type": "tag",
+    "slug": "instagram-bio",
+    "id": "8b48ced2-792c-4519-9730-9111b1890bdd"
+  },
+  {
+    "path": "/tag/instagram-bio-font",
+    "type": "tag",
+    "slug": "instagram-bio-font",
+    "id": "c694d059-7ba6-42e8-a5a5-adf51121d889"
+  },
+  {
+    "path": "/tag/instagram-bio-font-style-for-boy",
+    "type": "tag",
+    "slug": "instagram-bio-font-style-for-boy",
+    "id": "eaf07471-1abe-4646-9696-714d81297085"
+  },
+  {
+    "path": "/tag/instagram-bio-for-boys",
+    "type": "tag",
+    "slug": "instagram-bio-for-boys",
+    "id": "bcdf910e-1a4c-4dd6-8f0a-fd7ed59b51bc"
+  },
+  {
+    "path": "/tag/instagram-bio-for-college-student",
+    "type": "tag",
+    "slug": "instagram-bio-for-college-student",
+    "id": "48d5a137-53d2-4b62-9a04-7b2a2fd298d1"
+  },
+  {
+    "path": "/tag/instagram-bio-for-couple",
+    "type": "tag",
+    "slug": "instagram-bio-for-couple",
+    "id": "d62fac3b-01ca-4456-b9f1-ea5bded49147"
+  },
+  {
+    "path": "/tag/instagram-bio-for-school-boys",
+    "type": "tag",
+    "slug": "instagram-bio-for-school-boys",
+    "id": "46bba93f-1ba3-4cb6-9ff5-d2685a832797"
+  },
+  {
+    "path": "/tag/instagram-bio-in-hindi",
+    "type": "tag",
+    "slug": "instagram-bio-in-hindi",
+    "id": "7db3e4e5-b48b-46a5-aaf3-527740bba01d"
+  },
+  {
+    "path": "/tag/instagram-bio-quotes",
+    "type": "tag",
+    "slug": "instagram-bio-quotes",
+    "id": "9b526e82-63ff-425a-82cb-5129651a76e7"
+  },
+  {
+    "path": "/tag/instagram-bio-shayari",
+    "type": "tag",
+    "slug": "instagram-bio-shayari",
+    "id": "eb36c403-4602-4dee-b3be-d593b1543880"
+  },
+  {
+    "path": "/tag/instagram-bios-for-girls",
+    "type": "tag",
+    "slug": "instagram-bios-for-girls",
+    "id": "0ca8e5b0-1614-4c5a-9321-f13d651245a7"
+  },
+  {
+    "path": "/tag/instagram-vip-bio-for-boy",
+    "type": "tag",
+    "slug": "instagram-vip-bio-for-boy",
+    "id": "0b1923f7-31d5-4d14-924b-c1e0dbb40b03"
+  },
+  {
+    "path": "/tag/jungle-ka-paryayvachi-shabd",
+    "type": "tag",
+    "slug": "jungle-ka-paryayvachi-shabd",
+    "id": "e6893d77-377f-4c8a-bbd1-50377a5d0563"
+  },
+  {
+    "path": "/tag/kabir-ke-dohe",
+    "type": "tag",
+    "slug": "kabir-ke-dohe",
+    "id": "c4aa65eb-1cca-408b-9183-0dc94109328f"
+  },
+  {
+    "path": "/tag/krishna-bio-for-instagram",
+    "type": "tag",
+    "slug": "krishna-bio-for-instagram",
+    "id": "d8a50cd1-f08f-4f6b-9a47-77ea94080828"
+  },
+  {
+    "path": "/tag/kumar-vishwas-shayari",
+    "type": "tag",
+    "slug": "kumar-vishwas-shayari",
+    "id": "859aa4ce-38d1-4023-afea-d9ce7b468788"
+  },
+  {
+    "path": "/tag/life-quotes",
+    "type": "tag",
+    "slug": "life-quotes",
+    "id": "62c23c13-69f3-46b5-a8cd-d88c88a25897"
+  },
+  {
+    "path": "/tag/life-shayari",
+    "type": "tag",
+    "slug": "life-shayari",
+    "id": "d9020a39-20f3-414b-be82-e4b4cc8bde11"
+  },
+  {
+    "path": "/tag/life-status-in-hindi",
+    "type": "tag",
+    "slug": "life-status-in-hindi",
+    "id": "f3bd98de-3fe9-4a50-b007-75cecb9b935e"
+  },
+  {
+    "path": "/tag/love-shayari",
+    "type": "tag",
+    "slug": "love-shayari",
+    "id": "559f3a64-1211-4407-a826-8caa24f30314"
+  },
+  {
+    "path": "/tag/love-status",
+    "type": "tag",
+    "slug": "love-status",
+    "id": "a1d36c57-27bd-47ce-948c-d8fc4a33e263"
+  },
+  {
+    "path": "/tag/maa-shayari",
+    "type": "tag",
+    "slug": "maa-shayari",
+    "id": "371f6b5e-2097-4597-ac97-95f4c5f2260a"
+  },
+  {
+    "path": "/tag/maa-shayari-in-hindi",
+    "type": "tag",
+    "slug": "maa-shayari-in-hindi",
+    "id": "e17ddcac-aa8e-4c6e-9a82-50905823c0ac"
+  },
+  {
+    "path": "/tag/mahadev-bio-for-instagram",
+    "type": "tag",
+    "slug": "mahadev-bio-for-instagram",
+    "id": "19950a99-2ada-4692-9517-4d0a51c664d2"
+  },
+  {
+    "path": "/tag/mahakal-bio-for-instagram",
+    "type": "tag",
+    "slug": "mahakal-bio-for-instagram",
+    "id": "658a4eff-cd93-466f-8698-ddfc4355e7c7"
+  },
+  {
+    "path": "/tag/mahakal-status",
+    "type": "tag",
+    "slug": "mahakal-status",
+    "id": "6ef807cf-5ee9-43f6-ab88-3b507747bfb6"
+  },
+  {
+    "path": "/tag/merry-christmas-wishes",
+    "type": "tag",
+    "slug": "merry-christmas-wishes",
+    "id": "bdaa1e33-1901-443e-8efa-9b82e3dfb33a"
+  },
+  {
+    "path": "/tag/merry-christmas-wishes-and-christmas-cards",
+    "type": "tag",
+    "slug": "merry-christmas-wishes-and-christmas-cards",
+    "id": "46dd41be-0b8c-46ea-990d-d911a7d31e31"
+  },
+  {
+    "path": "/tag/merry-christmas-wishes-images",
+    "type": "tag",
+    "slug": "merry-christmas-wishes-images",
+    "id": "6e0f67a8-5ae4-4246-b39a-10d01ebf7332"
+  },
+  {
+    "path": "/tag/miss-you-yaad-shayari",
+    "type": "tag",
+    "slug": "miss-you-yaad-shayari",
+    "id": "3e1d22bb-d0ce-4930-9dc8-c153a33e5e75"
+  },
+  {
+    "path": "/tag/motivational-bio-for-instagram",
+    "type": "tag",
+    "slug": "motivational-bio-for-instagram",
+    "id": "2a6b7d51-ab3d-41b2-bff2-1c984b0bc69d"
+  },
+  {
+    "path": "/tag/motivational-shayari",
+    "type": "tag",
+    "slug": "motivational-shayari",
+    "id": "2debb06e-72cc-4b24-8b33-6913db0e1bd3"
+  },
+  {
+    "path": "/tag/motivational-thoughts-hindi",
+    "type": "tag",
+    "slug": "motivational-thoughts-hindi",
+    "id": "13bd9cfc-5b43-4796-b85b-ebc7a40cec0e"
+  },
+  {
+    "path": "/tag/motivational-thoughts-in-hindi",
+    "type": "tag",
+    "slug": "motivational-thoughts-in-hindi",
+    "id": "de6e3397-3262-4d31-8cb9-255072a1300e"
+  },
+  {
+    "path": "/tag/new-allama-iqbal-shayari",
+    "type": "tag",
+    "slug": "new-allama-iqbal-shayari",
+    "id": "924397a6-6883-449a-86f5-7d872b0066f7"
+  },
+  {
+    "path": "/tag/new-royal-attitude-status-with-images",
+    "type": "tag",
+    "slug": "new-royal-attitude-status-with-images",
+    "id": "737165ae-87c7-4028-a114-537c4b25f575"
+  },
+  {
+    "path": "/tag/nida-fazli-poetry",
+    "type": "tag",
+    "slug": "nida-fazli-poetry",
+    "id": "a12ee734-82cf-45bd-9cb7-f2cb34b6044b"
+  },
+  {
+    "path": "/tag/one-side-love-shayari-in-hindi",
+    "type": "tag",
+    "slug": "one-side-love-shayari-in-hindi",
+    "id": "56d6ffc2-1788-474d-b931-39b47255e288"
+  },
+  {
+    "path": "/tag/paisa-shayari-in-hindi",
+    "type": "tag",
+    "slug": "paisa-shayari-in-hindi",
+    "id": "6411d715-7310-42cd-b78b-ef642126ec4c"
+  },
+  {
+    "path": "/tag/pakshi-ka-paryayvachi-shabd",
+    "type": "tag",
+    "slug": "pakshi-ka-paryayvachi-shabd",
+    "id": "09936a13-1643-445e-a0cf-e3c1834f9490"
+  },
+  {
+    "path": "/tag/pati-patni-jokes",
+    "type": "tag",
+    "slug": "pati-patni-jokes",
+    "id": "16fd5a1b-d6d0-435d-a939-56423d8fe4fb"
+  },
+  {
+    "path": "/tag/pati-patni-jokes-in-hindi",
+    "type": "tag",
+    "slug": "pati-patni-jokes-in-hindi",
+    "id": "455dc810-57cb-4d13-bfb3-843ba87bec54"
+  },
+  {
+    "path": "/tag/personal-loan-status",
+    "type": "tag",
+    "slug": "personal-loan-status",
+    "id": "81cc7be1-ec27-4699-85d3-e8d9c3380686"
+  },
+  {
+    "path": "/tag/positive-quotes",
+    "type": "tag",
+    "slug": "positive-quotes",
+    "id": "622855e2-ed13-4add-ae58-5a12a94e7cf0"
+  },
+  {
+    "path": "/tag/professional-bio-for-instagram",
+    "type": "tag",
+    "slug": "professional-bio-for-instagram",
+    "id": "291277da-8b25-4722-83c9-4ba3232cc15e"
+  },
+  {
+    "path": "/tag/pyar-bhari-shayari",
+    "type": "tag",
+    "slug": "pyar-bhari-shayari",
+    "id": "7a715f30-9e41-4032-945b-9b650404a933"
+  },
+  {
+    "path": "/tag/quotes-for-instagram-bio",
+    "type": "tag",
+    "slug": "quotes-for-instagram-bio",
+    "id": "1ed8bd61-d70e-42f4-9f07-c6e97f411ad7"
+  },
+  {
+    "path": "/tag/raksha-bandhan-shayari",
+    "type": "tag",
+    "slug": "raksha-bandhan-shayari",
+    "id": "e50fd8fb-84c0-433c-b18a-43a3bee43a00"
+  },
+  {
+    "path": "/tag/ram-navami-images-in-hindi",
+    "type": "tag",
+    "slug": "ram-navami-images-in-hindi",
+    "id": "fd6b2805-b307-4e02-8bf9-2bfb13f828e7"
+  },
+  {
+    "path": "/tag/ram-navami-quotes-in-hindi",
+    "type": "tag",
+    "slug": "ram-navami-quotes-in-hindi",
+    "id": "6669edac-20cf-44f6-ac1e-ece6fe0bb26d"
+  },
+  {
+    "path": "/tag/ram-navami-shayari",
+    "type": "tag",
+    "slug": "ram-navami-shayari",
+    "id": "63001814-6d40-4711-8f6d-2025bb79e68d"
+  },
+  {
+    "path": "/tag/ram-navami-wishes-in-hindi",
+    "type": "tag",
+    "slug": "ram-navami-wishes-in-hindi",
+    "id": "40cce664-d048-4de6-8784-e8d9b784d36a"
+  },
+  {
+    "path": "/tag/republic-day-posters",
+    "type": "tag",
+    "slug": "republic-day-posters",
+    "id": "1e4cd9f0-d889-43c1-85e0-12411f31657a"
+  },
+  {
+    "path": "/tag/republic-day-quotes",
+    "type": "tag",
+    "slug": "republic-day-quotes",
+    "id": "940c31b6-f01e-4c84-ae04-71fb98f934b3"
+  },
+  {
+    "path": "/tag/republic-day-quotes-with-images",
+    "type": "tag",
+    "slug": "republic-day-quotes-with-images",
+    "id": "a0921eb1-0b1e-479f-b20c-2254708ed618"
+  },
+  {
+    "path": "/tag/republic-day-wishes-in-hindi",
+    "type": "tag",
+    "slug": "republic-day-wishes-in-hindi",
+    "id": "ba4e2f37-1a55-46a4-872d-1776eb7ef14a"
+  },
+  {
+    "path": "/tag/romantic-shayari-in-hindi",
+    "type": "tag",
+    "slug": "romantic-shayari-in-hindi",
+    "id": "1dddeb46-d69f-444e-bd09-2cd1924c5bf3"
+  },
+  {
+    "path": "/tag/royal-attitude-status-in-hindi",
+    "type": "tag",
+    "slug": "royal-attitude-status-in-hindi",
+    "id": "a0bfaf51-4131-47d6-b311-5c58d501b59b"
+  },
+  {
+    "path": "/tag/sad-quotes",
+    "type": "tag",
+    "slug": "sad-quotes",
+    "id": "1f51fd04-7350-4973-8033-0083a636d13b"
+  },
+  {
+    "path": "/tag/sad-quotes-with-images",
+    "type": "tag",
+    "slug": "sad-quotes-with-images",
+    "id": "0394dc87-5239-489a-a321-5521a66f22c0"
+  },
+  {
+    "path": "/tag/sad-shayari",
+    "type": "tag",
+    "slug": "sad-shayari",
+    "id": "0c550056-6cb9-4c1f-83b5-39261c74e8c9"
+  },
+  {
+    "path": "/tag/sad-shayari-with-images",
+    "type": "tag",
+    "slug": "sad-shayari-with-images",
+    "id": "5572fd69-7d35-425c-8385-0e97fdc4a2d1"
+  },
+  {
+    "path": "/tag/sad-status-in-hindi-for-life",
+    "type": "tag",
+    "slug": "sad-status-in-hindi-for-life",
+    "id": "5d7ab08e-8d36-4655-b0c2-95e9495cb011"
+  },
+  {
+    "path": "/tag/santa-banta-jokes",
+    "type": "tag",
+    "slug": "santa-banta-jokes",
+    "id": "9df58d35-198a-41b4-a528-e8f3e5035d06"
+  },
+  {
+    "path": "/tag/santa-banta-jokes-in-hindi",
+    "type": "tag",
+    "slug": "santa-banta-jokes-in-hindi",
+    "id": "883d6203-4570-4b5c-a36d-4d79a3fc75a2"
+  },
+  {
+    "path": "/tag/saraswati-mata-images",
+    "type": "tag",
+    "slug": "saraswati-mata-images",
+    "id": "7376dc05-02ff-40b6-9ab1-df8e7ff54ec6"
+  },
+  {
+    "path": "/tag/school-jokes-in-hindi",
+    "type": "tag",
+    "slug": "school-jokes-in-hindi",
+    "id": "05e5a170-5ec9-496b-9b14-3e138e03a924"
+  },
+  {
+    "path": "/tag/shayari-to-impress-a-girl",
+    "type": "tag",
+    "slug": "shayari-to-impress-a-girl",
+    "id": "9006fc1d-04a8-4d91-ac09-b607754f0326"
+  },
+  {
+    "path": "/tag/short-bio-for-instagram",
+    "type": "tag",
+    "slug": "short-bio-for-instagram",
+    "id": "80a394e6-f1f8-4ade-981d-4a06be1e8eb2"
+  },
+  {
+    "path": "/tag/swag-bio-for-instagram-boy",
+    "type": "tag",
+    "slug": "swag-bio-for-instagram-boy",
+    "id": "c4bc243f-7bc6-43f3-a22b-9609b9b72668"
+  },
+  {
+    "path": "/tag/swami-vivekananda-quotes",
+    "type": "tag",
+    "slug": "swami-vivekananda-quotes",
+    "id": "3886ff6a-7e48-46c6-8614-f467f8e5dbb4"
+  },
+  {
+    "path": "/tag/swami-vivekananda-quotes-images",
+    "type": "tag",
+    "slug": "swami-vivekananda-quotes-images",
+    "id": "5d77a35a-133d-4275-b43c-cf78b4b96eae"
+  },
+  {
+    "path": "/tag/teacher-student-jokes-in-hindi",
+    "type": "tag",
+    "slug": "teacher-student-jokes-in-hindi",
+    "id": "ba2fc41d-135d-4f6d-b9b3-db23050e554f"
+  },
+  {
+    "path": "/tag/today-special-good-morning-images",
+    "type": "tag",
+    "slug": "today-special-good-morning-images",
+    "id": "230361df-5f91-49c1-a186-f1656c811496"
+  },
+  {
+    "path": "/tag/two-line-shayari",
+    "type": "tag",
+    "slug": "two-line-shayari",
+    "id": "d08ae6eb-c9a9-4751-933c-737dce2ddf1c"
+  },
+  {
+    "path": "/tag/valentine-day-shayari",
+    "type": "tag",
+    "slug": "valentine-day-shayari",
+    "id": "2a05da9b-c180-4c42-b7fc-d7c5a2141e72"
+  },
+  {
+    "path": "/tag/valentines-day-quotes",
+    "type": "tag",
+    "slug": "valentines-day-quotes",
+    "id": "e47bbced-6ed0-41a3-9aac-2b682a9062db"
+  },
+  {
+    "path": "/tag/whatsapp-bio-caption-in-english",
+    "type": "tag",
+    "slug": "whatsapp-bio-caption-in-english",
+    "id": "5872d1d0-fe73-4753-9663-0aa07b9ef242"
+  },
+  {
+    "path": "/tag/yaad-shayari-in-hindi",
+    "type": "tag",
+    "slug": "yaad-shayari-in-hindi",
+    "id": "3c85ab7b-d920-409a-9d66-fd13a6461dbd"
+  },
+  {
+    "path": "/tag/%e0%a4%ad%e0%a4%be%e0%a4%b5%e0%a4%b5%e0%a4%be%e0%a4%9a%e0%a4%95-%e0%a4%b8%e0%a4%82%e0%a4%9c%e0%a5%8d%e0%a4%9e%e0%a4%be",
+    "type": "tag",
+    "slug": "%e0%a4%ad%e0%a4%be%e0%a4%b5%e0%a4%b5%e0%a4%be%e0%a4%9a%e0%a4%95-%e0%a4%b8%e0%a4%82%e0%a4%9c%e0%a5%8d%e0%a4%9e%e0%a4%be",
+    "id": "bf528e55-1b9b-4f7e-8c07-8964e32ebbfb"
+  }
+]

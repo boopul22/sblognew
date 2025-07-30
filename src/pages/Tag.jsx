@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { supabase } from '../lib/supabase'
+import { getTagBySlug, getPostsByTag } from '../lib/staticData'
 import PostCard from '../components/PostCard'
 
 const Tag = ({ searchQuery }) => {
@@ -20,51 +20,17 @@ const Tag = ({ searchQuery }) => {
     try {
       setLoading(true)
 
-      // First, get the tag info
-      const { data: tagData, error: tagError } = await supabase
-        .from('tags')
-        .select('id, name, slug, description')
-        .eq('slug', slug)
-        .single()
+      // Get tag from static data
+      const tagData = await getTagBySlug(slug)
 
-      if (tagError) throw tagError
-      setTag(tagData)
-
-      // Then get posts with this tag
-      const { data: postTagData, error: postsError } = await supabase
-        .from('post_tags')
-        .select(`
-          posts (
-            id,
-            title,
-            slug,
-            content,
-            excerpt,
-            author_id,
-            published_at
-          )
-        `)
-        .eq('tag_id', tagData.id)
-
-      if (postsError) throw postsError
-
-      // Extract and filter posts
-      let tagPosts = postTagData
-        ?.map(pt => pt.posts)
-        .filter(post => post) || []
-
-      // Apply search filter if searchQuery exists
-      if (searchQuery && searchQuery.trim()) {
-        const searchLower = searchQuery.toLowerCase()
-        tagPosts = tagPosts.filter(post =>
-          post.title.toLowerCase().includes(searchLower) ||
-          (post.content && post.content.toLowerCase().includes(searchLower))
-        )
+      if (!tagData) {
+        throw new Error('Tag not found')
       }
 
-      // Sort by published date
-      tagPosts.sort((a, b) => new Date(b.published_at) - new Date(a.published_at))
+      setTag(tagData)
 
+      // Get posts with this tag
+      const tagPosts = await getPostsByTag(tagData.id, searchQuery)
       setPosts(tagPosts)
     } catch (err) {
       console.error('Error fetching tag posts:', err)

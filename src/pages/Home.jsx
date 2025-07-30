@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, memo } from 'react'
-import { fetchHomePosts } from '../lib/queries'
+import { getPostsPaginated } from '../lib/staticData'
 import PostCard from '../components/PostCard'
 import SkeletonLoader from '../components/SkeletonLoader'
 
@@ -21,7 +21,7 @@ const Home = ({ searchQuery }) => {
       setError(null)
       const currentPage = reset ? 0 : page
 
-      const { posts: newPosts, hasMore: moreAvailable } = await fetchHomePosts(
+      const { posts: newPosts, hasMore: moreAvailable } = await getPostsPaginated(
         currentPage,
         POSTS_PER_PAGE,
         searchQuery
