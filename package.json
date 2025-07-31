@@ -13,7 +13,7 @@
     "build:vite": "cross-env SSG_MODE=true vite build",
     "build:static": "node scripts/generate-static-html.js",
     "build:spa": "vite build",
-    "build:vercel": "npm run build:spa",
+    "build:vercel": "npm run build:data && npm run build:spa",
     "preview": "vite preview",
     "build:analyze": "vite build --mode analyze",
     "deploy:vercel": "node scripts/vercel-deploy.js",

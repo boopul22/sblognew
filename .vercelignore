@@ -60,4 +60,4 @@ _redirects
 .env.example
 
 # Static data source files (generated during build)
-src/data/static/*.json
+# src/data/static/*.json  # Commented out - needed for Vercel build
