@@ -90,6 +90,16 @@ export class StorageConfig {
         break
       }
     }
+
+    // If no fallback found and Supabase is available, use it as ultimate fallback
+    // This ensures the app works on Vercel even if R2 APIs fail
+    if (!this.fallbackProvider && this.providers.has(STORAGE_PROVIDERS.SUPABASE)) {
+      const supabaseProvider = this.providers.get(STORAGE_PROVIDERS.SUPABASE)
+      if (supabaseProvider.isConfigured()) {
+        this.fallbackProvider = STORAGE_PROVIDERS.SUPABASE
+        console.log('🔄 Using Supabase as ultimate fallback (Vercel-compatible)')
+      }
+    }
   }
 
   /**

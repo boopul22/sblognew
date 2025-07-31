@@ -18,11 +18,11 @@ VITE_SUPABASE_ANON_KEY=your_supabase_anon_key_here
 
 #### Storage Provider Selection
 ```env
-# Choose your storage provider (optional, defaults to 'supabase')
+# Use Supabase for image storage (recommended for Vercel deployment)
 VITE_STORAGE_PROVIDER=supabase
-# OR
-VITE_STORAGE_PROVIDER=cloudflare-r2
 ```
+
+**Note**: Your existing images are stored in Supabase storage. Using `VITE_STORAGE_PROVIDER=supabase` ensures maximum compatibility and reliability on Vercel.
 
 ### Cloudflare R2 Configuration (Optional)
 
