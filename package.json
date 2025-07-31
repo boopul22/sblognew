@@ -4,7 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "concurrently --names \"API,FRONTEND\" --prefix-colors \"blue,green\" \"npm run dev:api\" \"npm run dev:frontend\"",
+    "dev:frontend": "vite",
+    "dev:api": "node scripts/dev-api-server.js",
+    "dev:full": "concurrently --names \"API,FRONTEND\" --prefix-colors \"blue,green\" \"npm run dev:api\" \"npm run dev:frontend\"",
     "build": "npm run build:data && npm run build:vite && npm run build:static",
     "build:data": "node scripts/build-static-data.js",
     "build:vite": "cross-env SSG_MODE=true vite build",
@@ -17,6 +20,7 @@
     "test:connection": "node scripts/test-connection.js",
     "test:r2": "node scripts/test-r2-connection.js",
     "setup:r2": "node scripts/setup-r2-credentials.js",
+    "setup:r2-cors": "node scripts/setup-r2-cors.js",
     "setup:admin": "node scripts/setup-admin-user.js"
   },
   "devDependencies": {
@@ -24,6 +28,7 @@
     "@vitejs/plugin-react": "^4.3.4",
     "@vitejs/plugin-react-swc": "^3.11.0",
     "cheerio": "^1.1.2",
+    "concurrently": "^9.2.0",
     "cross-env": "^10.0.0",
     "fs-extra": "^11.3.0",
     "puppeteer": "^24.15.0",
@@ -33,6 +38,8 @@
     "vite-plugin-static-copy": "^3.1.1"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.857.0",
+    "@aws-sdk/s3-request-presigner": "^3.857.0",
     "@supabase/supabase-js": "^2.53.0",
     "dotenv": "^17.2.1",
     "react": "^18.3.1",
