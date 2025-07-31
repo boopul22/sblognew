@@ -21,8 +21,9 @@ export default defineConfig({
     port: 3000,
     proxy: {
       // Proxy API requests to a local server during development
+      // In production (Vercel), API routes are handled by serverless functions
       '/api': {
-        target: 'http://localhost:3001',
+        target: process.env.NODE_ENV === 'production' ? undefined : 'http://localhost:3001',
         changeOrigin: true,
         secure: false,
         configure: (proxy, options) => {

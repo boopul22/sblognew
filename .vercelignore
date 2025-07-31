@@ -1,0 +1,63 @@
+# Dependencies
+node_modules/
+
+# Development files
+.env
+.env.local
+.env.development.local
+.env.test.local
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Migration files (not needed for production)
+migration/
+u957990218_GpBKT.sql
+
+# Documentation (not needed for production)
+*.md
+!README.md
+
+# Development scripts
+scripts/dev-api-server.js
+scripts/test-*.js
+test-*.js
+
+# Temporary files
+temp/
+tmp/
+.cache/
+.parcel-cache/
+
+# Build artifacts (will be rebuilt)
+dist/
+
+# Cloudflare specific files (not needed for Vercel)
+wrangler.toml
+_headers
+_redirects
+
+# Development configuration
+.env.example
+
+# Static data source files (generated during build)
+src/data/static/*.json

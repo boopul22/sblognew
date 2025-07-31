@@ -56,8 +56,8 @@ const OptimizedImage = memo(({
 
     const currentProvider = getCurrentProviderName()
 
-    // Handle Supabase storage URLs
-    if (currentProvider === 'supabase' && originalUrl.includes('supabase.co/storage/v1/object/public/')) {
+    // Handle Supabase storage URLs (regardless of current provider)
+    if (originalUrl.includes('supabase.co/storage/v1/object/public/')) {
       try {
         const url = new URL(originalUrl)
         url.searchParams.set('width', targetWidth.toString())
@@ -70,8 +70,8 @@ const OptimizedImage = memo(({
       }
     }
 
-    // Handle Cloudflare R2 URLs (R2 doesn't have built-in image optimization)
-    if (currentProvider === 'cloudflare-r2') {
+    // Handle Cloudflare R2 URLs (regardless of current provider)
+    if (originalUrl.includes('.r2.dev') || originalUrl.includes('r2.cloudflarestorage.com')) {
       // For R2, we return the original URL as-is since R2 doesn't have built-in optimization
       // In production, you might want to use Cloudflare Images or another optimization service
       return originalUrl
@@ -85,10 +85,8 @@ const OptimizedImage = memo(({
   const getWebPUrl = (originalUrl) => {
     if (!originalUrl) return null
 
-    const currentProvider = getCurrentProviderName()
-
-    // For Supabase storage URLs, use format parameter
-    if (currentProvider === 'supabase' && originalUrl.includes('supabase.co/storage/v1/object/public/')) {
+    // For Supabase storage URLs, use format parameter (regardless of current provider)
+    if (originalUrl.includes('supabase.co/storage/v1/object/public/')) {
       try {
         const url = new URL(originalUrl)
         url.searchParams.set('format', 'webp')
@@ -124,6 +122,10 @@ const OptimizedImage = memo(({
             } catch (error) {
               console.warn('Failed to create WebP URL:', error)
             }
+          } else if (optimizedUrl.includes('.r2.dev') || optimizedUrl.includes('r2.cloudflarestorage.com')) {
+            // For Cloudflare R2, return original URL (no WebP conversion available)
+            // In production, you might want to use Cloudflare Images for WebP conversion
+            optimizedUrl = optimizedUrl
           } else {
             // For other URLs, try to replace extension
             optimizedUrl = optimizedUrl.replace(/\.(jpg|jpeg|png)$/i, '.webp')
@@ -138,7 +140,12 @@ const OptimizedImage = memo(({
     setIsLoaded(true)
   }
 
-  const handleError = () => {
+  const handleError = (e) => {
+    console.warn('Image failed to load:', {
+      src: e.target.src,
+      originalSrc: src,
+      error: e.type
+    })
     setError(true)
   }
 
@@ -189,7 +196,7 @@ const OptimizedImage = memo(({
           width={width}
           height={height}
           loading={lazy && !priority ? 'lazy' : 'eager'}
-          fetchPriority={priority ? 'high' : 'auto'}
+          fetchpriority={priority ? 'high' : 'auto'}
           decoding="async"
           onLoad={handleLoad}
           onError={handleError}

@@ -37,6 +37,25 @@ export const getExcerpt = (content, maxLength = 150) => {
 }
 
 /**
+ * Normalize image URL to work with current storage provider
+ * @param {string} imageUrl - Original image URL
+ * @returns {string|null} Normalized image URL or null
+ */
+export const normalizeImageUrl = (imageUrl) => {
+  if (!imageUrl) return null
+
+  // If it's already a valid URL, return as-is
+  // Both Cloudflare R2 and Supabase URLs should work directly
+  if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+    return imageUrl
+  }
+
+  // If it's a relative path, we might need to construct the full URL
+  // This would depend on your storage configuration
+  return imageUrl
+}
+
+/**
  * Extract the first image URL from HTML content or featured image
  * @param {string} content - HTML content
  * @param {string} featuredImageUrl - Featured image URL from database
@@ -45,7 +64,7 @@ export const getExcerpt = (content, maxLength = 150) => {
 export const getThumbnailImage = (content, featuredImageUrl = null) => {
   // First, check if there's a featured image URL
   if (featuredImageUrl) {
-    return featuredImageUrl
+    return normalizeImageUrl(featuredImageUrl)
   }
 
   if (!content) return null
@@ -53,7 +72,7 @@ export const getThumbnailImage = (content, featuredImageUrl = null) => {
   // Extract the first image from the content
   const imgMatch = content.match(/<img[^>]+src="([^"]*)"[^>]*>/i)
   if (imgMatch) {
-    return imgMatch[1]
+    return normalizeImageUrl(imgMatch[1])
   }
 
   return null
@@ -103,17 +122,7 @@ export const debounce = (func, wait) => {
   }
 }
 
-/**
- * Normalize image URL for consistent handling
- * @param {string} originalUrl - Original image URL
- * @returns {string} Normalized image URL
- */
-export const normalizeImageUrl = (originalUrl) => {
-  if (!originalUrl) return null
 
-  // Return the URL as-is since we're using Supabase storage directly
-  return originalUrl
-}
 
 /**
  * Optimize image URL based on storage provider
