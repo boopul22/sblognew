@@ -13,7 +13,11 @@
     "preview": "vite preview",
     "build:analyze": "vite build --mode analyze",
     "perf:test": "node scripts/performance-test.js",
-    "perf:build": "npm run build && npm run preview & sleep 5 && npm run perf:test && pkill -f 'vite preview'"
+    "perf:build": "npm run build && npm run preview & sleep 5 && npm run perf:test && pkill -f 'vite preview'",
+    "test:connection": "node scripts/test-connection.js",
+    "test:r2": "node scripts/test-r2-connection.js",
+    "setup:r2": "node scripts/setup-r2-credentials.js",
+    "setup:admin": "node scripts/setup-admin-user.js"
   },
   "devDependencies": {
     "@types/node": "^24.1.0",

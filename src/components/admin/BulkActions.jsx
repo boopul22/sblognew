@@ -134,7 +134,7 @@ const BulkActions = ({ selectedPosts, onActionComplete, onClearSelection }) => {
         </button>
       </div>
 
-      <style jsx>{`
+      <style jsx="true">{`
         .bulk-actions {
           display: flex;
           justify-content: space-between;

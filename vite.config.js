@@ -16,6 +16,30 @@ export default defineConfig({
       ]
     })
   ],
+  // Development server configuration
+  server: {
+    port: 3000,
+    proxy: {
+      // Proxy API requests to a local server during development
+      '/api': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+        secure: false,
+        configure: (proxy, options) => {
+          proxy.on('error', (err, req, res) => {
+            console.log('Proxy error:', err.message)
+            res.writeHead(503, {
+              'Content-Type': 'application/json',
+            })
+            res.end(JSON.stringify({
+              success: false,
+              error: 'Development API server not running. Please start the API server on port 3001 or switch to local storage for development.'
+            }))
+          })
+        }
+      }
+    }
+  },
   build: {
     outDir: 'dist',
     assetsDir: 'assets',

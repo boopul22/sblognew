@@ -1,6 +1,7 @@
 import { useState, Suspense, lazy, useCallback, memo } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
+import { AuthProvider } from './contexts/AuthContext'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import SkeletonLoader from './components/SkeletonLoader'
@@ -18,6 +19,9 @@ const AdminLayout = lazy(() => import('./pages/admin/AdminLayout'))
 const CreatePost = lazy(() => import('./pages/admin/CreatePost'))
 const EditPost = lazy(() => import('./pages/admin/EditPost'))
 const PostsList = lazy(() => import('./pages/admin/PostsList'))
+const StorageSettings = lazy(() => import('./pages/admin/StorageSettings'))
+const Login = lazy(() => import('./components/admin/Login'))
+const ProtectedRoute = lazy(() => import('./components/admin/ProtectedRoute'))
 
 // Loading component
 const PageLoader = () => (
@@ -39,16 +43,17 @@ const App = memo(() => {
   }, [])
 
   return (
-    <Router>
-      <div className="container">
-        <Header
-          onSearch={handleSearch}
-          searchQuery={searchQuery}
-          setSearchQuery={handleSetSearchQuery}
-        />
-        
-        <Suspense fallback={<SkeletonLoader type="post" count={3} />}>
-          <Routes>
+    <AuthProvider>
+      <Router>
+        <div className="container">
+          <Header
+            onSearch={handleSearch}
+            searchQuery={searchQuery}
+            setSearchQuery={handleSetSearchQuery}
+          />
+
+          <Suspense fallback={<SkeletonLoader type="post" count={3} />}>
+            <Routes>
             <Route
               path="/"
               element={<Home searchQuery={searchQuery} />}
@@ -70,10 +75,16 @@ const App = memo(() => {
               element={<Tag searchQuery={searchQuery} />}
             />
             {/* Admin routes */}
-            <Route path="/admin" element={<AdminLayout />}>
+            <Route path="/admin/login" element={<Login />} />
+            <Route path="/admin" element={
+              <ProtectedRoute>
+                <AdminLayout />
+              </ProtectedRoute>
+            }>
               <Route path="posts" element={<PostsList />} />
               <Route path="create" element={<CreatePost />} />
               <Route path="edit/:id" element={<EditPost />} />
+              <Route path="storage-settings" element={<StorageSettings />} />
             </Route>
             {/* Catch-all route for individual posts - must be last */}
             <Route
@@ -101,7 +112,8 @@ const App = memo(() => {
           },
         }}
       />
-    </Router>
+      </Router>
+    </AuthProvider>
   )
 })
 

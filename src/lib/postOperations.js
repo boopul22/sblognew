@@ -21,6 +21,12 @@ export const createPost = async (postData) => {
 
     const uniqueSlug = await generateUniqueSlug(postData.slug)
 
+    // Get current user
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      throw new Error('You must be logged in to create posts')
+    }
+
     // Prepare post data
     const postToCreate = {
       title: postData.title.trim(),
@@ -31,7 +37,7 @@ export const createPost = async (postData) => {
       featured_image_url: postData.featured_image_url || null,
       meta_title: postData.meta_title || null,
       meta_description: postData.meta_description || null,
-      author_id: null, // For local development, we'll use null
+      author_id: user.id, // Use authenticated user's ID
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
     }

@@ -105,7 +105,7 @@ const EditPost = () => {
         isEditing={true}
       />
 
-      <style jsx>{`
+      <style jsx="true">{`
         .edit-post-page {
           max-width: 100%;
         }

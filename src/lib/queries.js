@@ -3,7 +3,7 @@
  * Reduces unused JavaScript by only loading required fields
  */
 
-import { supabase } from './supabase.js'
+import { supabasePublic } from './supabase.js'
 
 // Base query configurations to reduce data transfer
 const BASE_POST_FIELDS = 'id, title, slug, excerpt, published_at, status, featured_image_url, content'
@@ -18,7 +18,7 @@ export const fetchHomePosts = async (page = 0, postsPerPage = 10, searchQuery = 
   const from = page * postsPerPage
   const to = from + postsPerPage - 1
 
-  let query = supabase
+  let query = supabasePublic
     .from('posts')
     .select(BASE_POST_FIELDS)
     .eq('status', 'published')
@@ -48,7 +48,7 @@ export const fetchHomePosts = async (page = 0, postsPerPage = 10, searchQuery = 
  * Only loads when actually viewing a post
  */
 export const fetchSinglePost = async (slug) => {
-  const { data, error } = await supabase
+  const { data, error } = await supabasePublic
     .from('posts')
     .select(`
       ${FULL_POST_FIELDS},

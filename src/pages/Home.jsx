@@ -85,6 +85,7 @@ const Home = ({ searchQuery }) => {
             key={post.id}
             post={post}
             priority={index < 3} // Mark first 3 posts as priority for LCP
+            showDebug={index === 0} // Enable debug for first post only
           />
         ))}
       </div>

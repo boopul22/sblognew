@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom'
 import { memo } from 'react'
 import OptimizedImage from './OptimizedImage'
+import ImageDebugger from './ImageDebugger'
 import { getExcerpt, getThumbnailImage, formatDate } from '../utils/contentUtils'
 
-const PostCard = memo(({ post, featured = false, priority = false }) => {
+const PostCard = memo(({ post, featured = false, priority = false, showDebug = false }) => {
   // Get author name - simplified for now
   const getAuthorName = () => {
     // For now, return a placeholder. In a real app, you'd fetch author data
@@ -44,32 +45,35 @@ const PostCard = memo(({ post, featured = false, priority = false }) => {
   const thumbnailUrl = getThumbnailImage(post.content, post.featured_image_url)
 
   return (
-    <Link to={`/${post.slug}`} className="poem-card">
-      {thumbnailUrl && (
-        <div className="poem-image">
-          <OptimizedImage
-            src={thumbnailUrl}
-            alt={post.title}
-            width={400}
-            height={150}
-            lazy={!priority}
-            priority={priority}
-            style={{
-              borderRadius: '8px',
-              marginBottom: '10px'
-            }}
-          />
+    <>
+      <Link to={`/${post.slug}`} className="poem-card">
+        {thumbnailUrl && (
+          <div className="poem-image">
+            <OptimizedImage
+              src={thumbnailUrl}
+              alt={post.title}
+              width={400}
+              height={150}
+              lazy={!priority}
+              priority={priority}
+              style={{
+                borderRadius: '8px',
+                marginBottom: '10px'
+              }}
+            />
+          </div>
+        )}
+        <div className="poem-title">{post.title}</div>
+        <div className="poem-preview">
+          {getExcerpt(post.content)}
         </div>
-      )}
-      <div className="poem-title">{post.title}</div>
-      <div className="poem-preview">
-        {getExcerpt(post.content)}
-      </div>
-      <div className="poem-meta">
-        <div className="author">By {getAuthorName()}</div>
-        <div className="date">{formatDate(post.published_at)}</div>
-      </div>
-    </Link>
+        <div className="poem-meta">
+          <div className="author">By {getAuthorName()}</div>
+          <div className="date">{formatDate(post.published_at)}</div>
+        </div>
+      </Link>
+      {showDebug && <ImageDebugger post={post} showDebug={showDebug} />}
+    </>
   )
 }, (prevProps, nextProps) => {
   // Custom comparison function for React.memo

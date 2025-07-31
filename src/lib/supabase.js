@@ -11,12 +11,12 @@ if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error('Missing Supabase environment variables. Check your .env file and ENVIRONMENT_VARIABLES.md')
 }
 
-// Create optimized Supabase client with minimal configuration
+// Create Supabase client with authentication enabled for admin functionality
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
-    persistSession: false, // Disable auth session persistence to reduce bundle size
-    autoRefreshToken: false, // Disable auto refresh since we're not using auth
-    detectSessionInUrl: false // Disable URL session detection
+    persistSession: true, // Enable auth session persistence for admin login
+    autoRefreshToken: true, // Enable auto refresh for admin sessions
+    detectSessionInUrl: true // Enable URL session detection for auth flows
   },
   db: {
     schema: 'public' // Explicitly set schema to reduce overhead
@@ -24,6 +24,23 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   global: {
     headers: {
       'X-Client-Info': 'sayari-blog@1.0.0' // Custom client identifier
+    }
+  }
+})
+
+// Create a separate client for public operations (reading published posts)
+export const supabasePublic = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    persistSession: false, // Disable auth session persistence for public operations
+    autoRefreshToken: false, // Disable auto refresh for public operations
+    detectSessionInUrl: false // Disable URL session detection for public operations
+  },
+  db: {
+    schema: 'public'
+  },
+  global: {
+    headers: {
+      'X-Client-Info': 'sayari-blog-public@1.0.0'
     }
   }
 })

@@ -104,7 +104,7 @@ const RichTextEditor = ({ value, onChange, placeholder = "Start writing..." }) =
         </details>
       </div>
 
-      <style jsx global>{`
+      <style jsx="true" global="true">{`
         .rich-text-editor {
           position: relative;
         }

@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback } from 'react'
-import { supabase } from '../../lib/supabase'
+import { uploadImage, deleteImage } from '../../lib/storage'
 import { compressImage, generateThumbnail } from '../../utils/imageUtils'
 import toast from 'react-hot-toast'
 
@@ -26,10 +26,10 @@ const ImageUploader = ({ currentImage, onImageUpload, maxSize = 5 * 1024 * 1024 
       return
     }
 
-    await uploadImage(file)
+    await handleImageUpload(file)
   }, [maxSize])
 
-  const uploadImage = async (file) => {
+  const handleImageUpload = async (file) => {
     setUploading(true)
     setUploadProgress(0)
 
@@ -41,37 +41,23 @@ const ImageUploader = ({ currentImage, onImageUpload, maxSize = 5 * 1024 * 1024 
         quality: 0.8
       })
 
-      // Generate unique filename
-      const fileExt = file.name.split('.').pop()
-      const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`
-      const filePath = `blog-images/${fileName}`
+      // Upload using storage abstraction layer
+      const result = await uploadImage(compressedFile, {
+        onProgress: (progress) => {
+          setUploadProgress(Math.round(progress))
+        }
+      })
 
-      // Upload to Supabase Storage
-      const { data, error } = await supabase.storage
-        .from('images')
-        .upload(filePath, compressedFile, {
-          cacheControl: '3600',
-          upsert: false,
-          onUploadProgress: (progress) => {
-            setUploadProgress(Math.round((progress.loaded / progress.total) * 100))
-          }
-        })
-
-      if (error) {
-        throw error
+      if (!result.success) {
+        throw new Error(result.error || 'Upload failed')
       }
 
-      // Get public URL
-      const { data: { publicUrl } } = supabase.storage
-        .from('images')
-        .getPublicUrl(filePath)
-
-      onImageUpload(publicUrl)
+      onImageUpload(result.url)
       toast.success('Image uploaded successfully!')
 
     } catch (error) {
       console.error('Error uploading image:', error)
-      toast.error('Failed to upload image. Please try again.')
+      toast.error(error.message || 'Failed to upload image. Please try again.')
     } finally {
       setUploading(false)
       setUploadProgress(0)
@@ -179,7 +165,7 @@ const ImageUploader = ({ currentImage, onImageUpload, maxSize = 5 * 1024 * 1024 
         style={{ display: 'none' }}
       />
 
-      <style jsx>{`
+      <style jsx="true">{`
         .image-uploader {
           width: 100%;
         }

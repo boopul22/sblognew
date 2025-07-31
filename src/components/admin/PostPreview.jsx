@@ -117,7 +117,7 @@ const PostPreview = ({ data }) => {
         )}
       </article>
 
-      <style jsx>{`
+      <style jsx="true">{`
         .post-preview {
           padding: 2rem;
           max-width: 800px;

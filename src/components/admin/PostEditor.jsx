@@ -308,7 +308,7 @@ const PostEditor = ({
 
 
 
-      <style jsx>{`
+      <style jsx="true">{`
         .post-editor {
           max-width: 100%;
         }

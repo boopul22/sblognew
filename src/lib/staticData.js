@@ -3,7 +3,7 @@
  * Provides access to pre-generated static data with fallback to dynamic fetching
  */
 
-import { supabase } from './supabase.js'
+import { supabasePublic } from './supabase.js'
 
 // Static data cache
 let staticDataCache = {
@@ -49,7 +49,7 @@ export async function getAllPosts() {
 
   // Fallback to dynamic fetching
   console.log('Falling back to dynamic post fetching')
-  const { data, error } = await supabase
+  const { data, error } = await supabasePublic
     .from('posts')
     .select(`
       id,
@@ -130,7 +130,7 @@ export async function getAllAuthors() {
 
   // Fallback to dynamic fetching
   console.log('Falling back to dynamic author fetching')
-  const { data, error } = await supabase
+  const { data, error } = await supabasePublic
     .from('users')
     .select('id, user_login, display_name, user_registered')
     .order('display_name')
@@ -185,7 +185,7 @@ export async function getAllCategories() {
 
   // Fallback to dynamic fetching
   console.log('Falling back to dynamic category fetching')
-  const { data, error } = await supabase
+  const { data, error } = await supabasePublic
     .from('categories')
     .select('id, name, slug, description')
     .order('name')
@@ -242,7 +242,7 @@ export async function getAllTags() {
 
   // Fallback to dynamic fetching
   console.log('Falling back to dynamic tag fetching')
-  const { data, error } = await supabase
+  const { data, error } = await supabasePublic
     .from('tags')
     .select('id, name, slug, description')
     .order('name')

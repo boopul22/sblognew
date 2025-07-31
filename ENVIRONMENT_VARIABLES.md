@@ -6,12 +6,28 @@
 
 ## 📋 Required Environment Variables
 
-This project requires the following environment variables to function properly:
+This project uses a modular storage abstraction layer that supports multiple storage providers. Configure the variables for your chosen provider(s):
 
-### Supabase Configuration
+### Storage Provider Selection
+```env
+# Choose your storage provider (optional, defaults to 'supabase')
+VITE_STORAGE_PROVIDER=supabase  # or 'cloudflare-r2'
+```
+
+### Supabase Configuration (Default Provider)
 ```env
 VITE_SUPABASE_URL=your_supabase_project_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+### Cloudflare R2 Configuration (Optional Alternative)
+```env
+VITE_CLOUDFLARE_ACCOUNT_ID=your_cloudflare_account_id
+VITE_CLOUDFLARE_R2_ACCESS_KEY_ID=your_r2_access_key_id
+VITE_CLOUDFLARE_R2_SECRET_ACCESS_KEY=your_r2_secret_access_key
+VITE_CLOUDFLARE_R2_BUCKET_NAME=blog-images
+VITE_CLOUDFLARE_R2_PUBLIC_URL=https://pub-your-account.r2.dev/blog-images
+VITE_CLOUDFLARE_R2_ENDPOINT=https://your-account.r2.cloudflarestorage.com
 ```
 
 ## 🛠️ Setup Instructions
@@ -25,8 +41,20 @@ VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 
 2. Fill in your actual values in `.env`:
    ```env
+   # Storage provider selection (optional)
+   VITE_STORAGE_PROVIDER=supabase
+
+   # Supabase configuration (required for Supabase provider)
    VITE_SUPABASE_URL=https://your-project.supabase.co
    VITE_SUPABASE_ANON_KEY=your_actual_anon_key_here
+
+   # Cloudflare R2 configuration (optional, only if using R2)
+   VITE_CLOUDFLARE_ACCOUNT_ID=your_account_id
+   VITE_CLOUDFLARE_R2_ACCESS_KEY_ID=your_access_key
+   VITE_CLOUDFLARE_R2_SECRET_ACCESS_KEY=your_secret_key
+   VITE_CLOUDFLARE_R2_BUCKET_NAME=blog-images
+   VITE_CLOUDFLARE_R2_PUBLIC_URL=https://pub-your-account.r2.dev/blog-images
+   VITE_CLOUDFLARE_R2_ENDPOINT=https://your-account.r2.cloudflarestorage.com
    ```
 
 3. **Never commit the `.env` file to Git** (it's already in `.gitignore`)

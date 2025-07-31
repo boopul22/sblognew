@@ -52,7 +52,11 @@ export const getThumbnailImage = (content, featuredImageUrl = null) => {
 
   // Extract the first image from the content
   const imgMatch = content.match(/<img[^>]+src="([^"]*)"[^>]*>/i)
-  return imgMatch ? imgMatch[1] : null
+  if (imgMatch) {
+    return imgMatch[1]
+  }
+
+  return null
 }
 
 /**
@@ -100,7 +104,19 @@ export const debounce = (func, wait) => {
 }
 
 /**
- * Optimize image URL for Supabase storage
+ * Normalize image URL for consistent handling
+ * @param {string} originalUrl - Original image URL
+ * @returns {string} Normalized image URL
+ */
+export const normalizeImageUrl = (originalUrl) => {
+  if (!originalUrl) return null
+
+  // Return the URL as-is since we're using Supabase storage directly
+  return originalUrl
+}
+
+/**
+ * Optimize image URL based on storage provider
  * @param {string} url - Original image URL
  * @param {number} width - Desired width
  * @param {number} quality - Image quality (1-100)
@@ -108,16 +124,22 @@ export const debounce = (func, wait) => {
  */
 export const optimizeImageUrl = (url, width = 800, quality = 80) => {
   if (!url) return null
-  
-  // Check if it's a Supabase storage URL
+
+  // Check if it's a Supabase storage URL (supports built-in optimization)
   if (url.includes('supabase.co/storage/v1/object/public/')) {
-    const urlObj = new URL(url)
-    urlObj.searchParams.set('width', width)
-    urlObj.searchParams.set('quality', quality)
-    urlObj.searchParams.set('format', 'webp')
-    return urlObj.toString()
+    try {
+      const urlObj = new URL(url)
+      urlObj.searchParams.set('width', width)
+      urlObj.searchParams.set('quality', quality)
+      urlObj.searchParams.set('format', 'webp')
+      return urlObj.toString()
+    } catch (error) {
+      console.warn('Failed to optimize Supabase image URL:', error)
+    }
   }
-  
+
+  // For Cloudflare R2 or other providers without built-in optimization, return as-is
+  // In production, you might want to use Cloudflare Images or another optimization service
   return url
 }
 

@@ -261,7 +261,7 @@ const PostsList = () => {
         </div>
       )}
 
-      <style jsx>{`
+      <style jsx="true">{`
         .posts-list-page {
           max-width: 100%;
         }

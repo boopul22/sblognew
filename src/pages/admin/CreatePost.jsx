@@ -43,7 +43,7 @@ const CreatePost = () => {
         isEditing={false}
       />
 
-      <style jsx>{`
+      <style jsx="true">{`
         .create-post-page {
           max-width: 100%;
         }

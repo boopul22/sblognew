@@ -1,11 +1,17 @@
 import { Outlet, Link, useLocation } from 'react-router-dom'
 import { memo } from 'react'
+import { useAuth } from '../../contexts/AuthContext'
 
 const AdminLayout = memo(() => {
   const location = useLocation()
+  const { user, signOut } = useAuth()
 
   const isActive = (path) => {
     return location.pathname === path || location.pathname.startsWith(path + '/')
+  }
+
+  const handleSignOut = async () => {
+    await signOut()
   }
 
   return (
@@ -16,6 +22,12 @@ const AdminLayout = memo(() => {
             ← Back to Blog
           </Link>
           <h1>Admin Panel</h1>
+          <div className="admin-user">
+            <span>Welcome, {user?.email}</span>
+            <button onClick={handleSignOut} className="logout-btn">
+              Logout
+            </button>
+          </div>
         </div>
       </div>
 
@@ -31,11 +43,19 @@ const AdminLayout = memo(() => {
               </Link>
             </li>
             <li>
-              <Link 
-                to="/admin/create" 
+              <Link
+                to="/admin/create"
                 className={isActive('/admin/create') ? 'active' : ''}
               >
                 ➕ Create New Post
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/admin/storage-settings"
+                className={isActive('/admin/storage-settings') ? 'active' : ''}
+              >
+                🗄️ Storage Settings
               </Link>
             </li>
           </ul>
@@ -46,7 +66,7 @@ const AdminLayout = memo(() => {
         </main>
       </div>
 
-      <style jsx>{`
+      <style jsx="true">{`
         .admin-layout {
           min-height: 100vh;
           background: #f8f9fa;
@@ -62,7 +82,31 @@ const AdminLayout = memo(() => {
         .admin-nav {
           display: flex;
           align-items: center;
+          justify-content: space-between;
           gap: 2rem;
+        }
+
+        .admin-user {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          font-size: 0.9rem;
+          color: #6c757d;
+        }
+
+        .logout-btn {
+          background: #dc3545;
+          color: white;
+          border: none;
+          padding: 0.5rem 1rem;
+          border-radius: 4px;
+          font-size: 0.85rem;
+          cursor: pointer;
+          transition: background-color 0.2s;
+        }
+
+        .logout-btn:hover {
+          background: #c82333;
         }
 
         .admin-logo {

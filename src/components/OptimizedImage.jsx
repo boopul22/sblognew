@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, memo } from 'react'
+import { getCurrentProviderName } from '../lib/storage'
 
 const OptimizedImage = memo(({
   src,
@@ -49,12 +50,14 @@ const OptimizedImage = memo(({
     }
   }, [lazy, priority, isInView])
 
-  // Generate optimized image URLs for Supabase storage
+  // Generate optimized image URLs based on storage provider
   const getOptimizedImageUrl = (originalUrl, targetWidth, quality = 80) => {
     if (!originalUrl) return null
 
-    // Check if it's a Supabase storage URL
-    if (originalUrl.includes('supabase.co/storage/v1/object/public/')) {
+    const currentProvider = getCurrentProviderName()
+
+    // Handle Supabase storage URLs
+    if (currentProvider === 'supabase' && originalUrl.includes('supabase.co/storage/v1/object/public/')) {
       try {
         const url = new URL(originalUrl)
         url.searchParams.set('width', targetWidth.toString())
@@ -62,18 +65,43 @@ const OptimizedImage = memo(({
         url.searchParams.set('format', 'webp')
         return url.toString()
       } catch (error) {
-        console.warn('Failed to optimize image URL:', error)
+        console.warn('Failed to optimize Supabase image URL:', error)
         return originalUrl
       }
     }
 
+    // Handle Cloudflare R2 URLs (R2 doesn't have built-in image optimization)
+    if (currentProvider === 'cloudflare-r2') {
+      // For R2, we return the original URL as-is since R2 doesn't have built-in optimization
+      // In production, you might want to use Cloudflare Images or another optimization service
+      return originalUrl
+    }
+
+    // For other URLs or unknown providers, return as-is
     return originalUrl
   }
 
-  // Generate WebP version of image
+  // Generate WebP version of image based on storage provider
   const getWebPUrl = (originalUrl) => {
     if (!originalUrl) return null
-    return originalUrl.replace(/\.(jpg|jpeg|png)$/i, '.webp')
+
+    const currentProvider = getCurrentProviderName()
+
+    // For Supabase storage URLs, use format parameter
+    if (currentProvider === 'supabase' && originalUrl.includes('supabase.co/storage/v1/object/public/')) {
+      try {
+        const url = new URL(originalUrl)
+        url.searchParams.set('format', 'webp')
+        return url.toString()
+      } catch (error) {
+        console.warn('Failed to generate WebP URL:', error)
+        return originalUrl
+      }
+    }
+
+    // For Cloudflare R2 or other providers, return as-is
+    // (browser will handle format negotiation or you can implement custom logic)
+    return originalUrl
   }
 
   // Generate srcSet for responsive images
