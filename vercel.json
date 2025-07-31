@@ -6,33 +6,8 @@
   "installCommand": "npm install",
   "framework": "vite",
   "functions": {
-    "api/r2/presigned-upload.js": {
-      "runtime": "nodejs18.x",
+    "api/**/*.js": {
       "maxDuration": 30
-    },
-    "api/r2/delete.js": {
-      "runtime": "nodejs18.x",
-      "maxDuration": 30
-    },
-    "api/r2/list.js": {
-      "runtime": "nodejs18.x",
-      "maxDuration": 30
-    },
-    "api/r2/metadata.js": {
-      "runtime": "nodejs18.x",
-      "maxDuration": 30
-    },
-    "api/r2/health.js": {
-      "runtime": "nodejs18.x",
-      "maxDuration": 10
-    },
-    "api/delete-image.js": {
-      "runtime": "nodejs18.x",
-      "maxDuration": 30
-    },
-    "api/debug.js": {
-      "runtime": "nodejs18.x",
-      "maxDuration": 10
     }
   },
   "headers": [
