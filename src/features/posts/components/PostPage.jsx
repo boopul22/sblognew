@@ -3,6 +3,190 @@ import { Link } from 'react-router-dom'
 import { fetchSinglePost } from '../../../lib/api/queries'
 import '../styles/PostPage.css'
 
+// Enhanced HTML Content Component with Interactive Elements
+const EnhancedHTMLContent = ({ content, onCopy, onShare }) => {
+  const [copiedQuote, setCopiedQuote] = useState(null)
+  const [shareDropdown, setShareDropdown] = useState(null)
+  const contentRef = useRef(null)
+
+  // Social platforms for sharing
+  const socialPlatforms = {
+    whatsapp: {
+      name: "WhatsApp",
+      icon: "📱",
+      getUrl: (text) => `https://wa.me/?text=${encodeURIComponent(text + '\n\n' + window.location.href)}`
+    },
+    facebook: {
+      name: "Facebook",
+      icon: "📘",
+      getUrl: (text) => `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(text)}`
+    },
+    twitter: {
+      name: "Twitter",
+      icon: "🐦",
+      getUrl: (text) => `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(window.location.href)}`
+    },
+    instagram: {
+      name: "Instagram",
+      icon: "📷",
+      getUrl: (text) => `https://www.instagram.com/` // Instagram doesn't support direct sharing URLs
+    }
+  }
+
+  // Handle copy quote
+  const handleCopyQuote = useCallback(async (quoteText, quoteId) => {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(quoteText)
+      } else {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea')
+        textArea.value = quoteText
+        textArea.style.cssText = 'position: fixed; top: -9999px; left: -9999px; opacity: 0;'
+        document.body.appendChild(textArea)
+        textArea.focus()
+        textArea.select()
+        document.execCommand('copy')
+        document.body.removeChild(textArea)
+      }
+
+      setCopiedQuote(quoteId)
+      setTimeout(() => setCopiedQuote(null), 2000)
+      onCopy?.(quoteText)
+    } catch (err) {
+      console.error('Copy failed:', err)
+    }
+  }, [onCopy])
+
+  // Handle share quote
+  const handleShareQuote = useCallback((platform, quoteText) => {
+    try {
+      const platformData = socialPlatforms[platform]
+      if (platformData) {
+        const shareUrl = platformData.getUrl(quoteText)
+        if (platform === 'instagram') {
+          // For Instagram, just open the app/website since they don't support direct sharing
+          window.open(shareUrl, '_blank')
+          // Also copy the text to clipboard for Instagram
+          navigator.clipboard?.writeText(quoteText).catch(() => {})
+        } else {
+          window.open(shareUrl, '_blank', 'width=600,height=400,scrollbars=yes,resizable=yes')
+        }
+        onShare?.(platform, quoteText)
+      }
+      setShareDropdown(null)
+    } catch (error) {
+      console.error('Share error:', error)
+    }
+  }, [onShare])
+
+  // Process HTML content to add interactive elements
+  useEffect(() => {
+    if (!contentRef.current || !content) return
+
+    const container = contentRef.current
+    container.innerHTML = content
+
+    // Process blockquotes to add action buttons
+    const blockquotes = container.querySelectorAll('blockquote')
+    blockquotes.forEach((blockquote, index) => {
+      const quoteId = `quote-${index}`
+      const quoteText = blockquote.textContent.trim()
+
+      if (quoteText) {
+        // Create actions container
+        const actionsContainer = document.createElement('div')
+        actionsContainer.className = 'quote-actions'
+
+        // Copy button
+        const copyBtn = document.createElement('button')
+        copyBtn.className = 'quote-action-btn quote-copy-btn'
+        copyBtn.innerHTML = `<span class="btn-icon">📋</span><span class="btn-text">कॉपी</span>`
+        copyBtn.setAttribute('aria-label', 'Quote copy करें')
+        copyBtn.onclick = () => handleCopyQuote(quoteText, quoteId)
+
+        // WhatsApp button
+        const whatsappBtn = document.createElement('button')
+        whatsappBtn.className = 'quote-action-btn quote-whatsapp-btn'
+        whatsappBtn.innerHTML = `<span class="btn-icon">📱</span><span class="btn-text">WhatsApp</span>`
+        whatsappBtn.setAttribute('aria-label', 'WhatsApp पर share करें')
+        whatsappBtn.onclick = () => handleShareQuote('whatsapp', quoteText)
+
+        // Facebook button
+        const facebookBtn = document.createElement('button')
+        facebookBtn.className = 'quote-action-btn quote-facebook-btn'
+        facebookBtn.innerHTML = `<span class="btn-icon">📘</span><span class="btn-text">Facebook</span>`
+        facebookBtn.setAttribute('aria-label', 'Facebook पर share करें')
+        facebookBtn.onclick = () => handleShareQuote('facebook', quoteText)
+
+        // Twitter button
+        const twitterBtn = document.createElement('button')
+        twitterBtn.className = 'quote-action-btn quote-twitter-btn'
+        twitterBtn.innerHTML = `<span class="btn-icon">🐦</span><span class="btn-text">Twitter</span>`
+        twitterBtn.setAttribute('aria-label', 'Twitter पर share करें')
+        twitterBtn.onclick = () => handleShareQuote('twitter', quoteText)
+
+        actionsContainer.appendChild(copyBtn)
+        actionsContainer.appendChild(whatsappBtn)
+        actionsContainer.appendChild(facebookBtn)
+        actionsContainer.appendChild(twitterBtn)
+
+        // Add copied indicator
+        if (copiedQuote === quoteId) {
+          const copiedIndicator = document.createElement('span')
+          copiedIndicator.className = 'quote-copied-indicator'
+          copiedIndicator.textContent = '✅ कॉपी हो गया!'
+          actionsContainer.appendChild(copiedIndicator)
+        }
+
+        blockquote.appendChild(actionsContainer)
+      }
+    })
+
+    // Process images to add click-to-expand functionality
+    const images = container.querySelectorAll('img')
+    images.forEach((img) => {
+      img.style.cursor = 'pointer'
+      img.onclick = () => {
+        // Create modal for image expansion
+        const modal = document.createElement('div')
+        modal.className = 'image-modal'
+        modal.innerHTML = `
+          <div class="image-modal-backdrop"></div>
+          <div class="image-modal-content">
+            <img src="${img.src}" alt="${img.alt}" class="image-modal-img">
+            <button class="image-modal-close">✕</button>
+          </div>
+        `
+
+        // Close modal functionality
+        const closeModal = () => document.body.removeChild(modal)
+        modal.querySelector('.image-modal-close').onclick = closeModal
+        modal.querySelector('.image-modal-backdrop').onclick = closeModal
+
+        document.body.appendChild(modal)
+      }
+    })
+
+  }, [content, copiedQuote, shareDropdown, handleCopyQuote, handleShareQuote])
+
+  // Close share dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = () => setShareDropdown(null)
+    document.addEventListener('click', handleClickOutside)
+    return () => document.removeEventListener('click', handleClickOutside)
+  }, [])
+
+  return (
+    <div
+      ref={contentRef}
+      className="enhanced-html-content"
+      role="article"
+      aria-label="Post content"
+    />
+  )
+}
+
 // Self-contained Adaptive Image Component for PostPage
 const AdaptiveImage = ({ src, alt, className = '', style = {}, onLoad }) => {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -141,7 +325,7 @@ const PostPage = ({
     loadPost()
   }, [postSlug])
 
-  // Parse HTML content to extract individual shayaris with images
+  // Parse HTML content to extract individual shayaris with images and all content
   const parseShayaris = useCallback((htmlContent) => {
     if (!htmlContent) return []
 
@@ -149,7 +333,7 @@ const PostPage = ({
     const tempDiv = document.createElement('div')
     tempDiv.innerHTML = htmlContent
 
-    // Get all child elements (paragraphs, blockquotes, figures, etc.)
+    // Get all child elements (paragraphs, blockquotes, figures, headings, etc.)
     const allElements = Array.from(tempDiv.children)
     const shayaris = []
     let shayariIndex = 0
@@ -238,6 +422,47 @@ const PostPage = ({
             isCombinedCard: false // This is a text-only card
           }
           shayaris.push(newShayari)
+        }
+
+      } else if (['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(element.tagName)) {
+        // Process headings as content cards
+        const text = element.textContent || element.innerText
+        if (text.trim()) {
+          const headingCard = {
+            id: ++shayariIndex,
+            theme: 'general',
+            lines: [text.trim()],
+            images: [],
+            author: post?.users?.display_name || post?.users?.username || "अज्ञात",
+            likes: Math.floor(Math.random() * 30) + 5,
+            views: Math.floor(Math.random() * 300) + 50,
+            shares: Math.floor(Math.random() * 15) + 2,
+            category: post?.post_categories?.[0]?.categories?.name || "शायरी",
+            createdAt: post?.published_at || new Date().toISOString(),
+            isHeading: true,
+            headingLevel: element.tagName.toLowerCase()
+          }
+          shayaris.push(headingCard)
+        }
+
+      } else if (element.tagName === 'P' && !element.querySelector('img')) {
+        // Process regular paragraphs (without images) as content cards
+        const text = element.textContent || element.innerText
+        if (text.trim() && text.trim().length > 10) { // Only include substantial paragraphs
+          const paragraphCard = {
+            id: ++shayariIndex,
+            theme: 'general',
+            lines: [text.trim()],
+            images: [],
+            author: post?.users?.display_name || post?.users?.username || "अज्ञात",
+            likes: Math.floor(Math.random() * 25) + 3,
+            views: Math.floor(Math.random() * 200) + 30,
+            shares: Math.floor(Math.random() * 10) + 1,
+            category: post?.post_categories?.[0]?.categories?.name || "शायरी",
+            createdAt: post?.published_at || new Date().toISOString(),
+            isParagraph: true
+          }
+          shayaris.push(paragraphCard)
         }
       }
     })
@@ -447,13 +672,65 @@ const PostPage = ({
         showToastMessage('शायरी नहीं मिली', 'error')
         return
       }
-      generateImageDownload(shayari)
+
+      // If it's an image-only card, download the actual image
+      if (shayari.isImageCard && shayari.images && shayari.images.length > 0) {
+        downloadActualImage(shayari.images[0])
+      } else {
+        // For text cards or combined cards, generate image with text
+        generateImageDownload(shayari)
+      }
+
       onDownload?.(shayariId)
     } catch (error) {
       console.error('Download error:', error)
       showToastMessage('डाउनलोड में त्रुटि', 'error')
     }
   }, [shayariCollection, onDownload, showToastMessage])
+
+  const downloadActualImage = useCallback(async (image) => {
+    try {
+      // Method 1: Use our download proxy API (most reliable)
+      const apiPort = import.meta.env.DEV ? '3001' : '3000'
+      const proxyUrl = `http://localhost:${apiPort}/api/download-image?url=${encodeURIComponent(image.src)}`
+
+      // Create a temporary link that points to our proxy
+      const link = document.createElement('a')
+      link.href = proxyUrl
+      link.download = `inspirational-quote-${Date.now()}.jpg`
+      link.style.display = 'none'
+      link.target = '_blank'
+
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+
+      showToastMessage('इमेज डाउनलोड शुरू हो गई!', 'success')
+
+    } catch (error) {
+      console.error('Image download error:', error)
+
+      // Fallback: Try direct download
+      try {
+        const link = document.createElement('a')
+        link.href = image.src
+        link.download = `inspirational-quote-${Date.now()}.jpg`
+        link.style.display = 'none'
+        link.target = '_blank'
+
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+
+        showToastMessage('इमेज डाउनलोड शुरू हो गई!', 'success')
+      } catch (fallbackError) {
+        console.error('Fallback download failed:', fallbackError)
+        showToastMessage('इमेज डाउनलोड में त्रुटि। कृपया इमेज पर राइट-क्लिक करके "Save Image As" का उपयोग करें।', 'error')
+      }
+    }
+  }, [showToastMessage])
+
+
 
   const generateImageDownload = useCallback((shayari) => {
     try {
@@ -685,7 +962,7 @@ const PostPage = ({
 
       {/* Enhanced Breadcrumb Navigation */}
       <nav className="breadcrumb" role="navigation" aria-label="ब्रेडक्रम्ब नेवीगेशन">
-        <div className="container">
+        <div className="container container--full desktop-full-width">
           <ol className="breadcrumb-list">
             <li>
               <Link to="/" className="breadcrumb-link" aria-label="होम पेज पर जाएं">
@@ -708,7 +985,7 @@ const PostPage = ({
 
       {/* Enhanced Main Content */}
       <main className="main-content" role="main">
-        <div className="container">
+        <div className="container container--full desktop-full-width">
           <div className="post-layout">
             {/* Enhanced Post Content */}
             <article className="post-content" itemScope itemType="https://schema.org/BlogPosting">
@@ -761,23 +1038,18 @@ const PostPage = ({
                 </div>
               </header>
 
-              {/* Enhanced Shayari Collection */}
-              <div className="shayari-collection" role="group" aria-label="शायरी संग्रह">
-                {shayariCollection.map((shayari, index) => (
-                  <ShayariCard
-                    key={shayari.id}
-                    shayari={shayari}
-                    index={index}
-                    isLiked={likedShayari.has(shayari.id)}
-                    isShareOpen={openShareDropdown === shayari.id}
-                    onLike={() => handleLike(shayari.id)}
-                    onShareToggle={(e) => handleShareToggle(shayari.id, e)}
-                    onShare={(platform) => handleShare(platform, shayari.id)}
-                    onCopy={() => handleCopy(shayari.id)}
-                    onDownload={() => handleDownload(shayari.id)}
-                    socialPlatforms={socialPlatforms}
-                  />
-                ))}
+              {/* Enhanced Post Content - Traditional Blog Layout */}
+              <div className="post-content-body" role="group" aria-label="पोस्ट सामग्री">
+                <EnhancedHTMLContent
+                  content={post?.content || ''}
+                  onCopy={(text) => {
+                    setShowCopyModal(true)
+                    setTimeout(() => setShowCopyModal(false), 2000)
+                  }}
+                  onShare={(platform, text) => {
+                    console.log(`Shared on ${platform}:`, text)
+                  }}
+                />
               </div>
 
               {/* Enhanced Comments Section */}
@@ -971,15 +1243,15 @@ const ShayariCard = React.memo(({
               {/* Render text content if it exists */}
               {shayari.lines && shayari.lines.length > 0 && (
                 <div
-                  className="shayari-text"
+                  className={`shayari-text ${shayari.isHeading ? 'shayari-heading' : ''} ${shayari.isParagraph ? 'shayari-paragraph' : ''}`}
                   id={`shayari-${shayari.id}-title`}
                   role="group"
-                  aria-label={`शायरी ${index + 1}`}
+                  aria-label={shayari.isHeading ? `शीर्षक ${index + 1}` : shayari.isParagraph ? `पैराग्राफ ${index + 1}` : `शायरी ${index + 1}`}
                 >
                   {shayari.lines.map((line, lineIndex) => (
                     <div
                       key={lineIndex}
-                      className="shayari-line"
+                      className={`shayari-line ${shayari.isHeading ? `heading-${shayari.headingLevel}` : ''} ${shayari.isParagraph ? 'paragraph-text' : ''}`}
                       role="text"
                     >
                       {line}

@@ -45,7 +45,7 @@ const App = memo(() => {
   return (
     <AuthProvider>
       <Router>
-        <div className="container">
+        <div className="app-wrapper">
           <Header
             onSearch={handleSearch}
             searchQuery={searchQuery}

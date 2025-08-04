@@ -63,9 +63,31 @@
       }
 
       .container {
-        max-width: 1200px;
+        width: 100%;
         margin: 0 auto;
-        padding: 20px;
+        padding: 16px;
+      }
+
+      /* Mobile-first responsive container */
+      @media (min-width: 640px) {
+        .container {
+          max-width: 640px;
+          padding: 24px;
+        }
+      }
+
+      @media (min-width: 768px) {
+        .container {
+          max-width: 768px;
+          padding: 32px;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .container {
+          max-width: none;
+          padding: 32px;
+        }
       }
 
       /* Loading spinner for better perceived performance */

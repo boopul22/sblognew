@@ -34,7 +34,7 @@ const Header = memo(({ onSearch, searchQuery, setSearchQuery }) => {
 
   return (
     <header className="header">
-      <div className="container">
+      <div className="container container--full desktop-full-width">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="logo">

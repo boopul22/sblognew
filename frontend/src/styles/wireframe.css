@@ -137,11 +137,18 @@
   --duration-normal: 250ms;
   --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* Layout */
+  /* Layout - Updated for full width on desktop and mobile-first */
   --container-sm: 640px;
   --container-md: 768px;
   --container-lg: 1024px;
   --container-xl: 1280px;
+  --container-2xl: 1536px;
+  --container-full: 100%;
+
+  /* Mobile-first spacing */
+  --container-padding-mobile: 16px;
+  --container-padding-tablet: 24px;
+  --container-padding-desktop: 32px;
 }
 
 /* Dark mode colors */
@@ -203,7 +210,7 @@
   }
 }
 
-/* Base styles */
+/* Base styles - Mobile-first */
 html {
   font-size: var(--font-size-base);
   font-family: var(--font-family-base);
@@ -212,11 +219,25 @@ html {
   background-color: var(--color-background);
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+
+  /* Mobile-first: Prevent horizontal scroll */
+  overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
   padding: 0;
+
+  /* Mobile-first: Prevent horizontal scroll and improve mobile experience */
+  overflow-x: hidden;
+  width: 100%;
+  min-width: 320px; /* Minimum supported width */
+
+  /* Better text rendering on mobile */
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 *,
@@ -371,33 +392,103 @@ a:hover {
   outline: var(--focus-outline);
 }
 
-/* Container layout */
+/* App wrapper - Full width layout */
+.app-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* Full width utilities */
+.w-full {
+  width: 100% !important;
+}
+
+.max-w-none {
+  max-width: none !important;
+}
+
+/* Desktop full width override */
+@media (min-width: 1024px) {
+  .desktop-full-width {
+    max-width: none !important;
+    width: 100% !important;
+  }
+}
+
+/* Enhanced Container layout - Mobile-first with full width on desktop */
 .container {
   width: 100%;
   margin-right: auto;
   margin-left: auto;
-  padding-right: var(--space-16);
-  padding-left: var(--space-16);
+  padding-right: var(--container-padding-mobile);
+  padding-left: var(--container-padding-mobile);
 }
 
+/* Container variants */
+.container--full {
+  max-width: none;
+  padding-right: var(--container-padding-mobile);
+  padding-left: var(--container-padding-mobile);
+}
+
+.container--narrow {
+  max-width: var(--container-md);
+}
+
+/* Responsive container sizing */
 @media (min-width: 640px) {
   .container {
     max-width: var(--container-sm);
+    padding-right: var(--container-padding-tablet);
+    padding-left: var(--container-padding-tablet);
+  }
+
+  .container--full {
+    padding-right: var(--container-padding-tablet);
+    padding-left: var(--container-padding-tablet);
   }
 }
+
 @media (min-width: 768px) {
   .container {
     max-width: var(--container-md);
+    padding-right: var(--container-padding-desktop);
+    padding-left: var(--container-padding-desktop);
+  }
+
+  .container--full {
+    padding-right: var(--container-padding-desktop);
+    padding-left: var(--container-padding-desktop);
   }
 }
+
 @media (min-width: 1024px) {
   .container {
-    max-width: var(--container-lg);
+    max-width: none; /* Full width on desktop */
   }
 }
+
 @media (min-width: 1280px) {
   .container {
-    max-width: var(--container-xl);
+    max-width: none; /* Full width on large desktop */
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: none; /* Full width on ultra-wide */
+  }
+}
+
+/* Full width container for desktop */
+@media (min-width: 1024px) {
+  .container--full {
+    max-width: none;
+    padding-right: var(--container-padding-desktop);
+    padding-left: var(--container-padding-desktop);
   }
 }
 
@@ -513,8 +604,13 @@ a:hover {
     display: flex;
     align-items: center;
     gap: var(--space-32);
-    max-width: 800px;
+    width: 100%;
     margin: 0 auto;
+
+    /* Full width on desktop */
+    @media (min-width: 1024px) {
+        max-width: none;
+    }
 }
 
 .hero-image-placeholder {
@@ -571,12 +667,17 @@ a:hover {
     text-align: center;
 }
 
-/* Shayari Cards Grid */
+/* Enhanced Shayari Cards Grid - Mobile-first responsive */
 .cards-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--space-20);
+    gap: var(--space-16);
     margin-bottom: var(--space-32);
+    width: 100%;
+
+    /* Ensure cards don't overflow on mobile */
+    min-width: 0;
+    overflow-x: hidden;
 }
 
 .shayari-card {
@@ -887,7 +988,9 @@ a:hover {
     margin-bottom: var(--space-8);
 }
 
-/* Responsive Design */
+/* Enhanced Responsive Design - Mobile-first approach */
+
+/* Small screens (640px and up) */
 @media (min-width: 640px) {
     .search-input {
         width: 250px;
@@ -895,6 +998,7 @@ a:hover {
 
     .cards-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-20);
     }
 
     .hero-banner {
@@ -916,13 +1020,15 @@ a:hover {
     }
 }
 
+/* Medium screens (768px and up) - Tablet */
 @media (min-width: 768px) {
     .nav-menu {
         display: block;
     }
 
     .content-layout {
-        grid-template-columns: 1fr 300px;
+        grid-template-columns: 1fr 280px;
+        gap: var(--space-24);
     }
 
     .sidebar {
@@ -933,8 +1039,13 @@ a:hover {
         text-align: left;
     }
 
+    .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-24);
+    }
+
     .footer-content {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
     }
 
     .hero-banner {
@@ -947,18 +1058,62 @@ a:hover {
     }
 }
 
+/* Large screens (1024px and up) - Desktop */
 @media (min-width: 1024px) {
     .cards-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--space-32);
+        width: 100%;
     }
 
     .content-layout {
         grid-template-columns: 1fr 320px;
         gap: var(--space-32);
+        width: 100%;
     }
 
     .search-input {
         width: 300px;
+    }
+
+    .footer-content {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    /* Ensure full width on desktop */
+    .main-content {
+        width: 100%;
+        max-width: none;
+    }
+}
+
+/* Extra large screens (1280px and up) - Large Desktop */
+@media (min-width: 1280px) {
+    .cards-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: var(--space-32);
+        width: 100%;
+    }
+
+    .content-layout {
+        grid-template-columns: 1fr 360px;
+        gap: var(--space-40);
+        width: 100%;
+    }
+}
+
+/* Ultra large screens (1536px and up) - Ultra Wide */
+@media (min-width: 1536px) {
+    .cards-grid {
+        grid-template-columns: repeat(6, 1fr);
+        gap: var(--space-32);
+        width: 100%;
+    }
+
+    .content-layout {
+        grid-template-columns: 1fr 400px;
+        gap: var(--space-48);
+        width: 100%;
     }
 }
 
@@ -970,12 +1125,14 @@ a:hover {
     }
 
     .search-input {
-        width: 180px;
+        width: 100%;
+        max-width: 280px;
     }
 
     .hero-banner {
         flex-direction: column;
         text-align: center;
+        padding: var(--space-16);
     }
 
     .hero-image-placeholder {
@@ -987,11 +1144,44 @@ a:hover {
     .card-meta {
         flex-direction: column;
         align-items: flex-start;
+        gap: var(--space-8);
     }
 
     .card-actions {
         flex-direction: column;
+        gap: var(--space-8);
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .cards-grid {
+        gap: var(--space-16);
+        padding: var(--space-16);
+    }
+
+    .shayari-card {
+        margin-bottom: var(--space-16);
+    }
+}
+
+/* Extra small screens (360px and below) */
+@media (max-width: 360px) {
+    .container {
+        padding-left: var(--space-12);
+        padding-right: var(--space-12);
+    }
+
+    .search-input {
+        width: 100%;
+        max-width: 240px;
+    }
+
+    .hero-banner {
+        padding: var(--space-12);
+    }
+
+    .cards-grid {
         gap: var(--space-12);
-        align-items: flex-start;
+        padding: var(--space-12);
     }
 }

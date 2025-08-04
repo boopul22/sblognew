@@ -157,7 +157,7 @@ const Home = ({ searchQuery }) => {
 
       {/* Main Content Area */}
       <main className="main-content">
-        <div className="container">
+        <div className="container container--full desktop-full-width">
           <div className="content-layout">
             {/* Shayari Cards Grid */}
             <div className="shayari-grid">

@@ -43,7 +43,8 @@ async function initializeHandlers() {
     'r2/delete',
     'r2/list',
     'r2/metadata',
-    'r2/health'
+    'r2/health',
+    'download-image'
   ]
 
   for (const path of handlers) {
@@ -139,10 +140,21 @@ const server = createServer(async (req, res) => {
       }
 
       const mockRes = createMockRes(res)
-      
+
       // Call the handler
-      await handler(mockReq, mockRes)
-      
+      const result = await handler(mockReq, mockRes)
+
+      // Handle binary responses (for file downloads)
+      if (result && result.type === 'binary') {
+        // Set headers
+        for (const [key, value] of Object.entries(result.headers)) {
+          res.setHeader(key, value)
+        }
+
+        // Send binary data
+        res.end(result.data)
+      }
+
     } catch (error) {
       console.error(`Error handling ${pathname}:`, error)
       res.statusCode = 500
