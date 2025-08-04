@@ -64,22 +64,22 @@ export default defineConfig({
           }
 
           // Page-specific chunks - each page gets its own chunk
-          if (id.includes('/pages/Home.jsx')) {
+          if (id.includes('/homepage/pages/Home.jsx')) {
             return 'page-home'
           }
-          if (id.includes('/pages/SinglePost.jsx')) {
+          if (id.includes('/posts/pages/PostPageWrapper.jsx')) {
             return 'page-post'
           }
-          if (id.includes('/pages/Authors.jsx')) {
+          if (id.includes('/browse/pages/Authors.jsx')) {
             return 'page-authors'
           }
-          if (id.includes('/pages/Author.jsx')) {
+          if (id.includes('/browse/pages/Author.jsx')) {
             return 'page-author'
           }
-          if (id.includes('/pages/Category.jsx')) {
+          if (id.includes('/browse/pages/Category.jsx')) {
             return 'page-category'
           }
-          if (id.includes('/pages/Tag.jsx')) {
+          if (id.includes('/browse/pages/Tag.jsx')) {
             return 'page-tag'
           }
 
