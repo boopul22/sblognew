@@ -1,58 +1,50 @@
 /**
- * Static data loader for SSG
- * Provides access to pre-generated static data with fallback to dynamic fetching
+ * Supabase data loader
+ * Provides access to real-time data from Supabase database
  */
 
 import { supabasePublic } from './supabase.js'
 
-// Static data cache
-let staticDataCache = {
+// Data cache for performance
+let dataCache = {
   posts: null,
   authors: null,
   categories: null,
   tags: null,
-  routes: null,
-  manifest: null
-}
-
-// Flag to track if we're in SSG mode
-const isSSGMode = import.meta.env.SSG_MODE === 'true'
-
-/**
- * Load static data file with error handling
- */
-async function loadStaticData(filename) {
-  try {
-    const response = await fetch(`/data/static/${filename}`)
-    if (!response.ok) {
-      throw new Error(`Failed to load ${filename}: ${response.status}`)
-    }
-    return await response.json()
-  } catch (error) {
-    console.warn(`Failed to load static data ${filename}:`, error)
-    return null
+  lastFetch: {
+    posts: null,
+    authors: null,
+    categories: null,
+    tags: null
   }
 }
 
+// Cache duration in milliseconds (5 minutes)
+const CACHE_DURATION = 5 * 60 * 1000
+
 /**
- * Get all posts with static data fallback
+ * Check if cached data is still valid
+ */
+function isCacheValid(type) {
+  const lastFetch = dataCache.lastFetch[type]
+  return lastFetch && (Date.now() - lastFetch) < CACHE_DURATION
+}
+
+/**
+ * Get all posts from Supabase
  */
 export async function getAllPosts() {
-  // Try static data first
-  if (!staticDataCache.posts) {
-    staticDataCache.posts = await loadStaticData('posts.json')
-  }
-  
-  if (staticDataCache.posts) {
-    return staticDataCache.posts
+  // Return cached data if still valid
+  if (dataCache.posts && isCacheValid('posts')) {
+    return dataCache.posts
   }
 
-  // Fallback to dynamic fetching
-  console.log('Falling back to dynamic post fetching')
+  console.log('Fetching posts from Supabase...')
   const { data, error } = await supabasePublic
     .from('posts')
     .select(`
       id,
+      wp_id,
       title,
       slug,
       content,
@@ -60,22 +52,42 @@ export async function getAllPosts() {
       author_id,
       published_at,
       status,
+      reading_time,
       featured_image_url,
-      authors:author_id (
+      users:author_id (
         id,
         username,
         display_name,
-        bio
+        full_name
+      ),
+      post_categories (
+        categories (
+          id,
+          name,
+          slug
+        )
+      ),
+      post_tags (
+        tags (
+          id,
+          name,
+          slug
+        )
       )
     `)
     .eq('status', 'published')
     .order('published_at', { ascending: false })
 
   if (error) {
+    console.error('Failed to fetch posts:', error)
     throw new Error(`Failed to fetch posts: ${error.message}`)
   }
 
-  return data || []
+  // Cache the data
+  dataCache.posts = data || []
+  dataCache.lastFetch.posts = Date.now()
+
+  return dataCache.posts
 }
 
 /**
@@ -116,30 +128,30 @@ export async function getPostsPaginated(page = 0, postsPerPage = 10, searchQuery
 }
 
 /**
- * Get all authors with static data fallback
+ * Get all authors from Supabase
  */
 export async function getAllAuthors() {
-  // Try static data first
-  if (!staticDataCache.authors) {
-    staticDataCache.authors = await loadStaticData('authors.json')
-  }
-  
-  if (staticDataCache.authors) {
-    return staticDataCache.authors
+  // Return cached data if still valid
+  if (dataCache.authors && isCacheValid('authors')) {
+    return dataCache.authors
   }
 
-  // Fallback to dynamic fetching
-  console.log('Falling back to dynamic author fetching')
+  console.log('Fetching authors from Supabase...')
   const { data, error } = await supabasePublic
     .from('users')
-    .select('id, user_login, display_name, user_registered')
+    .select('id, wp_id, username, display_name, full_name, email, role, registered_at')
     .order('display_name')
 
   if (error) {
+    console.error('Failed to fetch authors:', error)
     throw new Error(`Failed to fetch authors: ${error.message}`)
   }
 
-  return data || []
+  // Cache the data
+  dataCache.authors = data || []
+  dataCache.lastFetch.authors = Date.now()
+
+  return dataCache.authors
 }
 
 /**
@@ -171,30 +183,30 @@ export async function getPostsByAuthor(authorId, searchQuery = '') {
 }
 
 /**
- * Get all categories with static data fallback
+ * Get all categories from Supabase
  */
 export async function getAllCategories() {
-  // Try static data first
-  if (!staticDataCache.categories) {
-    staticDataCache.categories = await loadStaticData('categories.json')
-  }
-  
-  if (staticDataCache.categories) {
-    return staticDataCache.categories
+  // Return cached data if still valid
+  if (dataCache.categories && isCacheValid('categories')) {
+    return dataCache.categories
   }
 
-  // Fallback to dynamic fetching
-  console.log('Falling back to dynamic category fetching')
+  console.log('Fetching categories from Supabase...')
   const { data, error } = await supabasePublic
     .from('categories')
-    .select('id, name, slug, description')
+    .select('id, wp_id, name, slug, description')
     .order('name')
 
   if (error) {
+    console.error('Failed to fetch categories:', error)
     throw new Error(`Failed to fetch categories: ${error.message}`)
   }
 
-  return data || []
+  // Cache the data
+  dataCache.categories = data || []
+  dataCache.lastFetch.categories = Date.now()
+
+  return dataCache.categories
 }
 
 /**
@@ -228,30 +240,30 @@ export async function getPostsByCategory(categoryId, searchQuery = '') {
 }
 
 /**
- * Get all tags with static data fallback
+ * Get all tags from Supabase
  */
 export async function getAllTags() {
-  // Try static data first
-  if (!staticDataCache.tags) {
-    staticDataCache.tags = await loadStaticData('tags.json')
-  }
-  
-  if (staticDataCache.tags) {
-    return staticDataCache.tags
+  // Return cached data if still valid
+  if (dataCache.tags && isCacheValid('tags')) {
+    return dataCache.tags
   }
 
-  // Fallback to dynamic fetching
-  console.log('Falling back to dynamic tag fetching')
+  console.log('Fetching tags from Supabase...')
   const { data, error } = await supabasePublic
     .from('tags')
-    .select('id, name, slug, description')
+    .select('id, wp_id, name, slug, description')
     .order('name')
 
   if (error) {
+    console.error('Failed to fetch tags:', error)
     throw new Error(`Failed to fetch tags: ${error.message}`)
   }
 
-  return data || []
+  // Cache the data
+  dataCache.tags = data || []
+  dataCache.lastFetch.tags = Date.now()
+
+  return dataCache.tags
 }
 
 /**
@@ -284,38 +296,26 @@ export async function getPostsByTag(tagId, searchQuery = '') {
   return tagPosts
 }
 
-/**
- * Get all routes for SSG
- */
-export async function getAllRoutes() {
-  if (!staticDataCache.routes) {
-    staticDataCache.routes = await loadStaticData('routes.json')
-  }
-  
-  return staticDataCache.routes || []
-}
+
+
+
+
+
 
 /**
- * Get build manifest
+ * Clear data cache (useful for development)
  */
-export async function getBuildManifest() {
-  if (!staticDataCache.manifest) {
-    staticDataCache.manifest = await loadStaticData('manifest.json')
-  }
-  
-  return staticDataCache.manifest || null
-}
-
-/**
- * Clear static data cache (useful for development)
- */
-export function clearStaticDataCache() {
-  staticDataCache = {
+export function clearDataCache() {
+  dataCache = {
     posts: null,
     authors: null,
     categories: null,
     tags: null,
-    routes: null,
-    manifest: null
+    lastFetch: {
+      posts: null,
+      authors: null,
+      categories: null,
+      tags: null
+    }
   }
 }

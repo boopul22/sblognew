@@ -1,0 +1,27 @@
+[
+  {
+    "path": "/",
+    "type": "home"
+  },
+  {
+    "path": "/authors",
+    "type": "authors"
+  },
+  {
+    "path": "/cloude-new",
+    "type": "post",
+    "slug": "cloude-new",
+    "id": "53807da4-63a3-4e0a-b99f-ccd6ac32f1f5"
+  },
+  {
+    "path": "/hi-check-new",
+    "type": "post",
+    "slug": "hi-check-new",
+    "id": "271f89aa-d2c4-43e3-9be0-1f93a860b069"
+  },
+  {
+    "path": "/author/undefined",
+    "type": "author",
+    "id": "f6acb36f-1f6f-4dd1-ab28-b777354d683e"
+  }
+]

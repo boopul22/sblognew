@@ -1,7 +1,9 @@
 import { useState, useEffect, useCallback, memo } from 'react'
-import { getPostsPaginated } from '../lib/staticData'
+import { getAllPosts } from '../lib/staticData'
 import PostCard from '../components/PostCard'
 import SkeletonLoader from '../components/SkeletonLoader'
+import HeroSection from '../components/HeroSection'
+import Sidebar from '../components/Sidebar'
 
 const Home = ({ searchQuery }) => {
   const [posts, setPosts] = useState([])
@@ -9,23 +11,49 @@ const Home = ({ searchQuery }) => {
   const [error, setError] = useState(null)
   const [hasMore, setHasMore] = useState(true)
   const [page, setPage] = useState(0)
+  const [selectedCategory, setSelectedCategory] = useState('all')
   const POSTS_PER_PAGE = 12
 
   useEffect(() => {
     fetchPosts(true) // Reset when search changes
-  }, [searchQuery])
+  }, [searchQuery, selectedCategory])
+
+  const handleCategoryChange = useCallback((category) => {
+    setSelectedCategory(category)
+    fetchPosts(true) // Reset posts when category changes
+  }, [])
 
   const fetchPosts = useCallback(async (reset = false) => {
     try {
       setLoading(true)
       setError(null)
-      const currentPage = reset ? 0 : page
 
-      const { posts: newPosts, hasMore: moreAvailable } = await getPostsPaginated(
-        currentPage,
-        POSTS_PER_PAGE,
-        searchQuery
-      )
+      // Get all posts from Supabase
+      let allPosts = await getAllPosts()
+
+      // Apply category filter
+      if (selectedCategory !== 'all') {
+        allPosts = allPosts.filter(post =>
+          post.categories?.slug === selectedCategory
+        )
+      }
+
+      // Apply search filter
+      if (searchQuery && searchQuery.trim()) {
+        const query = searchQuery.toLowerCase()
+        allPosts = allPosts.filter(post =>
+          post.title.toLowerCase().includes(query) ||
+          post.excerpt?.toLowerCase().includes(query) ||
+          post.content?.toLowerCase().includes(query)
+        )
+      }
+
+      // Implement pagination
+      const currentPage = reset ? 0 : page
+      const startIndex = currentPage * POSTS_PER_PAGE
+      const endIndex = startIndex + POSTS_PER_PAGE
+      const newPosts = allPosts.slice(startIndex, endIndex)
+      const moreAvailable = endIndex < allPosts.length
 
       if (reset) {
         setPosts(newPosts)
@@ -42,7 +70,7 @@ const Home = ({ searchQuery }) => {
     } finally {
       setLoading(false)
     }
-  }, [page, searchQuery])
+  }, [page, searchQuery, selectedCategory])
 
   if (loading && posts.length === 0) {
     return (
@@ -70,44 +98,146 @@ const Home = ({ searchQuery }) => {
     )
   }
 
-  // Get featured post (first post) and regular posts
-  const [featuredPost, ...regularPosts] = posts
+  // Helper functions for post interactions
+  const formatDate = (dateString) => {
+    const date = new Date(dateString)
+    return date.toLocaleDateString('hi-IN', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    })
+  }
+
+  const getRandomLikes = () => Math.floor(Math.random() * 500) + 50
+
+  const handleLike = (post) => {
+    const likes = getRandomLikes()
+    alert(`शायरी को ${likes} लाइक मिले!`)
+  }
+
+  const handleShare = (post) => {
+    const shareText = `${post.title}\n\n${post.excerpt}\n\n- ${post.users?.display_name || 'Admin'}\n\nशायरी ब्लॉग से साझा किया गया`
+
+    if (navigator.share) {
+      navigator.share({
+        title: post.title,
+        text: shareText,
+        url: window.location.href
+      }).catch(err => console.log('Error sharing:', err))
+    } else {
+      navigator.clipboard.writeText(shareText).then(() => {
+        alert('शायरी क्लिपबोर्ड में कॉपी हो गई!')
+      }).catch(() => {
+        alert(`शायरी साझा करें:\n\n${shareText}`)
+      })
+    }
+  }
+
+  const handleReadFull = (post) => {
+    const categoryName = post.post_categories?.[0]?.categories?.name || 'शायरी'
+    alert(`${post.title}\n\n${post.content}\n\n- ${post.users?.display_name || 'Admin'}\n\nकैटेगरी: ${categoryName}\nतारीख: ${formatDate(post.published_at)}`)
+  }
 
   return (
     <>
-      <div className="main-grid">
-        {featuredPost && !searchQuery && (
-          <PostCard post={featuredPost} featured={true} priority={true} />
-        )}
+      {/* Hero Section */}
+      <HeroSection />
 
-        {(searchQuery ? posts : regularPosts).map((post, index) => (
-          <PostCard
-            key={post.id}
-            post={post}
-            priority={index < 3} // Mark first 3 posts as priority for LCP
-            showDebug={index === 0} // Enable debug for first post only
-          />
-        ))}
-      </div>
+      {/* Main Content Area */}
+      <main className="main-content">
+        <div className="container">
+          <div className="content-layout">
+            {/* Shayari Cards Grid */}
+            <div className="shayari-grid">
+              <h3 className="section-title">Latest शायरी</h3>
 
-      {hasMore && !searchQuery && (
-        <div className="load-more-container">
-          <button
-            onClick={() => fetchPosts(false)}
-            disabled={loading}
-            className="load-more-btn"
-          >
-            {loading ? (
-              <div className="loading-inline">
-                <div className="spinner" style={{ width: '16px', height: '16px', marginRight: '8px' }}></div>
-                Loading...
+              <div className="cards-grid" id="shayariGrid">
+                {posts.length > 0 ? (
+                  posts.map((post) => (
+                    <div key={post.id} className="shayari-card">
+                      {post.featured_image_url ? (
+                        <div className="card-image">
+                          <img
+                            src={post.featured_image_url}
+                            alt={post.title}
+                            style={{
+                              width: '100%',
+                              height: '200px',
+                              objectFit: 'cover',
+                              borderRadius: '8px',
+                              marginBottom: '15px'
+                            }}
+                            onError={(e) => {
+                              e.target.style.display = 'none';
+                            }}
+                          />
+                        </div>
+                      ) : (
+                        <div className="card-image-placeholder"></div>
+                      )}
+                      <h3 className="card-title">{post.title}</h3>
+                      <p className="card-author">लेखक: {post.users?.display_name || 'Admin'}</p>
+                      <p className="card-excerpt">{post.excerpt}</p>
+                      <div className="card-meta">
+                        <span className="card-category">
+                          {post.post_categories?.[0]?.categories?.name || 'शायरी'}
+                        </span>
+                        <span className="card-date">{formatDate(post.published_at)}</span>
+                      </div>
+                      <div className="card-actions">
+                        <div className="card-engagement">
+                          <button
+                            className="like-count"
+                            onClick={() => handleLike(post)}
+                          >
+                            ❤️ <span>{getRandomLikes()}</span>
+                          </button>
+                          <button
+                            className="share-btn"
+                            onClick={() => handleShare(post)}
+                          >
+                            📤 Share
+                          </button>
+                        </div>
+                        <button
+                          className="btn btn--sm btn--primary"
+                          onClick={() => handleReadFull(post)}
+                        >
+                          पढ़ें
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="no-results">
+                    <h3>कोई शायरी नहीं मिली</h3>
+                    <p>कृपया अपनी खोज या फ़िल्टर बदलें</p>
+                  </div>
+                )}
               </div>
-            ) : (
-              'Load More Posts'
-            )}
-          </button>
+
+              {/* Load More Button */}
+              {hasMore && (
+                <div className="load-more-container">
+                  <button
+                    onClick={() => fetchPosts(false)}
+                    disabled={loading}
+                    className="btn btn--outline"
+                  >
+                    {loading ? 'Loading...' : 'Load More शायरी'}
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Sidebar */}
+            <Sidebar
+              selectedCategory={selectedCategory}
+              onCategoryChange={handleCategoryChange}
+            />
+          </div>
         </div>
-      )}
+      </main>
     </>
   )
 }

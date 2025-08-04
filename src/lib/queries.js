@@ -14,13 +14,27 @@ const AUTHOR_FIELDS = 'id, username, display_name, bio'
  * Fetch posts for home page with minimal data
  * Only loads essential fields to reduce bundle size
  */
-export const fetchHomePosts = async (page = 0, postsPerPage = 10, searchQuery = '') => {
+export const fetchHomePosts = async (page = 0, postsPerPage = 10, searchQuery = '', categorySlug = null) => {
   const from = page * postsPerPage
   const to = from + postsPerPage - 1
 
   let query = supabasePublic
     .from('posts')
-    .select(BASE_POST_FIELDS)
+    .select(`
+      ${BASE_POST_FIELDS},
+      users:author_id (
+        id,
+        display_name,
+        username
+      ),
+      post_categories (
+        categories (
+          id,
+          name,
+          slug
+        )
+      )
+    `)
     .eq('status', 'published')
     .order('published_at', { ascending: false })
     .range(from, to)
@@ -28,6 +42,11 @@ export const fetchHomePosts = async (page = 0, postsPerPage = 10, searchQuery = 
   // Apply search filter if provided
   if (searchQuery && searchQuery.trim()) {
     query = query.or(`title.ilike.%${searchQuery}%,excerpt.ilike.%${searchQuery}%`)
+  }
+
+  // Apply category filter if provided
+  if (categorySlug && categorySlug !== 'all') {
+    query = query.eq('post_categories.categories.slug', categorySlug)
   }
 
   const { data, error, count } = await query
@@ -52,7 +71,21 @@ export const fetchSinglePost = async (slug) => {
     .from('posts')
     .select(`
       ${FULL_POST_FIELDS},
-      authors:author_id (${AUTHOR_FIELDS})
+      users:author_id (${AUTHOR_FIELDS}),
+      post_categories (
+        categories (
+          id,
+          name,
+          slug
+        )
+      ),
+      post_tags (
+        tags (
+          id,
+          name,
+          slug
+        )
+      )
     `)
     .eq('slug', slug)
     .eq('status', 'published')

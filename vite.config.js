@@ -1,20 +1,10 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    react(),
-    // Copy static data files to dist
-    viteStaticCopy({
-      targets: [
-        {
-          src: 'src/data/static/*',
-          dest: 'data/static'
-        }
-      ]
-    })
+    react()
   ],
   // Development server configuration
   server: {

@@ -1,0 +1,103 @@
+{
+  "timestamp": "2025-08-04T13:30:57.626Z",
+  "configuration": {
+    "batchSize": 50,
+    "dryRun": true
+  },
+  "statistics": {
+    "users": {
+      "total": 3,
+      "migrated": 3,
+      "errors": 0
+    },
+    "categories": {
+      "total": 19,
+      "migrated": 19,
+      "errors": 0
+    },
+    "tags": {
+      "total": 192,
+      "migrated": 192,
+      "errors": 0
+    },
+    "posts": {
+      "total": 146,
+      "migrated": 146,
+      "errors": 0
+    },
+    "attachments": {
+      "total": 14,
+      "migrated": 14,
+      "errors": 0
+    },
+    "postMeta": {
+      "total": 14,
+      "migrated": 0,
+      "errors": 0
+    },
+    "postCategories": {
+      "total": 254,
+      "migrated": 0,
+      "errors": 0
+    },
+    "postTags": {
+      "total": 177,
+      "migrated": 0,
+      "errors": 0
+    }
+  },
+  "errors": [],
+  "log": [
+    "[2025-08-04T13:30:55.272Z] 🚀 Starting Enhanced WordPress to Supabase Migration",
+    "[2025-08-04T13:30:55.273Z] Configuration: Batch Size: 50, Dry Run: true",
+    "[2025-08-04T13:30:55.273Z] ================================================================================",
+    "[2025-08-04T13:30:55.273Z] 🔍 Validating environment...",
+    "[2025-08-04T13:30:56.021Z] ✅ Supabase connection validated",
+    "[2025-08-04T13:30:56.023Z] ✅ Extracted data directory found",
+    "[2025-08-04T13:30:56.023Z] 📊 Loading and validating extracted data...",
+    "[2025-08-04T13:30:56.025Z] ✅ Loaded 3 users records",
+    "[2025-08-04T13:30:56.026Z] ✅ Loaded 19 categories records",
+    "[2025-08-04T13:30:56.027Z] ✅ Loaded 192 tags records",
+    "[2025-08-04T13:30:56.105Z] ✅ Loaded 146 posts records",
+    "[2025-08-04T13:30:56.106Z] ✅ Loaded 14 attachments records",
+    "[2025-08-04T13:30:56.106Z] ✅ Loaded 14 postMeta records",
+    "[2025-08-04T13:30:56.109Z] ✅ Loaded 254 postCategories records",
+    "[2025-08-04T13:30:56.110Z] ✅ Loaded 177 postTags records",
+    "[2025-08-04T13:30:56.110Z] 👥 Migrating users...",
+    "[2025-08-04T13:30:56.110Z] 🔍 [DRY RUN] Would migrate users batch 1 (3 users)",
+    "[2025-08-04T13:30:56.110Z] ✅ Users migration completed: 3/3",
+    "[2025-08-04T13:30:56.110Z] 📂 Migrating categories...",
+    "[2025-08-04T13:30:56.110Z] 🔍 [DRY RUN] Would migrate categories batch 1 (19 categories)",
+    "[2025-08-04T13:30:56.110Z] ✅ Categories migration completed: 19/19",
+    "[2025-08-04T13:30:56.110Z] 🏷️  Migrating tags...",
+    "[2025-08-04T13:30:56.110Z] 🔍 [DRY RUN] Would migrate tags batch 1 (50 tags)",
+    "[2025-08-04T13:30:56.110Z] 🔍 [DRY RUN] Would migrate tags batch 2 (50 tags)",
+    "[2025-08-04T13:30:56.110Z] 🔍 [DRY RUN] Would migrate tags batch 3 (50 tags)",
+    "[2025-08-04T13:30:56.111Z] 🔍 [DRY RUN] Would migrate tags batch 4 (42 tags)",
+    "[2025-08-04T13:30:56.111Z] ✅ Tags migration completed: 192/192",
+    "[2025-08-04T13:30:56.111Z] 📝 Migrating posts...",
+    "[2025-08-04T13:30:56.166Z] 🔍 [DRY RUN] Would migrate posts batch 1 (50 posts)",
+    "[2025-08-04T13:30:56.202Z] 🔍 [DRY RUN] Would migrate posts batch 2 (50 posts)",
+    "[2025-08-04T13:30:56.246Z] 🔍 [DRY RUN] Would migrate posts batch 3 (46 posts)",
+    "[2025-08-04T13:30:56.246Z] ✅ Posts migration completed: 146/146",
+    "[2025-08-04T13:30:56.247Z] 📎 Migrating attachments...",
+    "[2025-08-04T13:30:56.247Z] 🔍 [DRY RUN] Would migrate attachments batch 1 (14 attachments)",
+    "[2025-08-04T13:30:56.247Z] ✅ Attachments migration completed: 14/14",
+    "[2025-08-04T13:30:56.247Z] 🔧 Migrating post meta...",
+    "[2025-08-04T13:30:56.247Z] ✅ Post meta migration completed: 0/14",
+    "[2025-08-04T13:30:56.247Z] 🔗 Migrating post-category relationships...",
+    "[2025-08-04T13:30:56.248Z] ✅ Post-category relations migration completed: 0/254",
+    "[2025-08-04T13:30:56.248Z] 🏷️  Migrating post-tag relationships...",
+    "[2025-08-04T13:30:56.250Z] ✅ Post-tag relations migration completed: 0/177",
+    "[2025-08-04T13:30:56.250Z] 🔍 Validating migration results...",
+    "[2025-08-04T13:30:56.410Z] ✅ users: Expected 3, Found 0",
+    "[2025-08-04T13:30:56.522Z] ✅ categories: Expected 19, Found 0",
+    "[2025-08-04T13:30:56.679Z] ✅ tags: Expected 192, Found 0",
+    "[2025-08-04T13:30:56.796Z] ✅ posts: Expected 146, Found 0",
+    "[2025-08-04T13:30:56.967Z] ✅ attachments: Expected 14, Found 0",
+    "[2025-08-04T13:30:57.389Z] ✅ postMeta: Expected 0, Found 0",
+    "[2025-08-04T13:30:57.485Z] ✅ postCategories: Expected 0, Found 0",
+    "[2025-08-04T13:30:57.625Z] ✅ postTags: Expected 0, Found 0",
+    "[2025-08-04T13:30:57.626Z] 📊 Generating migration report..."
+  ]
+}
