@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, memo } from 'react'
+import { Link } from 'react-router-dom'
 import { getPostsPaginated } from '../lib/staticData'
 import PostCard from '../components/PostCard'
 import SkeletonLoader from '../components/SkeletonLoader'
@@ -133,9 +134,9 @@ const Home = ({ searchQuery }) => {
                           📤 Share
                         </button>
                       </div>
-                      <a href={`/${post.slug}`} className="btn btn--sm btn--primary">
+                      <Link to={`/${post.slug}`} className="btn btn--sm btn--primary">
                         पढ़ें
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 ))}

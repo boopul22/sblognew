@@ -22,11 +22,15 @@ const PostCard = memo(({ post, featured = false, priority = false, showDebug = f
               src={thumbnailUrl}
               alt={post.title}
               width={800}
-              height={200}
+              height={400}
               priority={priority || featured}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
+              aspectRatio="2/1"
               style={{
                 borderRadius: '8px',
-                marginBottom: '15px'
+                marginBottom: '15px',
+                width: '100%',
+                height: 'auto'
               }}
             />
           </div>
@@ -53,12 +57,16 @@ const PostCard = memo(({ post, featured = false, priority = false, showDebug = f
               src={thumbnailUrl}
               alt={post.title}
               width={400}
-              height={150}
+              height={250}
               lazy={!priority}
               priority={priority}
+              sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, (max-width: 1200px) 33vw, 400px"
+              aspectRatio="8/5"
               style={{
                 borderRadius: '8px',
-                marginBottom: '10px'
+                marginBottom: '10px',
+                width: '100%',
+                height: 'auto'
               }}
             />
           </div>

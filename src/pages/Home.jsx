@@ -1,11 +1,14 @@
 import { useState, useEffect, useCallback, memo } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { getAllPosts } from '../lib/staticData'
+import OptimizedImage from '../components/OptimizedImage'
 import PostCard from '../components/PostCard'
 import SkeletonLoader from '../components/SkeletonLoader'
 import HeroSection from '../components/HeroSection'
 import Sidebar from '../components/Sidebar'
 
 const Home = ({ searchQuery }) => {
+  const navigate = useNavigate()
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -134,8 +137,8 @@ const Home = ({ searchQuery }) => {
   }
 
   const handleReadFull = (post) => {
-    const categoryName = post.post_categories?.[0]?.categories?.name || 'शायरी'
-    alert(`${post.title}\n\n${post.content}\n\n- ${post.users?.display_name || 'Admin'}\n\nकैटेगरी: ${categoryName}\nतारीख: ${formatDate(post.published_at)}`)
+    // Navigate to the individual post page using the post slug
+    navigate(`/${post.slug}`)
   }
 
   return (
@@ -157,18 +160,20 @@ const Home = ({ searchQuery }) => {
                     <div key={post.id} className="shayari-card">
                       {post.featured_image_url ? (
                         <div className="card-image">
-                          <img
+                          <OptimizedImage
                             src={post.featured_image_url}
                             alt={post.title}
+                            width={400}
+                            height={200}
+                            lazy={true}
+                            priority={false}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+                            aspectRatio="2/1"
                             style={{
                               width: '100%',
-                              height: '200px',
-                              objectFit: 'cover',
+                              height: 'auto',
                               borderRadius: '8px',
                               marginBottom: '15px'
-                            }}
-                            onError={(e) => {
-                              e.target.style.display = 'none';
                             }}
                           />
                         </div>

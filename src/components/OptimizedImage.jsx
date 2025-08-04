@@ -178,8 +178,16 @@ const OptimizedImage = memo(({
     return placeholder
   }
 
+  // Calculate container styles with aspect ratio
+  const containerStyles = {
+    ...style,
+    position: 'relative',
+    overflow: 'hidden',
+    ...(aspectRatio && { aspectRatio })
+  }
+
   return (
-    <div className={`optimized-image-container ${className}`} style={style} ref={imgRef}>
+    <div className={`optimized-image-container ${className}`} style={containerStyles} ref={imgRef}>
       <picture>
         {/* WebP source for modern browsers */}
         <source

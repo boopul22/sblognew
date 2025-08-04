@@ -8,7 +8,7 @@ import SkeletonLoader from './components/SkeletonLoader'
 
 // Lazy load page components for code splitting
 const Home = lazy(() => import('./pages/Home'))
-const SinglePost = lazy(() => import('./pages/SinglePost'))
+const PostPageWrapper = lazy(() => import('./pages/PostPageWrapper'))
 const Authors = lazy(() => import('./pages/Authors'))
 const Author = lazy(() => import('./pages/Author'))
 const Category = lazy(() => import('./pages/Category'))
@@ -74,6 +74,11 @@ const App = memo(() => {
               path="/tag/:slug"
               element={<Tag searchQuery={searchQuery} />}
             />
+            {/* Enhanced post page route */}
+            <Route
+              path="/post/:slug"
+              element={<PostPageWrapper />}
+            />
             {/* Admin routes */}
             <Route path="/admin/login" element={<Login />} />
             <Route path="/admin" element={
@@ -89,7 +94,7 @@ const App = memo(() => {
             {/* Catch-all route for individual posts - must be last */}
             <Route
               path="/:slug"
-              element={<SinglePost />}
+              element={<PostPageWrapper />}
             />
           </Routes>
         </Suspense>
