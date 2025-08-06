@@ -1,7 +1,7 @@
 {
   "name": "sayari-blog",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "concurrently --names \"API,FRONTEND\" --prefix-colors \"blue,green\" \"npm run dev:api\" \"npm run dev:frontend\"",
