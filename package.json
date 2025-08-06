@@ -37,8 +37,7 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "verify-deployment": "node scripts/verify-deployment.js",
-    "prepare": "is-ci || husky",
-    "postinstall": "is-ci || husky"
+    "prepare": "node -e \"process.exit(process.env.CI ? 0 : 1)\" || npx husky || true"
   },
   "devDependencies": {
     "@eslint/js": "^9.32.0",
@@ -66,7 +65,6 @@
     "fs-extra": "^11.3.0",
     "globals": "^16.3.0",
     "husky": "^9.1.7",
-    "is-ci": "^4.1.0",
     "jsdom": "^26.1.0",
     "lint-staged": "^16.1.4",
     "msw": "^2.10.4",
