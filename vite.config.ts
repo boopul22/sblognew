@@ -1,11 +1,22 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { resolve } from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     react()
   ],
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, './src'),
+      '@/components': resolve(__dirname, './src/components'),
+      '@/lib': resolve(__dirname, './src/lib'),
+      '@/utils': resolve(__dirname, './src/utils'),
+      '@/features': resolve(__dirname, './src/features'),
+      '@/shared': resolve(__dirname, './src/shared'),
+    },
+  },
   // Development server configuration
   server: {
     port: 3000,
@@ -103,23 +114,54 @@ export default defineConfig({
     chunkSizeWarningLimit: 500, // Warn if chunks exceed 500KB
     // Additional build optimizations
     reportCompressedSize: true,
-    cssMinify: true
+    cssMinify: true,
+    // Enable compression
+    assetsInlineLimit: 4096, // Inline assets smaller than 4KB
+    // Optimize CSS
+    cssCodeSplit: true,
+    // Enable experimental features for better performance
+    experimental: {
+      renderBuiltUrl: (filename: string) => {
+        // Use CDN for assets in production
+        if (process.env.NODE_ENV === 'production' && process.env.VITE_CDN_URL) {
+          return `${process.env.VITE_CDN_URL}/${filename}`
+        }
+        return `/${filename}`
+      }
+    }
   },
   base: '/',
   // Ensure public files are copied
   publicDir: 'public',
   // Optimize dependencies and enable aggressive tree shaking
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom', '@supabase/supabase-js'],
+    include: [
+      'react',
+      'react-dom',
+      'react-router-dom',
+      '@supabase/supabase-js',
+      'react-hot-toast',
+      'react-hook-form',
+      'slugify'
+    ],
     exclude: ['@supabase/auth-js', '@supabase/realtime-js'] // Exclude unused Supabase modules
   },
-  // Enable aggressive tree shaking
+  // Enable aggressive tree shaking and environment variables
   define: {
-    'process.env.NODE_ENV': JSON.stringify('production'),
-    'import.meta.env.SSG_MODE': JSON.stringify(process.env.SSG_MODE || 'false')
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+    'import.meta.env.SSG_MODE': JSON.stringify(process.env.SSG_MODE || 'false'),
+    // Remove debug code in production
+    __DEV__: JSON.stringify(process.env.NODE_ENV !== 'production'),
   },
   esbuild: {
-    drop: ['console', 'debugger'], // Remove console logs and debugger statements
-    pure: ['console.log', 'console.warn'] // Mark as pure functions for tree shaking
+    // Remove console logs and debugger statements in production
+    drop: process.env.NODE_ENV === 'production' ? ['console', 'debugger'] : [],
+    pure: process.env.NODE_ENV === 'production' ? ['console.log', 'console.warn'] : [],
+    // Enable tree shaking for unused imports
+    treeShaking: true,
+    // Minify identifiers in production
+    minifyIdentifiers: process.env.NODE_ENV === 'production',
+    // Keep function names for better debugging in development
+    keepNames: process.env.NODE_ENV === 'development',
   }
 })

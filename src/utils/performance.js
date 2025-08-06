@@ -295,16 +295,45 @@ export const performanceUtils = {
 export const initPerformanceMonitoring = () => {
   if (typeof window !== 'undefined') {
     const monitor = new PerformanceMonitor()
-    
+
     // Report performance metrics after page load
     window.addEventListener('load', () => {
       setTimeout(() => {
         const score = monitor.getPerformanceScore()
+        const metrics = monitor.getMetrics()
+
+        // Enhanced logging with structured data
+        console.group('🚀 Performance Report')
         console.log(`Performance Score: ${score}/100`)
-        console.log('Performance Metrics:', monitor.getMetrics())
+        console.log('Core Web Vitals:', {
+          LCP: metrics.lcp ? `${metrics.lcp.toFixed(2)}ms` : 'Not measured',
+          FID: metrics.fid ? `${metrics.fid.toFixed(2)}ms` : 'Not measured',
+          CLS: metrics.cls ? metrics.cls.toFixed(4) : 'Not measured'
+        })
+        console.log('Navigation Timing:', metrics.navigation)
+        console.log('Resource Performance:', metrics.resources?.slice(0, 5)) // Show first 5 resources
+        console.groupEnd()
+
+        // Send to analytics if available
+        if (window.gtag) {
+          window.gtag('event', 'performance_score', {
+            custom_parameter: score,
+            lcp: metrics.lcp,
+            fid: metrics.fid,
+            cls: metrics.cls
+          })
+        }
+
+        // Store in sessionStorage for debugging
+        sessionStorage.setItem('performance-report', JSON.stringify({
+          score,
+          metrics,
+          timestamp: Date.now(),
+          url: window.location.href
+        }))
       }, 5000) // Wait 5 seconds for all metrics to be collected
     })
-    
+
     return monitor
   }
   return null
