@@ -59,5 +59,26 @@ _redirects
 # Development configuration
 .env.example
 
+# Git hooks and development tools
+.husky/
+husky
+
+# TypeScript and linting configuration
+tsconfig.json
+tsconfig.node.json
+eslint.config.js
+prettier.config.js
+vitest.config.ts
+
+# Test files
+**/*.test.*
+**/*.spec.*
+src/test/
+coverage/
+
+# Development optimization files
+FRONTEND_OPTIMIZATIONS.md
+src/App.optimized.tsx
+
 # Static data source files (generated during build)
 # src/data/static/*.json  # Commented out - needed for Vercel build

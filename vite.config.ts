@@ -117,8 +117,6 @@ export default defineConfig({
     cssMinify: true,
     // Enable compression
     assetsInlineLimit: 4096, // Inline assets smaller than 4KB
-    // Optimize CSS
-    cssCodeSplit: true,
     // Enable experimental features for better performance
     experimental: {
       renderBuiltUrl: (filename: string) => {
