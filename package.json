@@ -10,10 +10,7 @@
     "test:r2": "node backend/scripts/test-r2-connection.js",
     "setup:admin": "node backend/scripts/setup-admin-user.js",
     "setup:r2": "node backend/scripts/setup-r2-credentials.js",
-    "setup:r2-cors": "node backend/scripts/setup-r2-cors.js",
-    "build:vercel": "cd Front-end && npm install && npm run build",
-    "dev": "cd Front-end && npm run dev",
-    "start": "cd Front-end && npm run start"
+    "setup:r2-cors": "node backend/scripts/setup-r2-cors.js"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.859.0",
