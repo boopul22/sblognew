@@ -29,8 +29,8 @@ const Hero: React.FC<HeroProps> = ({ post }) => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
                 <div className="flex flex-col md:flex-row items-center gap-8">
                     <div className="md:w-1/2 w-full">
-                        <img 
-                            src={post.featured_image_url} 
+                        <img
+                            src={post.featured_image_url || ''}
                             alt={post.title}
                             className="rounded-lg shadow-md w-full h-full object-cover max-h-80 aspect-video md:aspect-auto"
                         />

@@ -15,9 +15,9 @@ interface PostCardProps {
 const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const { language, t } = useLanguage();
   const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(post.likes);
+  const [likeCount, setLikeCount] = useState(post.likes || 0);
 
-  const formattedDate = new Date(post.published_at).toLocaleDateString(language === 'hi' ? 'hi-IN' : 'en-IN', {
+  const formattedDate = new Date(post.published_at || new Date()).toLocaleDateString(language === 'hi' ? 'hi-IN' : 'en-IN', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -34,8 +34,8 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
     e.preventDefault(); // Prevent navigation when sharing
     e.stopPropagation();
     const shareData = {
-      title: language === 'hi' ? post.title : post.title_en_hi,
-      text: `${language === 'hi' ? post.excerpt : post.excerpt_en_hi}\n\n- ${language === 'hi' ? post.users.display_name : post.users.display_name_en_hi}`,
+      title: language === 'hi' ? post.title : (post.title_en_hi || post.title),
+      text: `${language === 'hi' ? (post.excerpt || '') : (post.excerpt_en_hi || post.excerpt || '')}\n\n- ${language === 'hi' ? (post.users?.display_name || 'Unknown') : (post.users?.display_name_en_hi || post.users?.display_name || 'Unknown')}`,
       url: `${window.location.origin}/${post.slug}`,
     };
     try {
@@ -51,10 +51,10 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
     }
   };
   
-  const title = language === 'hi' ? post.title : post.title_en_hi;
-  const excerpt = language === 'hi' ? post.excerpt : post.excerpt_en_hi;
-  const authorName = language === 'hi' ? post.users.display_name : post.users.display_name_en_hi;
-  const categoryName = language === 'hi' ? post.post_categories[0]?.categories.name : post.post_categories[0]?.categories.name_en_hi;
+  const title = language === 'hi' ? post.title : (post.title_en_hi || post.title);
+  const excerpt = language === 'hi' ? (post.excerpt || '') : (post.excerpt_en_hi || post.excerpt || '');
+  const authorName = language === 'hi' ? (post.users?.display_name || 'Unknown') : (post.users?.display_name_en_hi || post.users?.display_name || 'Unknown');
+  const categoryName = language === 'hi' ? post.post_categories?.[0]?.categories.name : (post.post_categories?.[0]?.categories.name_en_hi || post.post_categories?.[0]?.categories.name);
 
   return (
     <Link href={`/${post.slug}`} className="bg-surface dark:bg-dark-surface rounded-xl border border-border dark:border-dark-border shadow-sm overflow-hidden flex flex-col transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group cursor-pointer">
@@ -73,7 +73,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
             <div className="flex-grow">
                 <div className="flex justify-between items-center mb-2">
                     <div className="flex-wrap gap-2 flex">
-                        {post.post_categories.slice(0, 1).map(pc => (
+                        {post.post_categories?.slice(0, 1).map(pc => (
                             <Tag key={pc.categories.id} name={categoryName || pc.categories.name} />
                         ))}
                     </div>

@@ -30,7 +30,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
     .filter(post => {
       // Category filter
       if (selectedCategory && selectedCategory !== 'all') {
-        return post.post_categories.some(pc => pc.categories.slug === selectedCategory);
+        return post.post_categories?.some(pc => pc.categories.slug === selectedCategory) || false;
       }
       return true;
     })
@@ -40,11 +40,11 @@ export default async function HomePage({ searchParams }: HomePageProps) {
         const lowerCaseQuery = activeSearch.toLowerCase();
         return (
           post.title.toLowerCase().includes(lowerCaseQuery) ||
-          post.title_en_hi.toLowerCase().includes(lowerCaseQuery) ||
-          post.excerpt.toLowerCase().includes(lowerCaseQuery) ||
-          post.excerpt_en_hi.toLowerCase().includes(lowerCaseQuery) ||
-          post.users.display_name.toLowerCase().includes(lowerCaseQuery) ||
-          post.users.display_name_en_hi.toLowerCase().includes(lowerCaseQuery)
+          post.title_en_hi?.toLowerCase().includes(lowerCaseQuery) ||
+          post.excerpt?.toLowerCase().includes(lowerCaseQuery) ||
+          post.excerpt_en_hi?.toLowerCase().includes(lowerCaseQuery) ||
+          post.users?.display_name?.toLowerCase().includes(lowerCaseQuery) ||
+          post.users?.display_name_en_hi?.toLowerCase().includes(lowerCaseQuery)
         );
       }
       return true;

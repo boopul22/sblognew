@@ -12,10 +12,27 @@ interface PostPageProps {
 
 // Generate static pages for all posts at build time
 export async function generateStaticParams() {
-  const posts = await fetchPosts();
-  return posts.map(post => ({
-    slug: post.slug,
-  }));
+  try {
+    console.log('Attempting to fetch posts for static generation...');
+    const posts = await fetchPosts();
+
+    if (!posts || posts.length === 0) {
+      console.warn('No posts found during static generation, returning empty array');
+      return [];
+    }
+
+    console.log(`Successfully fetched ${posts.length} posts for static generation`);
+    return posts.map(post => ({
+      slug: post.slug,
+    }));
+  } catch (error) {
+    console.error('Failed to fetch posts during static generation:', error);
+
+    // Return empty array to allow build to continue
+    // Pages will be generated on-demand when requested
+    console.warn('Falling back to on-demand generation for post pages');
+    return [];
+  }
 }
 
 // Generate dynamic metadata for each post page
@@ -34,8 +51,8 @@ export async function generateMetadata(
   }
 
   const title = post.title;
-  const description = post.excerpt;
-  const imageUrl = post.featured_image_url;
+  const description = post.excerpt || '';
+  const imageUrl = post.featured_image_url || '';
 
   return {
     title: title,

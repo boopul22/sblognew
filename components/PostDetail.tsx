@@ -22,14 +22,14 @@ const PostDetail: React.FC<PostDetailProps> = ({ post, allPosts }) => {
   ]);
   const [newComment, setNewComment] = useState('');
 
-  const formattedDate = new Date(post.published_at).toLocaleDateString(language === 'hi' ? 'hi-IN' : 'en-IN', {
+  const formattedDate = new Date(post.published_at || new Date()).toLocaleDateString(language === 'hi' ? 'hi-IN' : 'en-IN', {
     year: 'numeric', month: 'long', day: 'numeric'
   });
-  
-  const title = language === 'hi' ? post.title : post.title_en_hi;
-  const authorName = language === 'hi' ? post.users.display_name : post.users.display_name_en_hi;
-  const categoryName = language === 'hi' ? post.post_categories[0]?.categories.name : post.post_categories[0]?.categories.name_en_hi;
-  const categorySlug = post.post_categories[0]?.categories.slug;
+
+  const title = language === 'hi' ? post.title : (post.title_en_hi || post.title);
+  const authorName = language === 'hi' ? (post.users?.display_name || 'Unknown') : (post.users?.display_name_en_hi || post.users?.display_name || 'Unknown');
+  const categoryName = language === 'hi' ? post.post_categories?.[0]?.categories.name : (post.post_categories?.[0]?.categories.name_en_hi || post.post_categories?.[0]?.categories.name);
+  const categorySlug = post.post_categories?.[0]?.categories.slug;
   const authorAbout = language === 'hi' ? 'हिंदी साहित्य के प्रेमी और शायरी के शौकीन।' : 'A lover of Hindi literature and fond of shayari.';
 
   const handleCopySuccess = () => {
@@ -53,11 +53,11 @@ const PostDetail: React.FC<PostDetailProps> = ({ post, allPosts }) => {
   
   const totalLikes = useMemo(() => post.shayariCollection?.reduce((sum, s) => sum + s.likes, 0) || 0, [post.shayariCollection]);
   const totalShares = useMemo(() => post.shayariCollection?.reduce((sum, s) => sum + s.shares, 0) || 0, [post.shayariCollection]);
-  const relatedPosts = allPosts.filter(p => p.id !== post.id && p.post_categories.some(pc => post.post_categories.map(ppc => ppc.categories.slug).includes(pc.categories.slug))).slice(0, 3);
+  const relatedPosts = allPosts.filter(p => p.id !== post.id && p.post_categories?.some(pc => post.post_categories?.map(ppc => ppc.categories.slug).includes(pc.categories.slug))).slice(0, 3);
   const popularCategories = useMemo(() => {
     const allCategories: Category[] = [];
     allPosts.forEach(p => {
-        p.post_categories.forEach(pc => {
+        p.post_categories?.forEach(pc => {
             if (!allCategories.find(c => c.id === pc.categories.id)) {
                 allCategories.push(pc.categories);
             }
@@ -172,10 +172,10 @@ const PostDetail: React.FC<PostDetailProps> = ({ post, allPosts }) => {
                     {relatedPosts.map(rp => (
                         <Link href={`/${rp.slug}`} key={rp.id} className="cursor-pointer group block">
                              <h5 className="font-semibold group-hover:text-primary dark:group-hover:text-dark-primary">
-                                {language === 'hi' ? rp.title : rp.title_en_hi}
+                                {language === 'hi' ? rp.title : (rp.title_en_hi || rp.title)}
                              </h5>
                              <p className="text-sm text-secondary-text dark:text-dark-secondary-text">
-                                {language === 'hi' ? rp.users.display_name : rp.users.display_name_en_hi}
+                                {language === 'hi' ? (rp.users?.display_name || 'Unknown') : (rp.users?.display_name_en_hi || rp.users?.display_name || 'Unknown')}
                              </p>
                         </Link>
                     ))}

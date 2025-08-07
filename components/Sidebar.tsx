@@ -29,7 +29,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ posts, categories, selectedCategory }) => {
     const { language, t } = useLanguage();
-    const popularPosts = [...posts].sort((a, b) => b.likes - a.likes).slice(0, 3);
+    const popularPosts = [...posts].sort((a, b) => (b.likes || 0) - (a.likes || 0)).slice(0, 3);
     
     return (
         <aside className="lg:w-1/3 xl:w-1/4 flex-shrink-0 space-y-8">
@@ -38,12 +38,12 @@ const Sidebar: React.FC<SidebarProps> = ({ posts, categories, selectedCategory }
                     {popularPosts.map(post => (
                         <div key={post.id} className="pb-4 border-b border-border/50 dark:border-dark-border/50 last:border-b-0">
                             <Link href={`/${post.slug}`} className="font-semibold text-primary-text dark:text-dark-primary-text hover:text-primary dark:hover:text-dark-primary cursor-pointer">
-                                {language === 'hi' ? post.title : post.title_en_hi}
+                                {language === 'hi' ? post.title : (post.title_en_hi || post.title)}
                             </Link>
                             <p className="text-sm text-secondary-text dark:text-dark-secondary-text mt-1">
-                                {t('authorColon')} {language === 'hi' ? post.users.display_name : post.users.display_name_en_hi}
+                                {t('authorColon')} {language === 'hi' ? (post.users?.display_name || 'Unknown') : (post.users?.display_name_en_hi || post.users?.display_name || 'Unknown')}
                             </p>
-                            <span className="text-sm font-medium text-red-500 dark:text-red-400 mt-1 block">{post.likes.toLocaleString(language === 'hi' ? 'hi-IN' : 'en-IN')} ❤️</span>
+                            <span className="text-sm font-medium text-red-500 dark:text-red-400 mt-1 block">{(post.likes || 0).toLocaleString(language === 'hi' ? 'hi-IN' : 'en-IN')} ❤️</span>
                         </div>
                     ))}
                 </div>

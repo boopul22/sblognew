@@ -17,11 +17,11 @@ const Header: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    setSearchQuery(searchParams.get('q') || '');
+    setSearchQuery(searchParams?.get('q') || '');
   }, [searchParams]);
 
   const handleSearch = () => {
-    const params = new URLSearchParams(Array.from(searchParams.entries()));
+    const params = new URLSearchParams(Array.from(searchParams?.entries() || []));
     if (searchQuery.trim()) {
       params.set('q', searchQuery.trim());
     } else {

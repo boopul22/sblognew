@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test:build": "node scripts/test-build.js",
     "dev:api": "node backend/scripts/dev-api-server.js",
     "test:connection": "node backend/scripts/test-connection.js",
     "test:r2": "node backend/scripts/test-r2-connection.js",

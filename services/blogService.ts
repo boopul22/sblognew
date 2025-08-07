@@ -346,6 +346,13 @@ const delay = <T,>(data: T, ms: number): Promise<T> =>
 export const fetchPosts = async (limit?: number): Promise<Post[]> => {
   console.log("Fetching all posts from Supabase...");
 
+  // Check if we're in build environment and Supabase is not accessible
+  const isBuildTime = process.env.NODE_ENV === 'production' && !process.env.VERCEL_ENV;
+
+  if (isBuildTime) {
+    console.log('Build time detected, checking Supabase connectivity...');
+  }
+
   return retryQuery(async () => {
     // First, get basic post data with user info only
     let query = supabase
@@ -490,11 +497,21 @@ export const fetchPosts = async (limit?: number): Promise<Post[]> => {
 
     return transformedPosts;
   }, 1, 500).catch(error => {
-    console.error('Failed to fetch posts after retries:', error);
+    console.error('Failed to fetch posts after retries:', {
+      message: error?.message || 'Unknown error',
+      details: error?.toString() || 'No details available',
+      hint: error?.hint || '',
+      code: error?.code || ''
+    });
 
     // Check if it's a timeout error
     if (error && typeof error === 'object' && 'code' in error && error.code === '57014') {
       console.warn('Database query timeout - returning empty array');
+    }
+
+    // Check for network/fetch errors during build
+    if (error && (error.message?.includes('fetch failed') || error.message?.includes('ENOTFOUND'))) {
+      console.warn('Network connectivity issue during build - returning empty array');
     }
 
     // Return empty array on error to prevent app crash
