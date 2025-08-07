@@ -1,10 +1,5 @@
 {
   "version": 2,
-  "name": "sayari-blog",
   "framework": "nextjs",
-  "functions": {
-    "api/**/*.js": {
-      "runtime": "nodejs18.x"
-    }
-  }
+  "regions": ["iad1"]
 }
