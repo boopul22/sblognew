@@ -1,6 +1,10 @@
 # Dependencies
 node_modules/
 
+# Root package.json (use Front-end/package.json instead)
+package.json
+package-lock.json
+
 # Development files
 .env
 .env.local
