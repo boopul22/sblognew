@@ -70,9 +70,9 @@ const PostDetail: React.FC<PostDetailProps> = ({ post, allPosts }) => {
       `;
 
       // Add event listeners for the buttons
-      const copyBtn = blockquote.querySelector('.copy-btn');
-      const shareBtn = blockquote.querySelector('.share-btn');
-      const downloadBtn = blockquote.querySelector('.download-btn');
+      const copyBtn = blockquote.querySelector('.copy-btn') as HTMLButtonElement;
+      const shareBtn = blockquote.querySelector('.share-btn') as HTMLButtonElement;
+      const downloadBtn = blockquote.querySelector('.download-btn') as HTMLButtonElement;
 
       if (copyBtn) {
         copyBtn.addEventListener('click', async () => {
