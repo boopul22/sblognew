@@ -22,3 +22,55 @@
   font-family: var(--font-devanagari), sans-serif;
   text-rendering: optimizeLegibility;
 }
+
+/* SEO content styles for proper heading display */
+.seo-content h1 {
+  @apply text-3xl md:text-4xl font-bold font-serif text-primary-text dark:text-dark-primary-text mb-6 mt-8;
+}
+
+.seo-content h2 {
+  @apply text-2xl md:text-3xl font-bold font-serif text-primary-text dark:text-dark-primary-text mb-4 mt-6;
+}
+
+.seo-content h3 {
+  @apply text-xl md:text-2xl font-semibold font-serif text-primary-text dark:text-dark-primary-text mb-3 mt-5;
+}
+
+.seo-content h4 {
+  @apply text-lg md:text-xl font-semibold text-primary-text dark:text-dark-primary-text mb-2 mt-4;
+}
+
+.seo-content h5 {
+  @apply text-base md:text-lg font-semibold text-primary-text dark:text-dark-primary-text mb-2 mt-3;
+}
+
+.seo-content h6 {
+  @apply text-sm md:text-base font-semibold text-primary-text dark:text-dark-primary-text mb-2 mt-3;
+}
+
+/* SEO content - hide blockquotes, images, and figures - show only headings and paragraphs */
+.seo-content blockquote {
+  @apply hidden;
+}
+
+.seo-content figure {
+  @apply hidden;
+}
+
+.seo-content img {
+  @apply hidden;
+}
+
+/* Paragraph spacing in SEO content */
+.seo-content p {
+  @apply mb-4 text-primary-text dark:text-dark-primary-text leading-relaxed;
+}
+
+/* List styling in SEO content */
+.seo-content ul, .seo-content ol {
+  @apply mb-4 pl-6 text-primary-text dark:text-dark-primary-text;
+}
+
+.seo-content li {
+  @apply mb-2;
+}

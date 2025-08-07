@@ -112,6 +112,17 @@ const PostDetail: React.FC<PostDetailProps> = ({ post, allPosts }) => {
                 </div>
               </header>
 
+              {/* SEO Content - Only headings and paragraphs, no blockquotes */}
+              {post.content && (
+                <div className="p-6 md:p-8 prose prose-lg max-w-none dark:prose-invert">
+                  <div
+                    className="seo-content"
+                    dangerouslySetInnerHTML={{ __html: post.content }}
+                  />
+                </div>
+              )}
+
+              {/* Shayari Collection - Original clean rendering */}
               <div className="p-6 md:p-8 space-y-8">
                 {post.shayariCollection?.map(shayari => (
                   <ShayariDetailCard key={shayari.id} shayari={shayari} onCopy={handleCopySuccess} />
