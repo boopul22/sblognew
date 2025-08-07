@@ -1,6 +1,36 @@
 import type { Post, Category, Shayari } from '../types';
 import { supabase } from '../lib/supabase';
 
+// Utility function for retrying failed queries
+const retryQuery = async <T>(
+  queryFn: () => Promise<T>,
+  maxRetries: number = 2,
+  delay: number = 1000
+): Promise<T> => {
+  let lastError: any;
+
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      return await queryFn();
+    } catch (error) {
+      lastError = error;
+
+      // Don't retry on timeout errors during build
+      if (error && typeof error === 'object' && 'code' in error && error.code === '57014') {
+        throw error;
+      }
+
+      if (attempt < maxRetries) {
+        console.warn(`Query attempt ${attempt + 1} failed, retrying in ${delay}ms...`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+        delay *= 2; // Exponential backoff
+      }
+    }
+  }
+
+  throw lastError;
+};
+
 const mockShayariCollection: Shayari[] = [
     {
         id: 1,
@@ -313,78 +343,163 @@ const mockPosts: Post[] = [
 const delay = <T,>(data: T, ms: number): Promise<T> => 
   new Promise(resolve => setTimeout(() => resolve(data), ms));
 
-export const fetchPosts = async (): Promise<Post[]> => {
+export const fetchPosts = async (limit?: number): Promise<Post[]> => {
   console.log("Fetching all posts from Supabase...");
 
-  try {
-    const { data: posts, error } = await supabase
+  return retryQuery(async () => {
+    // First, get basic post data with user info only
+    let query = supabase
       .from('posts')
       .select(`
-        *,
+        id,
+        title,
+        slug,
+        excerpt,
+        featured_image_url,
+        featured_image,
+        published_at,
+        view_count,
         users (
           id,
           display_name,
           username,
           avatar_url
-        ),
-        post_categories (
-          categories (
-            id,
-            name,
-            slug,
-            color
-          )
-        ),
-        post_tags (
-          tags (
-            id,
-            name,
-            slug,
-            color
-          )
         )
       `)
       .eq('status', 'published')
       .order('published_at', { ascending: false });
+
+    // Add limit if specified (useful for build optimization)
+    if (limit) {
+      query = query.limit(limit);
+    }
+
+    const { data: posts, error } = await query;
 
     if (error) {
       console.error('Error fetching posts:', error);
       throw error;
     }
 
+    if (!posts || posts.length === 0) {
+      return [];
+    }
+
+    // Get post IDs for batch fetching categories and tags
+    const postIds = posts.map(post => post.id);
+
+    // Fetch categories and tags separately to avoid complex joins
+    const [categoriesData, tagsData] = await Promise.all([
+      supabase
+        .from('post_categories')
+        .select(`
+          post_id,
+          categories (
+            id,
+            name,
+            slug,
+            color
+          )
+        `)
+        .in('post_id', postIds),
+      supabase
+        .from('post_tags')
+        .select(`
+          post_id,
+          tags (
+            id,
+            name,
+            slug,
+            color
+          )
+        `)
+        .in('post_id', postIds)
+    ]);
+
+    // Create lookup maps for better performance
+    const categoriesMap = new Map();
+    const tagsMap = new Map();
+
+    categoriesData.data?.forEach(pc => {
+      if (!categoriesMap.has(pc.post_id)) {
+        categoriesMap.set(pc.post_id, []);
+      }
+      categoriesMap.get(pc.post_id).push(pc);
+    });
+
+    tagsData.data?.forEach(pt => {
+      if (!tagsMap.has(pt.post_id)) {
+        tagsMap.set(pt.post_id, []);
+      }
+      tagsMap.get(pt.post_id).push(pt);
+    });
+
     // Transform the data to match frontend expectations
-    const transformedPosts: Post[] = (posts || []).map(post => ({
+    const transformedPosts: Post[] = posts.map(post => ({
       ...post,
+      // Add missing fields for compatibility
+      content: '', // Will be loaded separately when needed
+      meta_title: post.title,
+      meta_description: post.excerpt || '',
+      reading_time: 5, // Default reading time
+      status: 'published',
+      created_at: post.published_at || new Date().toISOString(),
+      updated_at: post.published_at || new Date().toISOString(),
       // Add custom fields for frontend compatibility
-      title_en_hi: post.title, // Fallback to title if no translation
-      content_en_hi: post.content, // Fallback to content if no translation
-      excerpt_en_hi: post.excerpt || '', // Fallback to excerpt if no translation
+      title_en_hi: post.title,
+      content_en_hi: '',
+      excerpt_en_hi: post.excerpt || '',
       featured_image_url: post.featured_image_url || post.featured_image || '',
-      likes: 0, // TODO: Calculate from likes table
-      users: post.users ? {
-        ...post.users,
-        display_name_en_hi: post.users.display_name || post.users.username || ''
+      likes: 0,
+      users: post.users && Array.isArray(post.users) && post.users.length > 0 ? {
+        id: post.users[0].id,
+        display_name: post.users[0].display_name,
+        username: post.users[0].username,
+        avatar_url: post.users[0].avatar_url,
+        display_name_en_hi: post.users[0].display_name || post.users[0].username || '',
+        // Add required fields with defaults
+        role: 'user',
+        registered_at: new Date().toISOString(),
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      } : post.users && !Array.isArray(post.users) ? {
+        id: (post.users as any).id,
+        display_name: (post.users as any).display_name,
+        username: (post.users as any).username,
+        avatar_url: (post.users as any).avatar_url,
+        display_name_en_hi: (post.users as any).display_name || (post.users as any).username || '',
+        // Add required fields with defaults
+        role: 'user',
+        registered_at: new Date().toISOString(),
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
       } : undefined,
-      post_categories: post.post_categories?.map((pc: any) => ({
+      post_categories: categoriesMap.get(post.id)?.map((pc: any) => ({
         categories: {
           ...pc.categories,
-          name_en_hi: pc.categories.name // Fallback to name if no translation
+          name_en_hi: pc.categories.name
         }
       })) || [],
-      post_tags: post.post_tags?.map((pt: any) => ({
+      post_tags: tagsMap.get(post.id)?.map((pt: any) => ({
         tags: {
           ...pt.tags,
-          name_en_hi: pt.tags.name // Fallback to name if no translation
+          name_en_hi: pt.tags.name
         }
       })) || []
     }));
 
     return transformedPosts;
-  } catch (error) {
-    console.error('Failed to fetch posts:', error);
+  }, 1, 500).catch(error => {
+    console.error('Failed to fetch posts after retries:', error);
+
+    // Check if it's a timeout error
+    if (error && typeof error === 'object' && 'code' in error && error.code === '57014') {
+      console.warn('Database query timeout - returning empty array');
+    }
+
     // Return empty array on error to prevent app crash
     return [];
-  }
+  });
 };
 
 // Parse HTML content to extract individual shayaris with images and all content
@@ -473,6 +588,7 @@ export const fetchPostBySlug = async (slug: string): Promise<Post | undefined> =
   console.log(`Fetching post with slug: ${slug} from Supabase...`);
 
   try {
+    // First get the basic post data
     const { data: posts, error } = await supabase
       .from('posts')
       .select(`
@@ -482,22 +598,6 @@ export const fetchPostBySlug = async (slug: string): Promise<Post | undefined> =
           display_name,
           username,
           avatar_url
-        ),
-        post_categories (
-          categories (
-            id,
-            name,
-            slug,
-            color
-          )
-        ),
-        post_tags (
-          tags (
-            id,
-            name,
-            slug,
-            color
-          )
         )
       `)
       .eq('slug', slug)
@@ -515,37 +615,88 @@ export const fetchPostBySlug = async (slug: string): Promise<Post | undefined> =
 
     const post = posts[0];
 
+    // Fetch categories and tags separately for this specific post
+    const [categoriesData, tagsData] = await Promise.all([
+      supabase
+        .from('post_categories')
+        .select(`
+          categories (
+            id,
+            name,
+            slug,
+            color
+          )
+        `)
+        .eq('post_id', post.id),
+      supabase
+        .from('post_tags')
+        .select(`
+          tags (
+            id,
+            name,
+            slug,
+            color
+          )
+        `)
+        .eq('post_id', post.id)
+    ]);
+
     // Transform the data to match frontend expectations
     const transformedPost: Post = {
       ...post,
       // Add custom fields for frontend compatibility
-      title_en_hi: post.title, // Fallback to title if no translation
-      content_en_hi: post.content, // Fallback to content if no translation
-      excerpt_en_hi: post.excerpt || '', // Fallback to excerpt if no translation
+      title_en_hi: post.title,
+      content_en_hi: post.content,
+      excerpt_en_hi: post.excerpt || '',
       featured_image_url: post.featured_image_url || post.featured_image || '',
-      likes: 0, // TODO: Calculate from likes table
-      users: post.users ? {
-        ...post.users,
-        display_name_en_hi: post.users.display_name || post.users.username || ''
+      likes: 0,
+      users: post.users && Array.isArray(post.users) && post.users.length > 0 ? {
+        id: post.users[0].id,
+        display_name: post.users[0].display_name,
+        username: post.users[0].username,
+        avatar_url: post.users[0].avatar_url,
+        display_name_en_hi: post.users[0].display_name || post.users[0].username || '',
+        // Add required fields with defaults
+        role: 'user',
+        registered_at: new Date().toISOString(),
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      } : post.users && !Array.isArray(post.users) ? {
+        id: (post.users as any).id,
+        display_name: (post.users as any).display_name,
+        username: (post.users as any).username,
+        avatar_url: (post.users as any).avatar_url,
+        display_name_en_hi: (post.users as any).display_name || (post.users as any).username || '',
+        // Add required fields with defaults
+        role: 'user',
+        registered_at: new Date().toISOString(),
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
       } : undefined,
-      post_categories: post.post_categories?.map((pc: any) => ({
+      post_categories: categoriesData.data?.map((pc: any) => ({
         categories: {
           ...pc.categories,
-          name_en_hi: pc.categories.name // Fallback to name if no translation
+          name_en_hi: pc.categories.name
         }
       })) || [],
-      post_tags: post.post_tags?.map((pt: any) => ({
+      post_tags: tagsData.data?.map((pt: any) => ({
         tags: {
           ...pt.tags,
-          name_en_hi: pt.tags.name // Fallback to name if no translation
+          name_en_hi: pt.tags.name
         }
       })) || [],
-      shayariCollection: parseShayaris(post.content || '', post) // Parse real content instead of mock data
+      shayariCollection: parseShayaris(post.content || '', post)
     };
 
     return transformedPost;
   } catch (error) {
     console.error('Failed to fetch post by slug:', error);
+
+    // Check if it's a timeout error
+    if (error && typeof error === 'object' && 'code' in error && error.code === '57014') {
+      console.warn(`Database query timeout for slug: ${slug}`);
+    }
+
     return undefined;
   }
 };
@@ -573,6 +724,12 @@ export const getCategories = async (): Promise<Category[]> => {
     return transformedCategories;
   } catch (error) {
     console.error('Failed to fetch categories:', error);
+
+    // Check if it's a timeout error
+    if (error && typeof error === 'object' && 'code' in error && error.code === '57014') {
+      console.warn('Database query timeout for categories');
+    }
+
     // Return empty array on error to prevent app crash
     return [];
   }

@@ -1,13 +1,8 @@
 # Dependencies
 node_modules/
 
-# Root package.json (use Front-end/package.json instead)
-package.json
-package-lock.json
-
 # Development files
 .env
-.env.local
 .env.development.local
 .env.test.local
 
@@ -41,10 +36,10 @@ u957990218_GpBKT.sql
 *.md
 !README.md
 
-# Development scripts
-scripts/dev-api-server.js
-scripts/test-*.js
-test-*.js
+# Development scripts and backend utilities
+backend/scripts/dev-api-server.js
+backend/scripts/test-*.js
+backend/scripts/setup-*.js
 
 # Temporary files
 temp/
@@ -54,6 +49,7 @@ tmp/
 
 # Build artifacts (will be rebuilt)
 dist/
+.next/
 
 # Cloudflare specific files (not needed for Vercel)
 wrangler.toml
@@ -67,13 +63,6 @@ _redirects
 .husky/
 husky
 
-# TypeScript and linting configuration
-tsconfig.json
-tsconfig.node.json
-eslint.config.js
-prettier.config.js
-vitest.config.ts
-
 # Test files
 **/*.test.*
 **/*.spec.*
@@ -84,5 +73,5 @@ coverage/
 FRONTEND_OPTIMIZATIONS.md
 src/App.optimized.tsx
 
-# Static data source files (generated during build)
-# src/data/static/*.json  # Commented out - needed for Vercel build
+# Old frontend directory (will be moved to root)
+Front-end/

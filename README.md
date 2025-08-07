@@ -1,7 +1,7 @@
-# Sayari Blog API
-## Backend-Only API Service
+# Sayari Blog - दिल के जज़्बात
+## Full-Stack Next.js Blog Application
 
-A minimal, backend-only API service for blog management with Supabase database and Cloudflare R2 storage.
+A beautiful Hindi and Hinglish shayari blog built with Next.js 15, featuring a clean design, Supabase backend, and Cloudflare R2 storage.
 
 ## 🚀 Quick Start
 
@@ -21,13 +21,16 @@ cp .env.example .env.local
 # Configure environment variables (see below)
 # Edit .env.local with your credentials
 
-# Test database connection
+# Run development server
+npm run dev
+
+# Test database connection (optional)
 npm run test:connection
 
-# Test R2 storage connection
+# Test R2 storage connection (optional)
 npm run test:r2
 
-# Create admin user
+# Create admin user (optional)
 npm run setup:admin
 ```
 
@@ -57,22 +60,39 @@ CLOUDFLARE_R2_PUBLIC_URL=https://pub-YOUR_ACCOUNT_ID.r2.dev/blog-images
 
 ### Project Structure
 ```
-├── api/                     # Vercel serverless functions
-│   ├── r2/                  # Cloudflare R2 storage endpoints
+├── app/                     # Next.js App Router
+│   ├── [slug]/             # Dynamic blog post pages
+│   ├── globals.css         # Global styles
+│   ├── layout.tsx          # Root layout
+│   ├── loading.tsx         # Loading component
+│   └── page.tsx            # Homepage
+├── components/              # React components
+│   ├── Footer.tsx
+│   ├── Header.tsx
+│   ├── Hero.tsx
+│   ├── PostCard.tsx
+│   ├── PostDetail.tsx
+│   └── ...
+├── contexts/               # React Context providers
+│   ├── LanguageContext.tsx
+│   └── ThemeContext.tsx
+├── lib/                    # Utilities and configurations
+│   └── supabase.ts
+├── services/               # API services
+│   └── blogService.ts
+├── api/                    # Vercel API routes
+│   ├── r2/                 # Cloudflare R2 storage endpoints
 │   │   ├── presigned-upload.js
 │   │   ├── delete.js
 │   │   ├── list.js
 │   │   ├── metadata.js
 │   │   └── health.js
-│   ├── debug.js             # System diagnostics
-│   ├── delete-image.js      # Legacy image deletion
-│   └── download-image.js    # Legacy image download
-├── backend/                 # Backend services
-│   ├── api/                 # API implementations (legacy)
-│   ├── database/            # Database schema and migrations
+│   └── debug.js            # System diagnostics
+├── backend/                # Backend utilities (development)
+│   ├── database/           # Database schema and migrations
 │   │   ├── database-schema.sql
 │   │   └── database-performance-indexes.sql
-│   └── scripts/             # Backend utilities
+│   └── scripts/            # Backend utilities
 │       ├── setup-admin-user.js
 │       ├── test-connection.js
 │       ├── test-r2-connection.js
@@ -105,7 +125,11 @@ The schema includes RLS policies for secure data access.
 
 ### Development
 ```bash
+npm run dev              # Start Next.js development server (port 3000)
 npm run dev:api          # Start development API server (port 3001)
+npm run build            # Build for production
+npm run start            # Start production server
+npm run lint             # Run ESLint
 ```
 
 ### Testing

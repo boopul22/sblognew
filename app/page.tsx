@@ -19,9 +19,9 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   const resolvedSearchParams = await searchParams;
   const { category: selectedCategory = 'all', q: activeSearch = '' } = resolvedSearchParams;
   
-  // Fetch all data on the server
+  // Fetch data on the server with optimization for build
   const [allPosts, categories] = await Promise.all([
-    fetchPosts(),
+    fetchPosts(50), // Limit to 50 posts for better performance
     getCategories(),
   ]);
 
