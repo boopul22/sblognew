@@ -351,6 +351,88 @@ export const fetchPosts = async (): Promise<Post[]> => {
   }
 };
 
+// Parse HTML content to extract individual shayaris with images and all content
+const parseShayaris = (htmlContent: string, post: any): Shayari[] => {
+  if (!htmlContent) return [];
+
+  const shayaris: Shayari[] = [];
+  let shayariIndex = 0;
+
+  // Extract blockquotes using regex
+  const blockquoteRegex = /<blockquote[^>]*>([\s\S]*?)<\/blockquote>/gi;
+  let blockquoteMatch;
+
+  while ((blockquoteMatch = blockquoteRegex.exec(htmlContent)) !== null) {
+    const blockquoteContent = blockquoteMatch[1];
+    // Remove HTML tags and get text content
+    const text = blockquoteContent.replace(/<[^>]*>/g, '').trim();
+
+    if (text) {
+      // Clean the text and split by line breaks
+      const lines = text.split('\n').filter(line => line.trim()).map(line => line.trim());
+
+      // Determine theme based on content
+      const lowerText = text.toLowerCase();
+      let theme: 'love' | 'sad' | 'motivational' | 'friendship' | 'life' = 'life';
+
+      if (lowerText.includes('प्यार') || lowerText.includes('मोहब्बत') || lowerText.includes('इश्क') || lowerText.includes('love')) {
+        theme = 'love';
+      } else if (lowerText.includes('दुख') || lowerText.includes('गम') || lowerText.includes('आंसू') || lowerText.includes('sad')) {
+        theme = 'sad';
+      } else if (lowerText.includes('हिम्मत') || lowerText.includes('जीत') || lowerText.includes('सफल') || lowerText.includes('motivat')) {
+        theme = 'motivational';
+      } else if (lowerText.includes('दोस्त') || lowerText.includes('मित्र') || lowerText.includes('friend')) {
+        theme = 'friendship';
+      }
+
+      // Create individual text-only card for each blockquote
+      const newShayari: Shayari = {
+        id: ++shayariIndex,
+        theme,
+        lines,
+        lines_en_hi: lines, // For now, use same content for both languages
+        author: post?.users?.display_name || post?.users?.username || "अज्ञात",
+        author_en_hi: post?.users?.display_name || post?.users?.username || "Unknown",
+        likes: Math.floor(Math.random() * 50) + 10,
+        views: Math.floor(Math.random() * 500) + 100,
+        shares: Math.floor(Math.random() * 20) + 5
+      };
+      shayaris.push(newShayari);
+    }
+  }
+
+  // If no blockquotes found, extract paragraphs
+  if (shayaris.length === 0) {
+    const paragraphRegex = /<p[^>]*>([\s\S]*?)<\/p>/gi;
+    let paragraphMatch;
+
+    while ((paragraphMatch = paragraphRegex.exec(htmlContent)) !== null) {
+      const paragraphContent = paragraphMatch[1];
+      // Remove HTML tags and get text content, skip if contains images
+      if (!paragraphContent.includes('<img')) {
+        const text = paragraphContent.replace(/<[^>]*>/g, '').trim();
+
+        if (text && text.length > 10) { // Only include substantial paragraphs
+          const paragraphShayari: Shayari = {
+            id: ++shayariIndex,
+            theme: 'life',
+            lines: [text],
+            lines_en_hi: [text],
+            author: post?.users?.display_name || post?.users?.username || "अज्ञात",
+            author_en_hi: post?.users?.display_name || post?.users?.username || "Unknown",
+            likes: Math.floor(Math.random() * 25) + 3,
+            views: Math.floor(Math.random() * 200) + 30,
+            shares: Math.floor(Math.random() * 10) + 1
+          };
+          shayaris.push(paragraphShayari);
+        }
+      }
+    }
+  }
+
+  return shayaris.filter(shayari => shayari.lines.length > 0);
+};
+
 export const fetchPostBySlug = async (slug: string): Promise<Post | undefined> => {
   console.log(`Fetching post with slug: ${slug} from Supabase...`);
 
@@ -422,7 +504,7 @@ export const fetchPostBySlug = async (slug: string): Promise<Post | undefined> =
           name_en_hi: pt.tags.name // Fallback to name if no translation
         }
       })) || [],
-      shayariCollection: mockShayariCollection // Keep mock shayari for now
+      shayariCollection: parseShayaris(post.content || '', post) // Parse real content instead of mock data
     };
 
     return transformedPost;

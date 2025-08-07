@@ -42,8 +42,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ['var(--font-inter)', 'sans-serif'],
-        serif: ['var(--font-lora)', 'serif'],
+        sans: ['var(--font-inter)', 'var(--font-devanagari)', 'sans-serif'],
+        serif: ['var(--font-lora)', 'var(--font-devanagari)', 'serif'],
+        devanagari: ['var(--font-devanagari)', 'sans-serif'],
         grotesk: ['FKGroteskNeue', 'sans-serif']
       },
     },

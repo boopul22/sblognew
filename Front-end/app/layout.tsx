@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import { Inter, Lora } from 'next/font/google';
+import { Inter, Lora, Noto_Sans_Devanagari } from 'next/font/google';
 import { LanguageProvider } from '../contexts/LanguageContext';
 import { ThemeProvider } from '../contexts/ThemeContext';
 import Header from '../components/Header';
@@ -9,15 +9,21 @@ import './globals.css';
 
 
 const inter = Inter({
-  subsets: ['latin'],
+  subsets: ['latin', 'latin-ext'],
   display: 'swap',
   variable: '--font-inter',
 });
 
 const lora = Lora({
-  subsets: ['latin'],
+  subsets: ['latin', 'latin-ext'],
   display: 'swap',
   variable: '--font-lora',
+});
+
+const notoSansDevanagari = Noto_Sans_Devanagari({
+  subsets: ['devanagari', 'latin'],
+  display: 'swap',
+  variable: '--font-devanagari',
 });
 
 export const metadata: Metadata = {
@@ -55,7 +61,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${lora.variable}`} suppressHydrationWarning>
+    <html lang="hi" className={`${inter.variable} ${lora.variable} ${notoSansDevanagari.variable}`} suppressHydrationWarning>
+      <head>
+        <meta charSet="utf-8" />
+      </head>
       <body className="bg-background dark:bg-dark-background text-primary-text dark:text-dark-primary-text font-sans">
         <ThemeProvider>
           <LanguageProvider>
