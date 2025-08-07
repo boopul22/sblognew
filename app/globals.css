@@ -295,6 +295,8 @@
   justify-content: center;
   width: 2.5rem;
   height: 2.5rem;
+  position: relative;
+  overflow: hidden;
 }
 
 /* Dark mode action buttons */
@@ -314,6 +316,20 @@
 .dark .post-content blockquote .action-btn:hover {
   background: rgba(50, 184, 198, 0.2);
   border-color: rgba(50, 184, 198, 0.5);
+}
+
+/* Success state for copy button */
+.post-content blockquote .action-btn.success {
+  background: #10b981 !important;
+  border-color: #10b981 !important;
+  color: white !important;
+}
+
+/* Error state for buttons */
+.post-content blockquote .action-btn.error {
+  background: #ef4444 !important;
+  border-color: #ef4444 !important;
+  color: white !important;
 }
 
 /* SVG icons in action buttons */
