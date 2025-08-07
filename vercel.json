@@ -1,9 +1,8 @@
 {
   "version": 2,
   "name": "sayari-blog",
-  "rootDirectory": "Front-end",
-  "buildCommand": "npm run build",
-  "outputDirectory": ".next",
-  "installCommand": "npm install",
+  "buildCommand": "cd Front-end && npm run build",
+  "outputDirectory": "Front-end/.next",
+  "installCommand": "cd Front-end && npm install",
   "framework": "nextjs"
 }
