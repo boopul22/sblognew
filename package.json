@@ -1,7 +1,7 @@
 {
   "name": "sayari-blog-api",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "Backend API service for Sayari Blog with Supabase and Cloudflare R2 storage",
   "scripts": {
