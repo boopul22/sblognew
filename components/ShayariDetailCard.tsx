@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
 import type { Shayari } from '../types';
-import { HeartIcon, ShareIcon, CopyIcon, DownloadIcon } from './Icons';
+import { HeartIcon, ShareIcon, CopyIcon, DownloadIcon, WhatsAppIcon } from './Icons';
 import { useLanguage } from '../contexts/LanguageContext';
+import { shareOnWhatsApp, downloadElementAsImage } from '../utils/downloadUtils';
 
 interface ShayariDetailCardProps {
     shayari: Shayari;
@@ -30,6 +31,7 @@ const ShayariDetailCard: React.FC<ShayariDetailCardProps> = ({ shayari, onCopy }
     const { language, t } = useLanguage();
     const [isLiked, setIsLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(shayari.likes);
+    const [isDownloading, setIsDownloading] = useState(false);
     const cardRef = useRef<HTMLDivElement>(null);
 
     const handleLike = () => {
@@ -51,12 +53,19 @@ const ShayariDetailCard: React.FC<ShayariDetailCardProps> = ({ shayari, onCopy }
         onCopy();
     };
     
-    const handleDownload = () => {
-        const node = cardRef.current;
-        if (!node) return;
+    const handleDownload = async () => {
+        if (!cardRef.current || isDownloading) return;
 
-        // Using html-to-image would be better but avoiding new dependencies.
-        alert('Download functionality is a demo.');
+        setIsDownloading(true);
+        try {
+            const timestamp = new Date().getTime();
+            const filename = `shayari-${timestamp}.png`;
+            await downloadElementAsImage(cardRef.current, filename);
+        } catch (error) {
+            console.error('Download failed:', error);
+        } finally {
+            setIsDownloading(false);
+        }
     };
     
     const handleShare = async () => {
@@ -68,9 +77,15 @@ const ShayariDetailCard: React.FC<ShayariDetailCardProps> = ({ shayari, onCopy }
             });
         } catch (error) {
             console.error('Error sharing:', error);
-            alert('Could not share the shayari.');
+            if (error.name !== 'AbortError') {
+                alert('Could not share the shayari.');
+            }
         }
-    }
+    };
+
+    const handleWhatsAppShare = () => {
+        shareOnWhatsApp(getShayariText(), window.location.href);
+    };
 
     return (
         <div className="rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
@@ -103,8 +118,16 @@ const ShayariDetailCard: React.FC<ShayariDetailCardProps> = ({ shayari, onCopy }
                         <ShareIcon className="w-5 h-5" />
                         <span>{t('share')}</span>
                     </ActionButton>
+                    <ActionButton onClick={handleWhatsAppShare}>
+                        <WhatsAppIcon className="w-5 h-5" />
+                        <span>WhatsApp</span>
+                    </ActionButton>
                     <ActionButton onClick={handleDownload}>
-                         <DownloadIcon className="w-5 h-5" />
+                        {isDownloading ? (
+                            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        ) : (
+                            <DownloadIcon className="w-5 h-5" />
+                        )}
                         <span>{t('download')}</span>
                     </ActionButton>
                 </div>
