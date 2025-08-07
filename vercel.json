@@ -4,6 +4,7 @@
   "buildCommand": "npm run build:vercel",
   "outputDirectory": "Front-end/.next",
   "installCommand": "npm install",
+  "framework": null,
   "headers": [
     {
       "source": "/(.*)",

@@ -5,9 +5,9 @@ import PostDetail from '../../components/PostDetail';
 import { notFound } from 'next/navigation';
 
 interface PostPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 // Generate static pages for all posts at build time

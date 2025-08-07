@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { Inter, Lora, Noto_Sans_Devanagari } from 'next/font/google';
 import { LanguageProvider } from '../contexts/LanguageContext';
@@ -69,7 +69,9 @@ export default function RootLayout({
         <ThemeProvider>
           <LanguageProvider>
             <div className="min-h-screen flex flex-col">
-              <Header />
+              <Suspense fallback={<div className="h-20 bg-surface/80 dark:bg-dark-surface/80"></div>}>
+                <Header />
+              </Suspense>
               <div className="flex-grow">{children}</div>
               <Footer />
             </div>

@@ -102,6 +102,8 @@ const mockPosts: Post[] = [
     status: 'published',
     author_id: "user1",
     published_at: "2024-07-21T10:00:00Z",
+    created_at: "2024-07-21T10:00:00Z",
+    updated_at: "2024-07-21T10:00:00Z",
     reading_time: 5,
     view_count: 2450,
     likes: 245,
@@ -110,13 +112,17 @@ const mockPosts: Post[] = [
       display_name: "राहुल शर्मा",
       display_name_en_hi: "Rahul Sharma",
       username: "rahulsharma",
-      avatar_url: "https://i.pravatar.cc/150?u=rahul"
+      avatar_url: "https://i.pravatar.cc/150?u=rahul",
+      role: "author",
+      registered_at: "2024-01-01T00:00:00Z",
+      created_at: "2024-01-01T00:00:00Z",
+      updated_at: "2024-01-01T00:00:00Z"
     },
     post_categories: [
-      { categories: { id: "cat1", name: "प्रेम शायरी", name_en_hi: "Love Shayari", slug: "prem-shayari", color: "#ec4899" } },
+      { categories: { id: "cat1", name: "प्रेम शायरी", name_en_hi: "Love Shayari", slug: "prem-shayari", color: "#ec4899", created_at: "2024-01-01T00:00:00Z", updated_at: "2024-01-01T00:00:00Z" } },
     ],
     post_tags: [
-      { tags: { id: "tag1", name: "मोहब्बत", slug: "mohabbat", color: "#ef4444" } },
+      { tags: { id: "tag1", name: "मोहब्बत", slug: "mohabbat", color: "#ef4444", created_at: "2024-01-01T00:00:00Z", updated_at: "2024-01-01T00:00:00Z" } },
     ],
     shayariCollection: mockShayariCollection
   },
@@ -133,6 +139,8 @@ const mockPosts: Post[] = [
     status: 'published',
     author_id: "user2",
     published_at: "2024-07-20T14:30:00Z",
+    created_at: "2024-07-20T14:30:00Z",
+    updated_at: "2024-07-20T14:30:00Z",
     reading_time: 1,
     view_count: 1890,
     likes: 189,
@@ -141,13 +149,17 @@ const mockPosts: Post[] = [
       display_name: "प्रिया गुप्ता",
       display_name_en_hi: "Priya Gupta",
       username: "priyagupta",
-      avatar_url: "https://i.pravatar.cc/150?u=priya"
+      avatar_url: "https://i.pravatar.cc/150?u=priya",
+      role: "author",
+      registered_at: "2024-01-02T00:00:00Z",
+      created_at: "2024-01-02T00:00:00Z",
+      updated_at: "2024-01-02T00:00:00Z"
     },
     post_categories: [
-      { categories: { id: "cat2", name: "दुख शायरी", name_en_hi: "Sad Shayari", slug: "dukh-shayari", color: "#6366f1" } }
+      { categories: { id: "cat2", name: "दुख शायरी", name_en_hi: "Sad Shayari", slug: "dukh-shayari", color: "#6366f1", created_at: "2024-01-02T00:00:00Z", updated_at: "2024-01-02T00:00:00Z" } }
     ],
     post_tags: [
-      { tags: { id: "tag2", name: "दर्द", slug: "dard", color: "#3b82f6" } }
+      { tags: { id: "tag2", name: "दर्द", slug: "dard", color: "#3b82f6", created_at: "2024-01-02T00:00:00Z", updated_at: "2024-01-02T00:00:00Z" } }
     ]
   },
   {
@@ -163,6 +175,8 @@ const mockPosts: Post[] = [
     status: 'published',
     author_id: "user3",
     published_at: "2024-07-19T09:00:00Z",
+    created_at: "2024-07-19T09:00:00Z",
+    updated_at: "2024-07-19T09:00:00Z",
     reading_time: 1,
     view_count: 3560,
     likes: 356,
@@ -171,13 +185,17 @@ const mockPosts: Post[] = [
       display_name: "अमित कुमार",
       display_name_en_hi: "Amit Kumar",
       username: "amitkumar",
-      avatar_url: "https://i.pravatar.cc/150?u=amit"
+      avatar_url: "https://i.pravatar.cc/150?u=amit",
+      role: "author",
+      registered_at: "2024-01-03T00:00:00Z",
+      created_at: "2024-01-03T00:00:00Z",
+      updated_at: "2024-01-03T00:00:00Z"
     },
     post_categories: [
-      { categories: { id: "cat3", name: "मोटिवेशनल शायरी", name_en_hi: "Motivational Shayari", slug: "motivational-shayari", color: "#f97316" } },
+      { categories: { id: "cat3", name: "मोटिवेशनल शायरी", name_en_hi: "Motivational Shayari", slug: "motivational-shayari", color: "#f97316", created_at: "2024-01-03T00:00:00Z", updated_at: "2024-01-03T00:00:00Z" } },
     ],
     post_tags: [
-      { tags: { id: "tag3", name: "हिम्मत", slug: "himmat", color: "#22c55e" } }
+      { tags: { id: "tag3", name: "हिम्मत", slug: "himmat", color: "#22c55e", created_at: "2024-01-03T00:00:00Z", updated_at: "2024-01-03T00:00:00Z" } }
     ]
   },
   {
@@ -193,6 +211,8 @@ const mockPosts: Post[] = [
     status: 'published',
     author_id: "user4",
     published_at: "2024-07-18T11:00:00Z",
+    created_at: "2024-07-18T11:00:00Z",
+    updated_at: "2024-07-18T11:00:00Z",
     reading_time: 1,
     view_count: 2980,
     likes: 298,
@@ -201,13 +221,17 @@ const mockPosts: Post[] = [
       display_name: "सुनीता देवी",
       display_name_en_hi: "Sunita Devi",
       username: "sunitadevi",
-      avatar_url: "https://i.pravatar.cc/150?u=sunita"
+      avatar_url: "https://i.pravatar.cc/150?u=sunita",
+      role: "author",
+      registered_at: "2024-01-04T00:00:00Z",
+      created_at: "2024-01-04T00:00:00Z",
+      updated_at: "2024-01-04T00:00:00Z"
     },
     post_categories: [
-      { categories: { id: "cat4", name: "दोस्ती शायरी", name_en_hi: "Friendship Shayari", slug: "dosti-shayari", color: "#10b981" } },
+      { categories: { id: "cat4", name: "दोस्ती शायरी", name_en_hi: "Friendship Shayari", slug: "dosti-shayari", color: "#10b981", created_at: "2024-01-04T00:00:00Z", updated_at: "2024-01-04T00:00:00Z" } },
     ],
     post_tags: [
-      { tags: { id: "tag4", name: "यारी", slug: "yaari", color: "#06b6d4" } }
+      { tags: { id: "tag4", name: "यारी", slug: "yaari", color: "#06b6d4", created_at: "2024-01-04T00:00:00Z", updated_at: "2024-01-04T00:00:00Z" } }
     ]
   },
    {
@@ -223,6 +247,8 @@ const mockPosts: Post[] = [
     status: 'published',
     author_id: "user5",
     published_at: "2024-07-17T18:00:00Z",
+    created_at: "2024-07-17T18:00:00Z",
+    updated_at: "2024-07-17T18:00:00Z",
     reading_time: 1,
     view_count: 4120,
     likes: 412,
@@ -231,13 +257,17 @@ const mockPosts: Post[] = [
       display_name: "विकास पांडे",
       display_name_en_hi: "Vikas Pandey",
       username: "vikaspandey",
-      avatar_url: "https://i.pravatar.cc/150?u=vikas"
+      avatar_url: "https://i.pravatar.cc/150?u=vikas",
+      role: "author",
+      registered_at: "2024-01-05T00:00:00Z",
+      created_at: "2024-01-05T00:00:00Z",
+      updated_at: "2024-01-05T00:00:00Z"
     },
     post_categories: [
-      { categories: { id: "cat5", name: "जिंदगी शायरी", name_en_hi: "Life Shayari", slug: "zindagi-shayari", color: "#8b5cf6" } },
+      { categories: { id: "cat5", name: "जिंदगी शायरी", name_en_hi: "Life Shayari", slug: "zindagi-shayari", color: "#8b5cf6", created_at: "2024-01-05T00:00:00Z", updated_at: "2024-01-05T00:00:00Z" } },
     ],
     post_tags: [
-      { tags: { id: "tag5", name: "जीवन", slug: "jeevan", color: "#f59e0b" } }
+      { tags: { id: "tag5", name: "जीवन", slug: "jeevan", color: "#f59e0b", created_at: "2024-01-05T00:00:00Z", updated_at: "2024-01-05T00:00:00Z" } }
     ]
   },
   {
@@ -253,6 +283,8 @@ const mockPosts: Post[] = [
     status: 'published',
     author_id: "user1",
     published_at: "2024-07-16T12:00:00Z",
+    created_at: "2024-07-16T12:00:00Z",
+    updated_at: "2024-07-16T12:00:00Z",
     reading_time: 2,
     view_count: 5230,
     likes: 523,
@@ -261,14 +293,18 @@ const mockPosts: Post[] = [
       display_name: "राहुल शर्मा",
       display_name_en_hi: "Rahul Sharma",
       username: "rahulsharma",
-      avatar_url: "https://i.pravatar.cc/150?u=rahul"
+      avatar_url: "https://i.pravatar.cc/150?u=rahul",
+      role: "author",
+      registered_at: "2024-01-01T00:00:00Z",
+      created_at: "2024-01-01T00:00:00Z",
+      updated_at: "2024-01-01T00:00:00Z"
     },
     post_categories: [
-      { categories: { id: "cat1", name: "प्रेम शायरी", name_en_hi: "Love Shayari", slug: "prem-shayari", color: "#ec4899" } }
+      { categories: { id: "cat1", name: "प्रेम शायरी", name_en_hi: "Love Shayari", slug: "prem-shayari", color: "#ec4899", created_at: "2024-01-01T00:00:00Z", updated_at: "2024-01-01T00:00:00Z" } }
     ],
     post_tags: [
-      { tags: { id: "tag1", name: "मोहब्बत", slug: "mohabbat", color: "#ef4444" } },
-      { tags: { id: "tag6", name: "इश्क", slug: "ishq", color: "#d946ef" } }
+      { tags: { id: "tag1", name: "मोहब्बत", slug: "mohabbat", color: "#ef4444", created_at: "2024-01-01T00:00:00Z", updated_at: "2024-01-01T00:00:00Z" } },
+      { tags: { id: "tag6", name: "इश्क", slug: "ishq", color: "#d946ef", created_at: "2024-01-06T00:00:00Z", updated_at: "2024-01-06T00:00:00Z" } }
     ]
   }
 ];

@@ -6,10 +6,10 @@ import { fetchPosts, getCategories } from '../services/blogService';
 import type { Post } from '../types';
 
 interface HomePageProps {
-  searchParams: {
+  searchParams: Promise<{
     category?: string;
     q?: string;
-  }
+  }>
 }
 
 // Re-validate the page every hour
