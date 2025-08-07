@@ -3,5 +3,6 @@
   "name": "sayari-blog",
   "buildCommand": "cd Front-end && npm run build",
   "outputDirectory": "Front-end/.next",
-  "installCommand": "cd Front-end && npm install"
+  "installCommand": "cd Front-end && npm install",
+  "framework": "nextjs"
 }
