@@ -3,6 +3,5 @@
   "name": "sayari-blog",
   "buildCommand": "cd Front-end && npm run build",
   "outputDirectory": "Front-end/.next",
-  "installCommand": "cd Front-end && npm install",
-  "rootDirectory": "Front-end"
+  "installCommand": "cd Front-end && npm install"
 }
