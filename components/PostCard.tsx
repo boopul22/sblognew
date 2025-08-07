@@ -35,7 +35,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
     e.stopPropagation();
     const shareData = {
       title: language === 'hi' ? post.title : (post.title_en_hi || post.title),
-      text: `${language === 'hi' ? (post.excerpt || '') : (post.excerpt_en_hi || post.excerpt || '')}\n\n- ${language === 'hi' ? (post.users?.display_name || 'Unknown') : (post.users?.display_name_en_hi || post.users?.display_name || 'Unknown')}`,
+      text: `${excerpt}\n\n- ${language === 'hi' ? (post.users?.display_name || 'Unknown') : (post.users?.display_name_en_hi || post.users?.display_name || 'Unknown')}`,
       url: `${window.location.origin}/${post.slug}`,
     };
     try {
@@ -52,26 +52,34 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
   };
   
   const title = language === 'hi' ? post.title : (post.title_en_hi || post.title);
-  const excerpt = language === 'hi' ? (post.excerpt || '') : (post.excerpt_en_hi || post.excerpt || '');
+  const fullExcerpt = language === 'hi' ? (post.excerpt || '') : (post.excerpt_en_hi || post.excerpt || '');
+
+  // Truncate excerpt to maintain visual balance (120 characters max)
+  const excerpt = fullExcerpt.length > 120
+    ? fullExcerpt.substring(0, 120).trim() + '...'
+    : fullExcerpt;
+
   const authorName = language === 'hi' ? (post.users?.display_name || 'Unknown') : (post.users?.display_name_en_hi || post.users?.display_name || 'Unknown');
   const categoryName = language === 'hi' ? post.post_categories?.[0]?.categories.name : (post.post_categories?.[0]?.categories.name_en_hi || post.post_categories?.[0]?.categories.name);
 
   return (
-    <Link href={`/${post.slug}`} className="bg-surface dark:bg-dark-surface rounded-xl border border-border dark:border-dark-border shadow-sm overflow-hidden flex flex-col transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group cursor-pointer">
+    <Link href={`/${post.slug}`} className="bg-surface dark:bg-dark-surface rounded-xl border border-border dark:border-dark-border shadow-sm overflow-hidden flex flex-col transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group cursor-pointer h-full">
         {post.featured_image_url && (
-          <img className="h-56 w-full object-cover" src={post.featured_image_url} alt={title} />
+          <div className="aspect-16-10 w-full bg-gray-50 dark:bg-gray-800 flex-shrink-0">
+            <img className="w-full h-full object-contain" src={post.featured_image_url} alt={title} />
+          </div>
         )}
         {!post.featured_image_url && (
-          <div className="h-56 w-full bg-gradient-to-br from-primary/10 to-primary/5 dark:from-dark-primary/20 dark:to-dark-primary/10 flex items-center justify-center">
+          <div className="aspect-16-10 w-full bg-gradient-to-br from-primary/10 to-primary/5 dark:from-dark-primary/20 dark:to-dark-primary/10 flex items-center justify-center flex-shrink-0">
             <div className="text-center text-secondary-text dark:text-dark-secondary-text">
               <div className="text-4xl mb-2">📝</div>
               <div className="text-sm">{t('noImage') || 'No Image'}</div>
             </div>
           </div>
         )}
-        <div className="p-6 flex flex-col flex-grow">
-            <div className="flex-grow">
-                <div className="flex justify-between items-center mb-2">
+        <div className="p-6 flex flex-col flex-grow min-h-0">
+            <div className="flex-grow flex flex-col min-h-0">
+                <div className="flex justify-between items-center mb-2 flex-shrink-0">
                     <div className="flex-wrap gap-2 flex">
                         {post.post_categories?.slice(0, 1).map(pc => (
                             <Tag key={pc.categories.id} name={categoryName || pc.categories.name} />
@@ -79,15 +87,19 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
                     </div>
                     <span className="text-xs text-secondary-text dark:text-dark-secondary-text">{formattedDate}</span>
                 </div>
-                
-                <h3 className="text-2xl font-serif font-bold text-primary-text dark:text-dark-primary-text mb-2 group-hover:text-primary dark:group-hover:text-dark-primary">
+
+                <h3 className="text-xl md:text-2xl font-serif font-bold text-primary-text dark:text-dark-primary-text mb-2 group-hover:text-primary dark:group-hover:text-dark-primary line-clamp-2 flex-shrink-0">
                     {title}
                 </h3>
-                <p className="text-secondary-text dark:text-dark-secondary-text text-sm mb-1">{t('authorColon')} {authorName}</p>
-                <p className="text-primary-text dark:text-dark-primary-text text-base mb-4">{excerpt}</p>
+                <p className="text-secondary-text dark:text-dark-secondary-text text-sm mb-2 flex-shrink-0">{t('authorColon')} {authorName}</p>
+                {excerpt && (
+                  <p className="text-primary-text dark:text-dark-primary-text text-sm md:text-base line-clamp-3 leading-relaxed flex-grow">
+                    {excerpt}
+                  </p>
+                )}
             </div>
             
-            <div className="mt-auto pt-4 border-t border-border dark:border-dark-border">
+            <div className="mt-auto pt-4 border-t border-border dark:border-dark-border flex-shrink-0">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
                         <button onClick={handleLikeClick} className="flex items-center space-x-1.5 text-secondary-text dark:text-dark-secondary-text hover:text-red-500 dark:hover:text-red-400 transition-colors z-10 relative">

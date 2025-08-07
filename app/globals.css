@@ -48,17 +48,37 @@
   @apply text-sm md:text-base font-semibold text-primary-text dark:text-dark-primary-text mb-2 mt-3;
 }
 
-/* SEO content - hide blockquotes, images, and figures - show only headings and paragraphs */
+/* SEO content - hide blockquotes and figures, but allow images with proper styling */
 .seo-content blockquote {
   @apply hidden;
 }
 
-.seo-content figure {
+/* Hide figures without images, but show figures that contain images */
+.seo-content figure:not(:has(img)) {
   @apply hidden;
 }
 
+.seo-content figure {
+  @apply my-4;
+}
+
+/* Style images in content to be responsive and well-formatted */
 .seo-content img {
-  @apply hidden;
+  @apply w-full max-w-full h-auto rounded-lg shadow-md my-4 mx-auto block bg-gray-50 dark:bg-gray-800;
+  max-height: 500px;
+  object-fit: contain;
+}
+
+/* Ensure images in figures are also properly styled */
+.seo-content figure img {
+  @apply w-full max-w-full h-auto rounded-lg shadow-md my-4 mx-auto block bg-gray-50 dark:bg-gray-800;
+  max-height: 500px;
+  object-fit: contain;
+}
+
+/* Style figure captions */
+.seo-content figcaption {
+  @apply text-sm text-secondary-text dark:text-dark-secondary-text text-center mt-2 italic;
 }
 
 /* Paragraph spacing in SEO content */
@@ -73,4 +93,399 @@
 
 .seo-content li {
   @apply mb-2;
+}
+
+/* =====================================================
+   POST CONTENT STYLES - Preserve original formatting
+   ===================================================== */
+
+/* Post content - preserve all original formatting from Supabase */
+.post-content {
+  @apply text-primary-text dark:text-dark-primary-text;
+}
+
+/* Headings in post content */
+.post-content h1 {
+  @apply text-3xl md:text-4xl font-bold font-serif text-primary-text dark:text-dark-primary-text mb-6 mt-8;
+}
+
+.post-content h2 {
+  @apply text-2xl md:text-3xl font-bold font-serif text-primary-text dark:text-dark-primary-text mb-4 mt-6;
+}
+
+.post-content h3 {
+  @apply text-xl md:text-2xl font-semibold font-serif text-primary-text dark:text-dark-primary-text mb-3 mt-5;
+}
+
+.post-content h4 {
+  @apply text-lg md:text-xl font-semibold text-primary-text dark:text-dark-primary-text mb-2 mt-4;
+}
+
+.post-content h5 {
+  @apply text-base md:text-lg font-semibold text-primary-text dark:text-dark-primary-text mb-2 mt-3;
+}
+
+.post-content h6 {
+  @apply text-sm md:text-base font-semibold text-primary-text dark:text-dark-primary-text mb-2 mt-3;
+}
+
+/* Paragraphs in post content */
+.post-content p {
+  @apply mb-4 text-primary-text dark:text-dark-primary-text leading-relaxed;
+}
+
+/* Images in post content - responsive and well-styled */
+.post-content img {
+  @apply w-full max-w-full h-auto rounded-lg shadow-md my-6 mx-auto block bg-gray-50 dark:bg-gray-800;
+  max-height: 600px;
+  object-fit: contain;
+}
+
+/* Figures in post content */
+.post-content figure {
+  @apply my-6;
+}
+
+.post-content figure img {
+  @apply w-full max-w-full h-auto rounded-lg shadow-md my-4 mx-auto block bg-gray-50 dark:bg-gray-800;
+  max-height: 600px;
+  object-fit: contain;
+}
+
+.post-content figcaption {
+  @apply text-sm text-secondary-text dark:text-dark-secondary-text text-center mt-2 italic;
+}
+
+/* =====================================================
+   BLOCKQUOTES - Complete ShayariDetailCard Design
+   ===================================================== */
+
+/* Main blockquote container - exact ShayariDetailCard structure */
+.post-content blockquote {
+  @apply rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 my-8;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border: none;
+  padding: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Blockquote main content area - matches ShayariDetailCard gradient area */
+.post-content blockquote .blockquote-content {
+  position: relative;
+  min-height: 300px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom right, rgba(236, 72, 153, 0.8), rgba(251, 191, 36, 0.8)); /* Default love theme */
+}
+
+/* Dark mode gradient for blockquote content */
+.dark .post-content blockquote .blockquote-content {
+  background: linear-gradient(to bottom right, rgba(50, 184, 198, 0.8), rgba(45, 166, 178, 0.8));
+}
+
+/* Black overlay - exact match to ShayariDetailCard */
+.post-content blockquote .blockquote-content::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+}
+
+/* Text content area */
+.post-content blockquote .blockquote-text {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: white;
+  font-family: var(--font-lora), var(--font-devanagari), serif;
+  max-width: 32rem;
+}
+
+/* Individual text lines - matches ShayariDetailCard line styling */
+.post-content blockquote p {
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 1.3;
+  margin: 0;
+  margin-bottom: 0.75rem;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+/* Last paragraph in blockquote */
+.post-content blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Responsive text sizing */
+@media (min-width: 768px) {
+  .post-content blockquote p {
+    font-size: 1.875rem;
+  }
+}
+
+/* Author attribution - matches ShayariDetailCard author styling */
+.post-content blockquote .blockquote-author {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: white;
+  font-family: var(--font-lora), var(--font-devanagari), serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Action buttons footer - exact match to ShayariDetailCard */
+.post-content blockquote .blockquote-actions {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode actions footer */
+.dark .post-content blockquote .blockquote-actions {
+  background: rgba(38, 40, 40, 0.95);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Like counter styling */
+.post-content blockquote .like-counter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #6B6B6B;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.dark .post-content blockquote .like-counter {
+  color: rgba(167, 169, 169, 0.7);
+}
+
+/* Action buttons container */
+.post-content blockquote .action-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* Individual action button styling - matches ShayariDetailCard ActionButton */
+.post-content blockquote .action-btn {
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: #D4AF37;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+/* Dark mode action buttons */
+.dark .post-content blockquote .action-btn {
+  background: rgba(50, 184, 198, 0.1);
+  border: 1px solid rgba(50, 184, 198, 0.3);
+  color: #32b8c6;
+}
+
+/* Action button hover effects */
+.post-content blockquote .action-btn:hover {
+  background: rgba(212, 175, 55, 0.2);
+  border-color: rgba(212, 175, 55, 0.5);
+  transform: scale(1.05);
+}
+
+.dark .post-content blockquote .action-btn:hover {
+  background: rgba(50, 184, 198, 0.2);
+  border-color: rgba(50, 184, 198, 0.5);
+}
+
+/* SVG icons in action buttons */
+.post-content blockquote .action-btn svg {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+}
+
+/* =====================================================
+   BLOCKQUOTE THEME VARIATIONS - Exact ShayariDetailCard themes
+   ===================================================== */
+
+/* Love theme (default) */
+.post-content blockquote.theme-love .blockquote-content,
+.post-content blockquote .blockquote-content {
+  background: linear-gradient(to bottom right, rgba(236, 72, 153, 0.8), rgba(251, 191, 36, 0.8));
+}
+
+/* Sad theme */
+.post-content blockquote.theme-sad .blockquote-content {
+  background: linear-gradient(to bottom right, rgba(100, 116, 139, 0.8), rgba(147, 197, 253, 0.8));
+}
+
+/* Motivational theme */
+.post-content blockquote.theme-motivational .blockquote-content {
+  background: linear-gradient(to bottom right, rgba(248, 113, 113, 0.8), rgba(236, 72, 153, 0.8), rgba(251, 191, 36, 0.8));
+}
+
+/* Friendship theme */
+.post-content blockquote.theme-friendship .blockquote-content {
+  background: linear-gradient(to bottom right, rgba(52, 211, 153, 0.8), rgba(6, 182, 212, 0.8), rgba(99, 102, 241, 0.8));
+}
+
+/* Life theme */
+.post-content blockquote.theme-life .blockquote-content {
+  background: linear-gradient(to bottom right, rgba(56, 189, 248, 0.8), rgba(52, 211, 153, 0.8));
+}
+
+/* =====================================================
+   BLOCKQUOTE AUTO-ENHANCEMENT SCRIPT STYLES
+   ===================================================== */
+
+/* Default blockquote structure enhancement */
+.post-content blockquote:not(.enhanced) {
+  /* This will be enhanced by JavaScript to add the proper structure */
+}
+
+/* Heart icon for like button */
+.post-content blockquote .heart-icon {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+}
+
+/* Copy icon */
+.post-content blockquote .copy-icon {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+}
+
+/* Share icon */
+.post-content blockquote .share-icon {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+}
+
+/* Download icon */
+.post-content blockquote .download-icon {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+  .post-content blockquote .blockquote-content {
+    min-height: 250px;
+    padding: 1rem;
+  }
+
+  .post-content blockquote p {
+    font-size: 1.25rem;
+  }
+
+  .post-content blockquote .blockquote-actions {
+    padding: 0.75rem 1rem;
+  }
+
+  .post-content blockquote .action-buttons {
+    gap: 0.5rem;
+  }
+
+  .post-content blockquote .action-btn {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+/* Lists in post content */
+.post-content ul, .post-content ol {
+  @apply mb-4 pl-6 text-primary-text dark:text-dark-primary-text;
+}
+
+.post-content li {
+  @apply mb-2;
+}
+
+/* Links in post content */
+.post-content a {
+  @apply text-primary dark:text-dark-primary hover:underline;
+}
+
+/* =====================================================
+   CARD LAYOUT UTILITIES
+   ===================================================== */
+
+/* Ensure line-clamp works properly across browsers */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Responsive aspect ratios for consistent image sizing */
+.aspect-16-10 {
+  aspect-ratio: 16 / 10;
+}
+
+@supports not (aspect-ratio: 16 / 10) {
+  .aspect-16-10 {
+    position: relative;
+    padding-bottom: 62.5%; /* 10/16 = 0.625 */
+  }
+
+  .aspect-16-10 > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* Code blocks in post content */
+.post-content pre {
+  @apply bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto my-4;
+}
+
+.post-content code {
+  @apply bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-sm;
+}
+
+/* Tables in post content */
+.post-content table {
+  @apply w-full border-collapse border border-border dark:border-dark-border my-4;
+}
+
+.post-content th, .post-content td {
+  @apply border border-border dark:border-dark-border px-4 py-2;
+}
+
+.post-content th {
+  @apply bg-surface dark:bg-dark-surface font-semibold;
 }

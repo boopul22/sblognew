@@ -576,24 +576,22 @@ const parseShayaris = (htmlContent: string, post: any): Shayari[] => {
 
     while ((paragraphMatch = paragraphRegex.exec(htmlContent)) !== null) {
       const paragraphContent = paragraphMatch[1];
-      // Remove HTML tags and get text content, skip if contains images
-      if (!paragraphContent.includes('<img')) {
-        const text = paragraphContent.replace(/<[^>]*>/g, '').trim();
+      // Remove HTML tags and get text content (now allowing images)
+      const text = paragraphContent.replace(/<[^>]*>/g, '').trim();
 
-        if (text && text.length > 10) { // Only include substantial paragraphs
-          const paragraphShayari: Shayari = {
-            id: ++shayariIndex,
-            theme: 'life',
-            lines: [text],
-            lines_en_hi: [text],
-            author: post?.users?.display_name || post?.users?.username || "अज्ञात",
-            author_en_hi: post?.users?.display_name || post?.users?.username || "Unknown",
-            likes: Math.floor(Math.random() * 25) + 3,
-            views: Math.floor(Math.random() * 200) + 30,
-            shares: Math.floor(Math.random() * 10) + 1
-          };
-          shayaris.push(paragraphShayari);
-        }
+      if (text && text.length > 10) { // Only include substantial paragraphs
+        const paragraphShayari: Shayari = {
+          id: ++shayariIndex,
+          theme: 'life',
+          lines: [text],
+          lines_en_hi: [text],
+          author: post?.users?.display_name || post?.users?.username || "अज्ञात",
+          author_en_hi: post?.users?.display_name || post?.users?.username || "Unknown",
+          likes: Math.floor(Math.random() * 25) + 3,
+          views: Math.floor(Math.random() * 200) + 30,
+          shares: Math.floor(Math.random() * 10) + 1
+        };
+        shayaris.push(paragraphShayari);
       }
     }
   }
