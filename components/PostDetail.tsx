@@ -8,6 +8,7 @@ import { EyeIcon } from './Icons';
 import ShayariDetailCard from './ShayariDetailCard';
 import { useLanguage } from '../contexts/LanguageContext';
 import { handleShare as shareUtilsHandleShare, getShareText, trackShare } from '../lib/shareUtils';
+import { parseContentWithBlockquotes, renderParsedContent } from '../lib/contentParser';
 
 interface Comment {
   id: string;
@@ -147,153 +148,9 @@ const PostDetail: React.FC<PostDetailProps> = ({ post, allPosts }) => {
     }
   };
 
-  // Enhanced blockquote functionality
-  const enhanceBlockquotes = () => {
-    const blockquotes = document.querySelectorAll('.post-content blockquote:not(.enhanced)');
 
-    blockquotes.forEach((blockquote, index) => {
-      const originalContent = blockquote.innerHTML;
-      const randomLikes = Math.floor(Math.random() * 50) + 10;
-      const themes = ['love', 'sad', 'motivational', 'friendship', 'life'];
-      const randomTheme = themes[Math.floor(Math.random() * themes.length)];
 
-      // Extract text content for sharing
-      const textContent = blockquote.textContent || '';
 
-      blockquote.className = `${blockquote.className} enhanced theme-${randomTheme}`;
-      blockquote.innerHTML = `
-        <div class="blockquote-content">
-          <div class="blockquote-text">
-            ${originalContent}
-          </div>
-        </div>
-        <div class="blockquote-actions">
-          <div class="like-counter">
-            <svg class="heart-icon" viewBox="0 0 24 24">
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-            </svg>
-            <span class="like-count">${randomLikes.toLocaleString(language === 'hi' ? 'hi-IN' : 'en-IN')}</span>
-          </div>
-          <div class="action-buttons">
-            <button class="action-btn copy-btn" title="${t('copy') || 'Copy'}" data-text="${encodeURIComponent(textContent)}">
-              <svg class="copy-icon" viewBox="0 0 24 24">
-                <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-              </svg>
-            </button>
-            <button class="action-btn share-btn" title="${t('share') || 'Share'}" data-text="${encodeURIComponent(textContent)}">
-              <svg class="share-icon" viewBox="0 0 24 24">
-                <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
-              </svg>
-            </button>
-            <button class="action-btn download-btn" title="${t('download') || 'Download'}" data-text="${encodeURIComponent(textContent)}">
-              <svg class="download-icon" viewBox="0 0 24 24">
-                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-      `;
-
-      // Add event listeners for the buttons
-      const copyBtn = blockquote.querySelector('.copy-btn') as HTMLButtonElement;
-      const shareBtn = blockquote.querySelector('.share-btn') as HTMLButtonElement;
-      const downloadBtn = blockquote.querySelector('.download-btn') as HTMLButtonElement;
-
-      if (copyBtn) {
-        copyBtn.addEventListener('click', async () => {
-          try {
-            await navigator.clipboard.writeText(textContent);
-
-            // Show copied animation
-            const originalHTML = copyBtn.innerHTML;
-            copyBtn.innerHTML = `
-              <svg class="copy-icon" viewBox="0 0 24 24">
-                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-              </svg>
-            `;
-            copyBtn.style.backgroundColor = '#10b981';
-            copyBtn.style.borderColor = '#10b981';
-            copyBtn.style.transform = 'scale(0.95)';
-            copyBtn.style.transition = 'all 0.2s ease';
-
-            // Reset after 2 seconds
-            setTimeout(() => {
-              copyBtn.innerHTML = originalHTML;
-              copyBtn.style.backgroundColor = '';
-              copyBtn.style.borderColor = '';
-              copyBtn.style.transform = '';
-            }, 2000);
-
-          } catch (error) {
-            console.error('Copy failed:', error);
-            // Show error animation
-            copyBtn.style.backgroundColor = '#ef4444';
-            copyBtn.style.borderColor = '#ef4444';
-            copyBtn.style.transform = 'scale(0.95)';
-            copyBtn.style.transition = 'all 0.2s ease';
-
-            setTimeout(() => {
-              copyBtn.style.backgroundColor = '';
-              copyBtn.style.borderColor = '';
-              copyBtn.style.transform = '';
-            }, 1000);
-          }
-        });
-      }
-
-      if (shareBtn) {
-        shareBtn.addEventListener('click', async () => {
-          try {
-            if (navigator.share) {
-              await navigator.share({
-                title: 'Shayari from Dil Ke Jazbaat',
-                text: textContent,
-                url: window.location.href,
-              });
-            } else {
-              await navigator.clipboard.writeText(textContent);
-              alert(t('shareNotSupported') || 'Share not supported. Text copied to clipboard.');
-            }
-          } catch (error) {
-            console.error('Share failed:', error);
-            alert('Share failed. Please try again.');
-          }
-        });
-      }
-
-      if (downloadBtn) {
-        downloadBtn.addEventListener('click', () => {
-          // Show download animation
-          const originalHTML = downloadBtn.innerHTML;
-          downloadBtn.innerHTML = `
-            <svg class="download-icon" viewBox="0 0 24 24">
-              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-            </svg>
-          `;
-          downloadBtn.style.backgroundColor = '#3b82f6';
-          downloadBtn.style.borderColor = '#3b82f6';
-          downloadBtn.style.transform = 'scale(0.95)';
-          downloadBtn.style.transition = 'all 0.2s ease';
-
-          // Reset after 2 seconds
-          setTimeout(() => {
-            downloadBtn.innerHTML = originalHTML;
-            downloadBtn.style.backgroundColor = '';
-            downloadBtn.style.borderColor = '';
-            downloadBtn.style.transform = '';
-          }, 2000);
-        });
-      }
-    });
-  };
-
-  // Run enhancement after component mounts and content changes
-  React.useEffect(() => {
-    if (post.content) {
-      // Small delay to ensure DOM is ready
-      setTimeout(enhanceBlockquotes, 100);
-    }
-  }, [post.content, language, t]);
 
   const formattedDate = new Date(post.published_at || new Date()).toLocaleDateString(language === 'hi' ? 'hi-IN' : 'en-IN', {
     year: 'numeric', month: 'long', day: 'numeric'
@@ -304,6 +161,12 @@ const PostDetail: React.FC<PostDetailProps> = ({ post, allPosts }) => {
   const categoryName = language === 'hi' ? post.post_categories?.[0]?.categories.name : (post.post_categories?.[0]?.categories.name_en_hi || post.post_categories?.[0]?.categories.name);
   const categorySlug = post.post_categories?.[0]?.categories.slug;
   const authorAbout = language === 'hi' ? 'Hindi literature ke lover aur shayari ke shaukeen.' : 'A lover of Hindi literature and fond of shayari.';
+
+  // Parse post content to extract blockquotes for special rendering
+  const parsedContent = useMemo(() => {
+    if (!post.content) return [];
+    return parseContentWithBlockquotes(post.content);
+  }, [post.content]);
 
   const handleCopySuccess = () => {
     setIsModalOpen(true);
@@ -406,13 +269,12 @@ const PostDetail: React.FC<PostDetailProps> = ({ post, allPosts }) => {
                 </div>
               )}
 
-              {/* Post Content - Preserve original formatting from Supabase */}
+              {/* Post Content - Enhanced with BlockquoteCard components */}
               {post.content && (
                 <div className="p-6 md:p-8">
-                  <div
-                    className="post-content prose prose-lg max-w-none dark:prose-invert"
-                    dangerouslySetInnerHTML={{ __html: post.content }}
-                  />
+                  <div className="post-content">
+                    {renderParsedContent(parsedContent)}
+                  </div>
                 </div>
               )}
 
