@@ -599,6 +599,54 @@ const parseShayaris = (htmlContent: string, post: any): Shayari[] => {
   return shayaris.filter(shayari => shayari.lines.length > 0);
 };
 
+export const fetchAuthors = async (): Promise<any[]> => {
+  console.log("Fetching authors from Supabase...");
+
+  return retryQuery(async () => {
+    // Get authors who have published posts
+    const { data: authors, error } = await supabase
+      .from('users')
+      .select(`
+        id,
+        display_name,
+        username,
+        avatar_url,
+        bio,
+        role,
+        created_at,
+        posts!posts_author_id_fkey (
+          id,
+          title,
+          published_at,
+          view_count
+        )
+      `)
+      .eq('posts.status', 'published')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching authors:', error);
+      throw error;
+    }
+
+    // Calculate post count and total views for each author
+    const authorsWithStats = (authors || []).map(author => {
+      const publishedPosts = author.posts || [];
+      const postCount = publishedPosts.length;
+      const totalViews = publishedPosts.reduce((sum: number, post: any) => sum + (post.view_count || 0), 0);
+
+      return {
+        ...author,
+        postCount,
+        totalViews,
+        latestPost: publishedPosts.length > 0 ? publishedPosts[0] : null
+      };
+    }).filter(author => author.postCount > 0); // Only include authors with published posts
+
+    return authorsWithStats;
+  });
+};
+
 export const fetchPostBySlug = async (slug: string): Promise<Post | undefined> => {
   console.log(`Fetching post with slug: ${slug} from Supabase...`);
 

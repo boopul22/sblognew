@@ -1,12 +1,13 @@
 
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import type { Post } from '../types';
 import Tag from './Tag';
 import { HeartIcon, ShareIcon } from './Icons';
 import { useLanguage } from '../contexts/LanguageContext';
+import { handleShare, getShareText, trackShare } from '../lib/shareUtils';
 
 interface PostCardProps {
   post: Post;
@@ -15,7 +16,8 @@ interface PostCardProps {
 const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const { language, t } = useLanguage();
   const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(post.likes || 0);
+  const [likeCount, setLikeCount] = useState(0);
+  const [isLiking, setIsLiking] = useState(false);
 
   const formattedDate = new Date(post.published_at || new Date()).toLocaleDateString(language === 'hi' ? 'hi-IN' : 'en-IN', {
     year: 'numeric',
@@ -23,31 +25,76 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
     day: 'numeric',
   });
 
-  const handleLikeClick = (e: React.MouseEvent) => {
+  // Load like status on component mount
+  useEffect(() => {
+    loadLikeStatus();
+  }, [post.id]);
+
+  const loadLikeStatus = async () => {
+    try {
+      const response = await fetch(`/api/likes?postId=${post.id}`);
+      const data = await response.json();
+
+      if (data.success) {
+        setLikeCount(data.likeCount);
+        setIsLiked(data.isLiked);
+      }
+    } catch (error) {
+      console.error('Error loading like status:', error);
+    }
+  };
+
+  const handleLikeClick = async (e: React.MouseEvent) => {
     e.preventDefault(); // Prevent navigation when liking
     e.stopPropagation();
-    setIsLiked(!isLiked);
-    setLikeCount(isLiked ? likeCount - 1 : likeCount + 1);
+
+    if (isLiking) return;
+
+    try {
+      setIsLiking(true);
+      const response = await fetch('/api/likes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ postId: post.id })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setIsLiked(data.isLiked);
+        setLikeCount(data.likeCount);
+      }
+    } catch (error) {
+      console.error('Error toggling like:', error);
+    } finally {
+      setIsLiking(false);
+    }
   };
 
   const handleShareClick = async (e: React.MouseEvent) => {
     e.preventDefault(); // Prevent navigation when sharing
     e.stopPropagation();
-    const shareData = {
-      title: language === 'hi' ? post.title : (post.title_en_hi || post.title),
-      text: `${excerpt}\n\n- ${language === 'hi' ? (post.users?.display_name || 'Unknown') : (post.users?.display_name_en_hi || post.users?.display_name || 'Unknown')}`,
-      url: `${window.location.origin}/${post.slug}`,
-    };
+
+    const shareData = getShareText(post, 'post');
+
     try {
+      await trackShare('native', post.id, 'post');
+
       if (navigator.share) {
-        await navigator.share(shareData);
+        await navigator.share({
+          title: shareData.title,
+          text: shareData.text,
+          url: shareData.url
+        });
       } else {
-        await navigator.clipboard.writeText(`${shareData.title}\n${shareData.text}`);
-        alert('शायरी क्लिपबोर्ड में कॉपी हो गई!');
+        await navigator.clipboard.writeText(`${shareData.title}\n${shareData.text}\n${shareData.url}`);
+        alert(language === 'hi' ? 'लिंक क्लिपबोर्ड में कॉपी हो गया!' : 'Link copied to clipboard!');
       }
     } catch (error) {
       console.error('Error sharing:', error);
-      alert('Could not share the post.');
+      if (error.name !== 'AbortError') { // User didn't cancel
+        alert(language === 'hi' ? 'शेयर नहीं हो सका।' : 'Could not share the post.');
+      }
     }
   };
   
@@ -102,8 +149,12 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
             <div className="mt-auto pt-4 border-t border-border dark:border-dark-border flex-shrink-0">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
-                        <button onClick={handleLikeClick} className="flex items-center space-x-1.5 text-secondary-text dark:text-dark-secondary-text hover:text-red-500 dark:hover:text-red-400 transition-colors z-10 relative">
-                            <HeartIcon className={`h-5 w-5 ${isLiked ? 'fill-current text-red-500 dark:text-red-400' : ''}`} />
+                        <button
+                          onClick={handleLikeClick}
+                          disabled={isLiking}
+                          className="flex items-center space-x-1.5 text-secondary-text dark:text-dark-secondary-text hover:text-red-500 dark:hover:text-red-400 transition-colors z-10 relative disabled:opacity-50"
+                        >
+                            <HeartIcon className={`h-5 w-5 ${isLiked ? 'fill-current text-red-500 dark:text-red-400' : ''} ${isLiking ? 'animate-pulse' : ''}`} />
                             <span className="text-sm font-medium">{likeCount}</span>
                         </button>
                         <button onClick={handleShareClick} className="flex items-center space-x-1.5 text-secondary-text dark:text-dark-secondary-text hover:text-primary dark:hover:text-dark-primary transition-colors z-10 relative">

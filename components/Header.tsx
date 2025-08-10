@@ -50,6 +50,7 @@ const Header: React.FC = () => {
             <Link href="/?category=all" className="font-medium text-primary-text dark:text-dark-primary-text hover:text-primary dark:hover:text-dark-primary transition-colors">{t('categories')}</Link>
             <Link href="/authors" className="font-medium text-primary-text dark:text-dark-primary-text hover:text-primary dark:hover:text-dark-primary transition-colors">{t('authors')}</Link>
             <Link href="/about" className="font-medium text-primary-text dark:text-dark-primary-text hover:text-primary dark:hover:text-dark-primary transition-colors">{t('about')}</Link>
+            <Link href="/admin" className="font-medium text-primary text-primary/90 dark:text-dark-primary hover:underline">Admin</Link>
           </nav>
           <div className="flex items-center space-x-2 sm:space-x-4">
              <div className="relative">

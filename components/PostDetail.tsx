@@ -1,12 +1,22 @@
 
 "use client";
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import type { Post, Category } from '../types';
 import { EyeIcon } from './Icons';
 import ShayariDetailCard from './ShayariDetailCard';
 import { useLanguage } from '../contexts/LanguageContext';
+import { handleShare as shareUtilsHandleShare, getShareText, trackShare } from '../lib/shareUtils';
+
+interface Comment {
+  id: string;
+  content: string;
+  author_name: string;
+  created_at: string;
+  parent_id?: string;
+  replies?: Comment[];
+}
 
 interface PostDetailProps {
   post: Post;
@@ -16,11 +26,126 @@ interface PostDetailProps {
 const PostDetail: React.FC<PostDetailProps> = ({ post, allPosts }) => {
   const { language, t } = useLanguage();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [comments, setComments] = useState([
-    { id: 1, author: 'अनिल शर्मा', text: 'बहुत ही सुंदर शायरी है! दिल को छू गई।', time: '2 घंटे पहले', likes: 5 },
-    { id: 2, author: 'प्रीति कुमारी', text: 'वाह! क्या बात है। हर शायरी दिल की गहराई से लिखी गई है।', time: '4 घंटे पहले', likes: 8 },
-  ]);
+  const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState('');
+  const [commentAuthorName, setCommentAuthorName] = useState('');
+  const [authorEmail, setAuthorEmail] = useState('');
+  const [isSubmittingComment, setIsSubmittingComment] = useState(false);
+  const [viewCount, setViewCount] = useState(post.view_count || 0);
+  const [isLoadingComments, setIsLoadingComments] = useState(true);
+
+  // Load comments and track view on component mount
+  useEffect(() => {
+    loadComments();
+    trackPageView();
+  }, [post.id]);
+
+  // API Functions
+  const loadComments = async () => {
+    try {
+      setIsLoadingComments(true);
+      const response = await fetch(`/api/comments?postId=${post.id}`);
+      const data = await response.json();
+
+      if (data.success) {
+        setComments(data.comments || []);
+      }
+    } catch (error) {
+      console.error('Error loading comments:', error);
+    } finally {
+      setIsLoadingComments(false);
+    }
+  };
+
+  const trackPageView = async () => {
+    try {
+      const response = await fetch(`/api/views/${post.id}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      const data = await response.json();
+
+      if (data.success && data.counted) {
+        setViewCount(data.viewCount);
+      }
+    } catch (error) {
+      console.error('Error tracking page view:', error);
+    }
+  };
+
+  const submitComment = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newComment.trim() === '' || commentAuthorName.trim() === '') return;
+
+    try {
+      setIsSubmittingComment(true);
+      const response = await fetch('/api/comments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          postId: post.id,
+          content: newComment.trim(),
+          authorName: commentAuthorName.trim(),
+          authorEmail: authorEmail.trim() || null
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setComments([data.comment, ...comments]);
+        setNewComment('');
+        setCommentAuthorName('');
+        setAuthorEmail('');
+      } else {
+        alert(data.error || 'Failed to post comment');
+      }
+    } catch (error) {
+      console.error('Error submitting comment:', error);
+      alert('Failed to post comment');
+    } finally {
+      setIsSubmittingComment(false);
+    }
+  };
+
+  const handleShare = async (platform: string) => {
+    const shareData = getShareText(post, 'post');
+
+    try {
+      await trackShare(platform, post.id, 'post');
+
+      if (platform === 'copy') {
+        await navigator.clipboard.writeText(shareData.url);
+        setIsModalOpen(true);
+        setTimeout(() => setIsModalOpen(false), 2000);
+      } else {
+        const success = await shareUtilsHandleShare({ platform: platform as any, data: shareData });
+        if (!success) {
+          console.error('Failed to share');
+        }
+      }
+    } catch (error) {
+      console.error('Error sharing:', error);
+    }
+  };
+
+  const formatTimeAgo = (dateString: string) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInMinutes = Math.floor((now.getTime() - date.getTime()) / (1000 * 60));
+
+    if (diffInMinutes < 1) {
+      return language === 'hi' ? 'अभी' : 'Just now';
+    } else if (diffInMinutes < 60) {
+      return language === 'hi' ? `${diffInMinutes} मिनट पहले` : `${diffInMinutes} minutes ago`;
+    } else if (diffInMinutes < 1440) {
+      const hours = Math.floor(diffInMinutes / 60);
+      return language === 'hi' ? `${hours} घंटे पहले` : `${hours} hours ago`;
+    } else {
+      const days = Math.floor(diffInMinutes / 1440);
+      return language === 'hi' ? `${days} दिन पहले` : `${days} days ago`;
+    }
+  };
 
   // Enhanced blockquote functionality
   const enhanceBlockquotes = () => {
@@ -185,20 +310,6 @@ const PostDetail: React.FC<PostDetailProps> = ({ post, allPosts }) => {
     setTimeout(() => setIsModalOpen(false), 2000);
   };
   
-  const handleCommentSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (newComment.trim() === '') return;
-    const comment = {
-        id: comments.length + 1,
-        author: language === 'hi' ? 'पाठक' : 'Reader',
-        text: newComment,
-        time: language === 'hi' ? 'अभी' : 'Just now',
-        likes: 0,
-    };
-    setComments([comment, ...comments]);
-    setNewComment('');
-  };
-  
   const totalLikes = useMemo(() => post.shayariCollection?.reduce((sum, s) => sum + s.likes, 0) || 0, [post.shayariCollection]);
   const totalShares = useMemo(() => post.shayariCollection?.reduce((sum, s) => sum + s.shares, 0) || 0, [post.shayariCollection]);
   const relatedPosts = allPosts.filter(p => p.id !== post.id && p.post_categories?.some(pc => post.post_categories?.map(ppc => ppc.categories.slug).includes(pc.categories.slug))).slice(0, 3);
@@ -314,32 +425,95 @@ const PostDetail: React.FC<PostDetailProps> = ({ post, allPosts }) => {
 
               <section className="p-6 md:p-8 border-t border-border dark:border-dark-border">
                 <h3 className="text-2xl font-bold font-serif mb-6">{t('comments')} ({comments.length})</h3>
-                <form onSubmit={handleCommentSubmit} className="mb-8">
-                  <textarea 
+
+                {/* Comment Form */}
+                <form onSubmit={submitComment} className="mb-8 space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input
+                      type="text"
+                      value={commentAuthorName}
+                      onChange={(e) => setCommentAuthorName(e.target.value)}
+                      className="w-full p-3 rounded-lg border border-border dark:border-dark-border bg-background dark:bg-dark-background focus:ring-2 focus:ring-primary focus:outline-none"
+                      placeholder={language === 'hi' ? 'आपका नाम *' : 'Your Name *'}
+                      required
+                    />
+                    <input
+                      type="email"
+                      value={authorEmail}
+                      onChange={(e) => setAuthorEmail(e.target.value)}
+                      className="w-full p-3 rounded-lg border border-border dark:border-dark-border bg-background dark:bg-dark-background focus:ring-2 focus:ring-primary focus:outline-none"
+                      placeholder={language === 'hi' ? 'ईमेल (वैकल्पिक)' : 'Email (Optional)'}
+                    />
+                  </div>
+                  <textarea
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
                     className="w-full p-3 rounded-lg border border-border dark:border-dark-border bg-background dark:bg-dark-background focus:ring-2 focus:ring-primary focus:outline-none"
-                    placeholder={t('writeCommentPlaceholder')} 
+                    placeholder={t('writeCommentPlaceholder')}
                     rows={3}
+                    required
                   ></textarea>
-                  <button type="submit" className="mt-3 px-6 py-2 bg-primary text-btn-primary-text dark:bg-dark-primary dark:text-dark-btn-primary-text font-semibold rounded-full hover:bg-primary-hover dark:hover:bg-dark-primary-hover transition-colors">
-                    {t('postComment')}
+                  <button
+                    type="submit"
+                    disabled={isSubmittingComment}
+                    className="px-6 py-2 bg-primary text-btn-primary-text dark:bg-dark-primary dark:text-dark-btn-primary-text font-semibold rounded-full hover:bg-primary-hover dark:hover:bg-dark-primary-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmittingComment ? (language === 'hi' ? 'भेजा जा रहा है...' : 'Posting...') : t('postComment')}
                   </button>
                 </form>
-                <div className="space-y-6">
-                  {comments.map(comment => (
-                    <div key={comment.id} className="flex gap-4">
-                      <div className="w-10 h-10 rounded-full bg-primary/20 dark:bg-dark-primary/20 flex-shrink-0"></div>
-                      <div>
-                        <div className="flex items-baseline gap-3">
-                          <h5 className="font-semibold text-primary-text dark:text-dark-primary-text">{comment.author}</h5>
-                          <span className="text-xs text-secondary-text dark:text-dark-secondary-text">{comment.time}</span>
+
+                {/* Comments List */}
+                {isLoadingComments ? (
+                  <div className="text-center py-8">
+                    <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                    <p className="mt-2 text-secondary-text dark:text-dark-secondary-text">
+                      {language === 'hi' ? 'टिप्पणियाँ लोड हो रही हैं...' : 'Loading comments...'}
+                    </p>
+                  </div>
+                ) : comments.length === 0 ? (
+                  <div className="text-center py-8">
+                    <p className="text-secondary-text dark:text-dark-secondary-text">
+                      {language === 'hi' ? 'अभी तक कोई टिप्पणी नहीं है। पहली टिप्पणी करें!' : 'No comments yet. Be the first to comment!'}
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-6">
+                    {comments.map(comment => (
+                      <div key={comment.id} className="flex gap-4">
+                        <div className="w-10 h-10 rounded-full bg-primary/20 dark:bg-dark-primary/20 flex-shrink-0 flex items-center justify-center text-primary font-semibold">
+                          {comment.author_name.charAt(0).toUpperCase()}
                         </div>
-                        <p className="text-primary-text/90 dark:text-dark-primary-text/90 mt-1">{comment.text}</p>
+                        <div className="flex-1">
+                          <div className="flex items-baseline gap-3">
+                            <h5 className="font-semibold text-primary-text dark:text-dark-primary-text">{comment.author_name}</h5>
+                            <span className="text-xs text-secondary-text dark:text-dark-secondary-text">{formatTimeAgo(comment.created_at)}</span>
+                          </div>
+                          <p className="text-primary-text/90 dark:text-dark-primary-text/90 mt-1">{comment.content}</p>
+
+                          {/* Render replies if any */}
+                          {comment.replies && comment.replies.length > 0 && (
+                            <div className="mt-4 ml-4 space-y-4 border-l-2 border-border dark:border-dark-border pl-4">
+                              {comment.replies.map(reply => (
+                                <div key={reply.id} className="flex gap-3">
+                                  <div className="w-8 h-8 rounded-full bg-primary/10 dark:bg-dark-primary/10 flex-shrink-0 flex items-center justify-center text-primary text-sm font-semibold">
+                                    {reply.author_name.charAt(0).toUpperCase()}
+                                  </div>
+                                  <div className="flex-1">
+                                    <div className="flex items-baseline gap-2">
+                                      <h6 className="font-medium text-primary-text dark:text-dark-primary-text text-sm">{reply.author_name}</h6>
+                                      <span className="text-xs text-secondary-text dark:text-dark-secondary-text">{formatTimeAgo(reply.created_at)}</span>
+                                    </div>
+                                    <p className="text-primary-text/90 dark:text-dark-primary-text/90 mt-1 text-sm">{reply.content}</p>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                )}
               </section>
             </article>
 

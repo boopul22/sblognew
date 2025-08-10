@@ -19,7 +19,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 const projectRoot = join(__dirname, '..')
 
-const PORT = 3001
+const PORT = process.env.API_PORT || 3002
 
 // Import API handlers
 const apiHandlers = new Map()
@@ -44,6 +44,7 @@ async function initializeHandlers() {
     'r2/list',
     'r2/metadata',
     'r2/health',
+    'gemini/generate-content',
     'debug'
   ]
 

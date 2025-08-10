@@ -16,8 +16,8 @@ const __dirname = path.dirname(__filename)
 // Load environment variables from the root .env.local file
 dotenv.config({ path: path.join(__dirname, '../../.env.local') })
 
-const supabaseUrl = process.env.VITE_SUPABASE_URL
-const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY
 
 console.log('🔍 Testing Supabase Connection...')
 console.log('=' .repeat(50))
@@ -25,7 +25,7 @@ console.log('=' .repeat(50))
 // Check environment variables
 if (!supabaseUrl || !supabaseAnonKey) {
   console.error('❌ Missing environment variables!')
-  console.error('Required: VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY')
+  console.error('Required: NEXT_PUBLIC_SUPABASE_URL (or SUPABASE_URL), NEXT_PUBLIC_SUPABASE_ANON_KEY (or SUPABASE_ANON_KEY)')
   process.exit(1)
 }
 

@@ -188,6 +188,37 @@ Check R2 service availability.
 #### GET `/api/debug`
 System diagnostics and environment check.
 
+### AI Content Generation
+
+#### POST `/api/gemini/generate-content`
+Generate titles, slugs, descriptions, tags, and summaries using Gemini 2.0 Flash.
+
+**Request Body:**
+```json
+{
+  "content": "Your content here...",
+  "type": "title|slug|description|tags|summary|custom",
+  "customPrompt": "Optional custom prompt for type 'custom'"
+}
+```
+
+**Supported Types:**
+- `title`: Generate SEO-friendly titles (3 suggestions)
+- `slug`: Generate URL-friendly slugs (3 suggestions)
+- `description`: Generate meta descriptions (2 suggestions)
+- `tags`: Generate relevant tags (8-12 suggestions)
+- `summary`: Generate content summary (100-150 words)
+- `custom`: Generate content with custom prompt
+
+**Example:**
+```bash
+curl -X POST http://localhost:3001/api/gemini/generate-content \
+  -H "Content-Type: application/json" \
+  -d '{"content": "Your article content...", "type": "title"}'
+```
+
+See [Gemini API Documentation](backend/docs/GEMINI_API.md) for detailed usage.
+
 ---
 
 ## 🗄️ Database Schema

@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import type { Shayari } from '../types';
 import { HeartIcon, ShareIcon, CopyIcon, DownloadIcon } from './Icons';
 import { useLanguage } from '../contexts/LanguageContext';
+import { copyToClipboard, nativeShare, trackShare } from '../lib/shareUtils';
 
 interface ShayariDetailCardProps {
     shayari: Shayari;
@@ -46,29 +47,55 @@ const ShayariDetailCard: React.FC<ShayariDetailCardProps> = ({ shayari, onCopy }
 
     const getShayariText = () => `${lines.join('\n')}\n\n- ${author}`;
 
-    const handleCopy = () => {
-        navigator.clipboard.writeText(getShayariText());
-        onCopy();
+    const handleCopy = async () => {
+        try {
+            const success = await copyToClipboard(getShayariText());
+            if (success) {
+                await trackShare('copy', shayari.id.toString(), 'shayari');
+                onCopy();
+            } else {
+                alert(language === 'hi' ? 'कॉपी नहीं हो सका।' : 'Could not copy to clipboard.');
+            }
+        } catch (error) {
+            console.error('Error copying:', error);
+            alert(language === 'hi' ? 'कॉपी नहीं हो सका।' : 'Could not copy to clipboard.');
+        }
     };
-    
+
     const handleDownload = () => {
         const node = cardRef.current;
         if (!node) return;
 
         // Using html-to-image would be better but avoiding new dependencies.
-        alert('Download functionality is a demo.');
+        alert(language === 'hi' ? 'डाउनलोड फ़ंक्शन जल्द ही उपलब्ध होगा।' : 'Download functionality coming soon.');
     };
-    
+
     const handleShare = async () => {
         try {
-            await navigator.share({
-                title: 'Shayari from Dil Ke Jazbaat',
+            const shareData = {
+                title: language === 'hi' ? 'दिल के जज़्बात से शायरी' : 'Shayari from Dil Ke Jazbaat',
                 text: getShayariText(),
                 url: window.location.href,
-            });
+            };
+
+            const success = await nativeShare(shareData);
+            if (success) {
+                await trackShare('native', shayari.id.toString(), 'shayari');
+            } else {
+                // Fallback to copy
+                const copySuccess = await copyToClipboard(`${shareData.title}\n\n${shareData.text}\n\n${shareData.url}`);
+                if (copySuccess) {
+                    await trackShare('copy', shayari.id.toString(), 'shayari');
+                    alert(language === 'hi' ? 'शायरी क्लिपबोर्ड में कॉपी हो गई!' : 'Shayari copied to clipboard!');
+                } else {
+                    alert(language === 'hi' ? 'शेयर नहीं हो सका।' : 'Could not share the shayari.');
+                }
+            }
         } catch (error) {
             console.error('Error sharing:', error);
-            alert('Could not share the shayari.');
+            if (error.name !== 'AbortError') { // User didn't cancel
+                alert(language === 'hi' ? 'शेयर नहीं हो सका।' : 'Could not share the shayari.');
+            }
         }
     }
 

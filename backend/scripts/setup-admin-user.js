@@ -13,17 +13,17 @@ import path from 'path'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-// Load environment variables
-dotenv.config({ path: path.join(__dirname, '../.env') })
+// Load environment variables from the root .env.local file
+dotenv.config({ path: path.join(__dirname, '../../.env.local') })
 
-const supabaseUrl = process.env.VITE_SUPABASE_URL
+const supabaseUrl = process.env.SUPABASE_URL
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY
 
 if (!supabaseUrl || !supabaseServiceKey) {
   console.error('❌ Missing required environment variables:')
-  console.error('   VITE_SUPABASE_URL')
+  console.error('   SUPABASE_URL')
   console.error('   SUPABASE_SERVICE_KEY')
-  console.error('\nPlease check your .env file.')
+  console.error('\nPlease check your .env.local file.')
   process.exit(1)
 }
 

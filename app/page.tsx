@@ -9,6 +9,7 @@ interface HomePageProps {
   searchParams: Promise<{
     category?: string;
     q?: string;
+    author?: string;
   }>
 }
 
@@ -17,7 +18,7 @@ export const revalidate = 3600;
 
 export default async function HomePage({ searchParams }: HomePageProps) {
   const resolvedSearchParams = await searchParams;
-  const { category: selectedCategory = 'all', q: activeSearch = '' } = resolvedSearchParams;
+  const { category: selectedCategory = 'all', q: activeSearch = '', author: selectedAuthor = '' } = resolvedSearchParams;
   
   // Fetch data on the server with optimization for build
   const [allPosts, categories] = await Promise.all([
@@ -31,6 +32,13 @@ export default async function HomePage({ searchParams }: HomePageProps) {
       // Category filter
       if (selectedCategory && selectedCategory !== 'all') {
         return post.post_categories?.some(pc => pc.categories.slug === selectedCategory) || false;
+      }
+      return true;
+    })
+    .filter(post => {
+      // Author filter
+      if (selectedAuthor) {
+        return post.users?.id === selectedAuthor;
       }
       return true;
     })
