@@ -73,7 +73,7 @@ const Sidebar: React.FC<SidebarProps> = ({ posts, categories, selectedCategory }
                 <div className="text-center">
                     <img src="https://i.pravatar.cc/150?u=rahul" alt="Author Spotlight" className="w-20 h-20 rounded-full mx-auto mb-4 border-2 border-primary/50"/>
                     <h5 className="font-semibold text-primary-text dark:text-dark-primary-text text-lg">
-                        {language === 'hi' ? 'राहुल शर्मा' : 'Rahul Sharma'}
+                        {language === 'hi' ? 'Rahul Sharma' : 'Rahul Sharma'}
                     </h5>
                     <p className="text-sm text-secondary-text dark:text-dark-secondary-text mt-2">{t('authorSpotlightDesc')}</p>
                     <button className="mt-4 text-sm font-semibold text-primary dark:text-dark-primary hover:underline">

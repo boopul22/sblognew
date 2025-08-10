@@ -54,11 +54,11 @@ const ShayariDetailCard: React.FC<ShayariDetailCardProps> = ({ shayari, onCopy }
                 await trackShare('copy', shayari.id.toString(), 'shayari');
                 onCopy();
             } else {
-                alert(language === 'hi' ? 'कॉपी नहीं हो सका।' : 'Could not copy to clipboard.');
+                alert(language === 'hi' ? 'Copy nahi ho saka.' : 'Could not copy to clipboard.');
             }
         } catch (error) {
             console.error('Error copying:', error);
-            alert(language === 'hi' ? 'कॉपी नहीं हो सका।' : 'Could not copy to clipboard.');
+            alert(language === 'hi' ? 'Copy nahi ho saka.' : 'Could not copy to clipboard.');
         }
     };
 
@@ -73,7 +73,7 @@ const ShayariDetailCard: React.FC<ShayariDetailCardProps> = ({ shayari, onCopy }
     const handleShare = async () => {
         try {
             const shareData = {
-                title: language === 'hi' ? 'दिल के जज़्बात से शायरी' : 'Shayari from Dil Ke Jazbaat',
+                title: language === 'hi' ? 'Dil Ke Jazbaat se Shayari' : 'Shayari from Dil Ke Jazbaat',
                 text: getShayariText(),
                 url: window.location.href,
             };
@@ -86,15 +86,15 @@ const ShayariDetailCard: React.FC<ShayariDetailCardProps> = ({ shayari, onCopy }
                 const copySuccess = await copyToClipboard(`${shareData.title}\n\n${shareData.text}\n\n${shareData.url}`);
                 if (copySuccess) {
                     await trackShare('copy', shayari.id.toString(), 'shayari');
-                    alert(language === 'hi' ? 'शायरी क्लिपबोर्ड में कॉपी हो गई!' : 'Shayari copied to clipboard!');
+                    alert(language === 'hi' ? 'Shayari clipboard mein copy ho gayi!' : 'Shayari copied to clipboard!');
                 } else {
-                    alert(language === 'hi' ? 'शेयर नहीं हो सका।' : 'Could not share the shayari.');
+                    alert(language === 'hi' ? 'Share nahi ho saka.' : 'Could not share the shayari.');
                 }
             }
         } catch (error) {
             console.error('Error sharing:', error);
             if (error.name !== 'AbortError') { // User didn't cancel
-                alert(language === 'hi' ? 'शेयर नहीं हो सका।' : 'Could not share the shayari.');
+                alert(language === 'hi' ? 'Share nahi ho saka.' : 'Could not share the shayari.');
             }
         }
     }

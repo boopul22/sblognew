@@ -117,7 +117,7 @@ function AuthorCard({ author }: { author: Author }) {
         {author.latestPost && (
           <div className="mb-6">
             <h4 className="text-sm font-semibold text-secondary-text dark:text-dark-secondary-text mb-2">
-              नवीनतम पोस्ट / Latest Post:
+              Latest Post:
             </h4>
             <p className="text-sm text-primary-text dark:text-dark-primary-text line-clamp-1">
               {author.latestPost.title}
@@ -127,15 +127,15 @@ function AuthorCard({ author }: { author: Author }) {
 
         {/* Member Since */}
         <div className="text-center text-sm text-secondary-text dark:text-dark-secondary-text mb-6">
-          सदस्य बने: {formatDate(author.created_at, 'hi')} / Member since: {formatDate(author.created_at, 'en')}
+          Member since: {formatDate(author.created_at, 'en')}
         </div>
 
         {/* View Profile Button */}
-        <Link 
+        <Link
           href={`/?author=${author.id}`}
           className="block w-full text-center bg-primary dark:bg-dark-primary text-white py-3 rounded-lg font-semibold hover:bg-primary/90 dark:hover:bg-dark-primary/90 transition-colors"
         >
-          प्रोफाइल देखें / View Profile
+          View Profile
         </Link>
       </div>
     </div>

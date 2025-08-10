@@ -303,7 +303,7 @@ const PostDetail: React.FC<PostDetailProps> = ({ post, allPosts }) => {
   const authorName = language === 'hi' ? (post.users?.display_name || 'Unknown') : (post.users?.display_name_en_hi || post.users?.display_name || 'Unknown');
   const categoryName = language === 'hi' ? post.post_categories?.[0]?.categories.name : (post.post_categories?.[0]?.categories.name_en_hi || post.post_categories?.[0]?.categories.name);
   const categorySlug = post.post_categories?.[0]?.categories.slug;
-  const authorAbout = language === 'hi' ? 'हिंदी साहित्य के प्रेमी और शायरी के शौकीन।' : 'A lover of Hindi literature and fond of shayari.';
+  const authorAbout = language === 'hi' ? 'Hindi literature ke lover aur shayari ke shaukeen.' : 'A lover of Hindi literature and fond of shayari.';
 
   const handleCopySuccess = () => {
     setIsModalOpen(true);

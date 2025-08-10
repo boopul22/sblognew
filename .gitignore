@@ -93,4 +93,4 @@ jspm_packages/
 migration/temp-images/
 
 # Static data files (generated during build)
-src/data/static/*.json
+python-admin/

@@ -47,7 +47,7 @@ const mockShayariCollection: Shayari[] = [
             "Dil ki har dhadkan mein basa hai tera naam",
             "Tu hi meri manzil, tu hi mera aaraam"
         ],
-        author: "राहुल शर्मा",
+        author: "Rahul Sharma",
         author_en_hi: "Rahul Sharma",
         likes: 24,
         views: 456,
@@ -559,7 +559,7 @@ const parseShayaris = (htmlContent: string, post: any): Shayari[] => {
         theme,
         lines,
         lines_en_hi: lines, // For now, use same content for both languages
-        author: post?.users?.display_name || post?.users?.username || "अज्ञात",
+        author: post?.users?.display_name || post?.users?.username || "Unknown",
         author_en_hi: post?.users?.display_name || post?.users?.username || "Unknown",
         likes: Math.floor(Math.random() * 50) + 10,
         views: Math.floor(Math.random() * 500) + 100,
