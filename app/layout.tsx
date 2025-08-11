@@ -202,6 +202,9 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="ShareVault" />
 
+        {/* Google Site Verification */}
+        <meta name="google-site-verification" content="xYrL6NXjzcD2Wfu5TxQeBwH_aACAOGPhPj1rEEGX3Oc" />
+
         {/* Preconnect to external domains */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

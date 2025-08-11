@@ -66,6 +66,14 @@ export const SEO_CONFIG = {
     instagram: 'https://www.instagram.com/sharevault',
     youtube: 'https://www.youtube.com/sharevault'
   },
+
+  // Verification Codes
+  verification: {
+    google: 'xYrL6NXjzcD2Wfu5TxQeBwH_aACAOGPhPj1rEEGX3Oc',
+    yandex: 'your-yandex-verification-code',
+    yahoo: 'your-yahoo-verification-code',
+    bing: 'your-bing-verification-code'
+  },
   
   // Images
   images: {
