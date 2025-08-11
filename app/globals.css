@@ -6,6 +6,7 @@
   font-family: 'FKGroteskNeue';
   src: url('https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2')
     format('woff2');
+  font-display: swap;
 }
 
 /* Ensure proper text rendering for Hindi/Devanagari characters */

@@ -3,6 +3,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import type { Post } from '../types';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -28,11 +29,14 @@ const Hero: React.FC<HeroProps> = ({ post }) => {
         <section className="bg-surface dark:bg-dark-surface border-b border-border dark:border-dark-border">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
                 <div className="flex flex-col md:flex-row items-center gap-8">
-                    <div className="md:w-1/2 w-full bg-gray-50 dark:bg-gray-800 rounded-lg">
-                        <img
+                    <div className="md:w-1/2 w-full bg-gray-50 dark:bg-gray-800 rounded-lg relative aspect-video max-h-80">
+                        <Image
                             src={post.featured_image_url || ''}
                             alt={post.title}
-                            className="rounded-lg shadow-md w-full h-full object-contain max-h-80 aspect-video md:aspect-auto"
+                            fill
+                            className="rounded-lg shadow-md object-contain"
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                            priority={true}
                         />
                     </div>
                     <div className="md:w-1/2 w-full text-center md:text-left">

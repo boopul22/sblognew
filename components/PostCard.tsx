@@ -3,6 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import type { Post } from '../types';
 import Tag from './Tag';
 import { HeartIcon, ShareIcon } from './Icons';
@@ -112,8 +113,16 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
   return (
     <Link href={`/${post.slug}`} className="bg-surface dark:bg-dark-surface rounded-xl border border-border dark:border-dark-border shadow-sm overflow-hidden flex flex-col transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group cursor-pointer h-full">
         {post.featured_image_url && (
-          <div className="aspect-16-10 w-full bg-gray-50 dark:bg-gray-800 flex-shrink-0">
-            <img className="w-full h-full object-contain" src={post.featured_image_url} alt={title} />
+          <div className="aspect-16-10 w-full bg-gray-50 dark:bg-gray-800 flex-shrink-0 relative">
+            <Image
+              className="object-contain"
+              src={post.featured_image_url}
+              alt={title}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              priority={false}
+              loading="lazy"
+            />
           </div>
         )}
         {!post.featured_image_url && (

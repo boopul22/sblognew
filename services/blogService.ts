@@ -1,6 +1,22 @@
 import type { Post, Category, Shayari } from '../types';
 import { supabase } from '../lib/supabase';
 
+// Simple in-memory cache for frequently accessed data
+const cache = new Map<string, { data: any; timestamp: number; ttl: number }>();
+
+const getCachedData = <T>(key: string): T | null => {
+  const cached = cache.get(key);
+  if (cached && Date.now() - cached.timestamp < cached.ttl) {
+    return cached.data as T;
+  }
+  cache.delete(key);
+  return null;
+};
+
+const setCachedData = <T>(key: string, data: T, ttlMs: number = 300000): void => { // 5 minutes default
+  cache.set(key, { data, timestamp: Date.now(), ttl: ttlMs });
+};
+
 // Utility function for retrying failed queries
 const retryQuery = async <T>(
   queryFn: () => Promise<T>,
@@ -346,6 +362,14 @@ const delay = <T,>(data: T, ms: number): Promise<T> =>
 export const fetchPosts = async (limit?: number): Promise<Post[]> => {
   console.log("Fetching all posts from Supabase...");
 
+  // Check cache first
+  const cacheKey = `posts_${limit || 'all'}`;
+  const cachedPosts = getCachedData<Post[]>(cacheKey);
+  if (cachedPosts) {
+    console.log('Returning cached posts');
+    return cachedPosts;
+  }
+
   // Check if we're in build environment and Supabase is not accessible
   const isBuildTime = process.env.NODE_ENV === 'production' && !process.env.VERCEL_ENV;
 
@@ -495,6 +519,8 @@ export const fetchPosts = async (limit?: number): Promise<Post[]> => {
       })) || []
     }));
 
+    // Cache the results
+    setCachedData(cacheKey, transformedPosts, 300000); // Cache for 5 minutes
     return transformedPosts;
   }, 1, 500).catch(error => {
     console.error('Failed to fetch posts after retries:', {

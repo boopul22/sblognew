@@ -3,6 +3,7 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import type { Post, Category } from '../types';
 import { EyeIcon } from './Icons';
 import ShayariDetailCard from './ShayariDetailCard';
@@ -211,11 +212,14 @@ const PostDetail: React.FC<PostDetailProps> = ({ post, allPosts }) => {
             <article className="w-full lg:w-2/3 xl:w-3/4 bg-surface dark:bg-dark-surface rounded-xl border border-card-border dark:border-dark-card-border shadow-lg">
               {/* Featured Image */}
               {post.featured_image_url && (
-                <div className="w-full bg-gray-50 dark:bg-gray-800 rounded-t-xl">
-                  <img
+                <div className="w-full bg-gray-50 dark:bg-gray-800 rounded-t-xl relative h-64 md:h-80 lg:h-96">
+                  <Image
                     src={post.featured_image_url}
                     alt={title}
-                    className="w-full h-64 md:h-80 lg:h-96 object-contain rounded-t-xl"
+                    fill
+                    className="object-contain rounded-t-xl"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 66vw"
+                    priority={true}
                   />
                 </div>
               )}
@@ -225,7 +229,9 @@ const PostDetail: React.FC<PostDetailProps> = ({ post, allPosts }) => {
                 <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-sm">
                   <div className="flex items-center gap-4">
                     {post.users?.avatar_url ? (
-                      <img src={post.users.avatar_url} alt={authorName} className="w-14 h-14 rounded-full border-2 border-primary/50" />
+                      <div className="w-14 h-14 rounded-full border-2 border-primary/50 relative overflow-hidden">
+                        <Image src={post.users.avatar_url} alt={authorName} fill className="object-cover" sizes="56px" />
+                      </div>
                     ) : (
                       <div className="w-14 h-14 rounded-full border-2 border-primary/50 bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center text-primary text-xl font-bold">
                         {authorName?.charAt(0) || '?'}
@@ -385,7 +391,9 @@ const PostDetail: React.FC<PostDetailProps> = ({ post, allPosts }) => {
                  <h4 className="text-xl font-bold font-serif pb-3 mb-4 border-b border-border dark:border-dark-border">{t('aboutAuthor')}</h4>
                  <div className="text-center">
                     {post.users?.avatar_url ? (
-                     <img src={post.users.avatar_url} alt={authorName} className="w-20 h-20 rounded-full mx-auto mb-4 border-2 border-primary/50"/>
+                     <div className="w-20 h-20 rounded-full mx-auto mb-4 border-2 border-primary/50 relative overflow-hidden">
+                       <Image src={post.users.avatar_url} alt={authorName} fill className="object-cover" sizes="80px" />
+                     </div>
                    ) : (
                      <div className="w-20 h-20 rounded-full mx-auto mb-4 border-2 border-primary/50 bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center text-primary text-2xl font-bold">
                        {authorName?.charAt(0) || '?'}
