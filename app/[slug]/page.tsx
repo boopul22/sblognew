@@ -59,7 +59,6 @@ export async function generateMetadata(
 
   // Generate SEO-optimized keywords based on content
   const postKeywords = [
-    ...(post.meta_keywords || []),
     ...(post.tags || []),
     'Hindi Shayari',
     'Quotes',
@@ -69,8 +68,14 @@ export async function generateMetadata(
 
   // Add category-specific keywords
   let categoryKeywords: string[] = [];
-  if (post.category) {
-    const category = post.category.toLowerCase();
+
+  // Get category name from post_categories relationship or fallback
+  const categoryName = post.post_categories?.[0]?.categories?.name ||
+                      post.post_categories?.[0]?.categories?.slug ||
+                      '';
+
+  if (categoryName) {
+    const category = categoryName.toLowerCase();
     if (category.includes('love') || category.includes('romantic') || category.includes('pyaar')) {
       categoryKeywords = SEO_CONFIG.keywords.love;
     } else if (category.includes('sad') || category.includes('dukh') || category.includes('gam')) {
@@ -88,7 +93,7 @@ export async function generateMetadata(
     title: `${postTitle} | ShareVault`,
     description: postDescription,
     keywords: allKeywords,
-    authors: [{ name: post.author || 'ShareVault Team' }],
+    authors: [{ name: post.users?.display_name || post.users?.full_name || 'ShareVault Team' }],
     creator: 'ShareVault',
     publisher: 'ShareVault',
     formatDetection: {
@@ -117,8 +122,8 @@ export async function generateMetadata(
       type: 'article',
       publishedTime: post.created_at,
       modifiedTime: post.updated_at,
-      authors: [post.author || 'ShareVault Team'],
-      section: post.category || 'Shayari',
+      authors: [post.users?.display_name || post.users?.full_name || 'ShareVault Team'],
+      section: categoryName || 'Shayari',
       tags: post.tags,
     },
     twitter: {
@@ -143,8 +148,8 @@ export async function generateMetadata(
     other: {
       'article:published_time': post.created_at,
       'article:modified_time': post.updated_at,
-      'article:author': post.author || 'ShareVault Team',
-      'article:section': post.category || 'Shayari',
+      'article:author': post.users?.display_name || post.users?.full_name || 'ShareVault Team',
+      'article:section': categoryName || 'Shayari',
       'article:tag': post.tags?.join(', ') || 'Hindi Shayari',
     },
   };
@@ -168,7 +173,7 @@ export default async function PostPage({ params }: PostPageProps) {
     url: `${SEO_CONFIG.siteUrl}/${post.slug}`,
     publishedAt: post.created_at,
     updatedAt: post.updated_at,
-    author: post.author || 'ShareVault Team'
+    author: post.users?.display_name || post.users?.full_name || 'ShareVault Team'
   });
 
   return (

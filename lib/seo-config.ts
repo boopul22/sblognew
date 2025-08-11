@@ -179,8 +179,8 @@ export function generateMetaTags(pageType: string, customData?: any) {
 }
 
 // Generate structured data for different content types
-export function generateStructuredData(type: string, data?: any) {
-  const baseStructure = {
+export function generateStructuredData(type: string, data?: any): any {
+  const baseStructure: any = {
     '@context': 'https://schema.org',
     '@graph': [
       {
@@ -195,7 +195,7 @@ export function generateStructuredData(type: string, data?: any) {
       }
     ]
   };
-  
+
   if (type === 'article' && data) {
     baseStructure['@graph'].push({
       '@type': 'Article',
@@ -219,7 +219,7 @@ export function generateStructuredData(type: string, data?: any) {
       inLanguage: 'hi-IN'
     });
   }
-  
+
   return baseStructure;
 }
 
@@ -236,7 +236,7 @@ export function generateSEOUrl(title: string, type: 'post' | 'category' = 'post'
 }
 
 // Breadcrumb generation
-export function generateBreadcrumbs(path: string[]) {
+export function generateBreadcrumbs(path: Array<{name: string, url: string}>) {
   const breadcrumbs = [
     {
       '@type': 'ListItem',
