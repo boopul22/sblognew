@@ -62,7 +62,7 @@ const Footer: React.FC = () => {
             © {new Date().getFullYear()} {t('shayariBlogTitle')}. All rights reserved.
           </p>
            <p className="text-xs text-secondary-text/80 dark:text-dark-secondary-text/80 mt-1">
-            Contact: info@shayariblog.com
+            Contact: info@sharevault.in
           </p>
         </div>
       </div>

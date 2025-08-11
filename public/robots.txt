@@ -1,0 +1,113 @@
+# ShareVault Robots.txt
+# Website: https://www.sharevault.in
+# Best Hindi Shayari, Quotes, Status & Wishes Collection
+
+# Allow all search engines to crawl the site
+User-agent: *
+Allow: /
+Allow: /category/
+Allow: /search
+Allow: /about
+Allow: /contact
+Allow: /privacy
+Allow: /terms
+
+# Disallow sensitive areas
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /_next/
+Disallow: /temp/
+Disallow: /draft/
+Disallow: /preview/
+Disallow: *.json$
+Disallow: /search?*
+Disallow: /login
+Disallow: /register
+Disallow: /dashboard/
+Disallow: /wp-admin/
+Disallow: /wp-content/
+Disallow: /cgi-bin/
+Disallow: /tmp/
+Disallow: /cache/
+
+# Crawl delay for general bots
+Crawl-delay: 1
+
+# Specific rules for Googlebot
+User-agent: Googlebot
+Allow: /
+Allow: /category/
+Allow: /search
+Allow: /sitemap.xml
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /draft/
+Disallow: /preview/
+Crawl-delay: 0
+
+# Specific rules for Bingbot
+User-agent: Bingbot
+Allow: /
+Allow: /category/
+Allow: /search
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+Crawl-delay: 1
+
+# Allow social media crawlers
+User-agent: facebookexternalhit
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+
+User-agent: Twitterbot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+
+User-agent: WhatsApp
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+
+# Block aggressive crawlers and SEO tools
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: SiteAuditBot
+Disallow: /
+
+User-agent: MegaIndex
+Disallow: /
+
+User-agent: BUbiNG
+Disallow: /
+
+# Sitemap location
+Sitemap: https://www.sharevault.in/sitemap.xml
+
+# Host directive
+Host: https://www.sharevault.in
+
+# Additional sitemaps (if you create category-specific sitemaps)
+# Sitemap: https://www.sharevault.in/sitemap-posts.xml
+# Sitemap: https://www.sharevault.in/sitemap-categories.xml
+# Sitemap: https://www.sharevault.in/sitemap-images.xml

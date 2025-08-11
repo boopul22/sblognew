@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 
 type Language = 'hi' | 'en_hi';
 
@@ -15,7 +15,7 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 // Define translations
 const translations: Record<Language, Record<string, string>> = {
   hi: {
-    shayariBlogTitle: 'Shayari Blog',
+    shayariBlogTitle: 'ShareVault',
     home: 'Home',
     categories: 'Categories',
     authors: 'Authors',
@@ -55,7 +55,7 @@ const translations: Record<Language, Record<string, string>> = {
     download: 'Download',
   },
   en_hi: {
-    shayariBlogTitle: 'Shayari Blog',
+    shayariBlogTitle: 'ShareVault',
     home: 'Home',
     categories: 'Categories',
     authors: 'Authors',
@@ -98,12 +98,21 @@ const translations: Record<Language, Record<string, string>> = {
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('en_hi');
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   const toggleLanguage = () => {
     setLanguage(prev => (prev === 'hi' ? 'en_hi' : 'hi'));
   };
 
   const t = (key: string): string => {
+    // Ensure consistent rendering during hydration
+    if (!isHydrated) {
+      return translations['en_hi'][key] || key;
+    }
     return translations[language][key] || key;
   };
 

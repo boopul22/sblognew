@@ -1,8 +1,8 @@
 {
-  "name": "sayari-blog",
+  "name": "sharevault",
   "version": "1.0.0",
   "private": true,
-  "description": "A Hindi and Hinglish shayari blog with Next.js frontend and Supabase backend",
+  "description": "ShareVault - A Hindi and Hinglish shayari blog with Next.js frontend and Supabase backend",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

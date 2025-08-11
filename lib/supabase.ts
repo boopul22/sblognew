@@ -18,7 +18,7 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   },
   global: {
     headers: {
-      'x-my-custom-header': 'sayari-blog'
+      'x-my-custom-header': 'sharevault'
     }
   },
   realtime: {

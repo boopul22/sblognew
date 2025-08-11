@@ -3,6 +3,7 @@ import type { Metadata, ResolvingMetadata } from 'next';
 import { fetchPosts, fetchPostBySlug } from '../../services/blogService';
 import PostDetail from '../../components/PostDetail';
 import { notFound } from 'next/navigation';
+import { generateMetaTags, generateStructuredData, SEO_CONFIG } from '../../lib/seo-config';
 
 interface PostPageProps {
   params: Promise<{
@@ -46,34 +47,106 @@ export async function generateMetadata(
 
   if (!post) {
     return {
-      title: 'Post Not Found',
+      title: 'Post Not Found | ShareVault',
+      description: 'The requested post could not be found on ShareVault.',
     };
   }
 
-  const title = post.title;
-  const description = post.excerpt || '';
-  const imageUrl = post.featured_image_url || '';
+  const postUrl = `${SEO_CONFIG.siteUrl}/${post.slug}`;
+  const postTitle = post.title;
+  const postDescription = post.meta_description || post.excerpt || `Read "${post.title}" - Beautiful Hindi Shayari and Quotes on ShareVault. Perfect for WhatsApp, Instagram, and Facebook sharing.`;
+  const postImage = post.featured_image_url || `${SEO_CONFIG.siteUrl}${SEO_CONFIG.images.ogImage}`;
+
+  // Generate SEO-optimized keywords based on content
+  const postKeywords = [
+    ...(post.meta_keywords || []),
+    ...(post.tags || []),
+    'Hindi Shayari',
+    'Quotes',
+    'Status',
+    'ShareVault'
+  ];
+
+  // Add category-specific keywords
+  let categoryKeywords: string[] = [];
+  if (post.category) {
+    const category = post.category.toLowerCase();
+    if (category.includes('love') || category.includes('romantic') || category.includes('pyaar')) {
+      categoryKeywords = SEO_CONFIG.keywords.love;
+    } else if (category.includes('sad') || category.includes('dukh') || category.includes('gam')) {
+      categoryKeywords = SEO_CONFIG.keywords.sad;
+    } else if (category.includes('friend') || category.includes('dosti') || category.includes('yaari')) {
+      categoryKeywords = SEO_CONFIG.keywords.friendship;
+    } else if (category.includes('motivational') || category.includes('inspirational') || category.includes('success')) {
+      categoryKeywords = SEO_CONFIG.keywords.motivational;
+    }
+  }
+
+  const allKeywords = [...SEO_CONFIG.keywords.global, ...categoryKeywords, ...postKeywords];
 
   return {
-    title: title,
-    description: description,
+    title: `${postTitle} | ShareVault`,
+    description: postDescription,
+    keywords: allKeywords,
+    authors: [{ name: post.author || 'ShareVault Team' }],
+    creator: 'ShareVault',
+    publisher: 'ShareVault',
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false,
+    },
+    metadataBase: new URL(SEO_CONFIG.siteUrl),
+    alternates: {
+      canonical: postUrl,
+    },
     openGraph: {
-      title: title,
-      description: description,
+      title: postTitle,
+      description: postDescription,
+      url: postUrl,
+      siteName: SEO_CONFIG.siteName,
       images: [
         {
-          url: imageUrl,
+          url: postImage,
           width: 1200,
-          height: 800,
+          height: 630,
+          alt: postTitle,
         },
       ],
+      locale: 'hi_IN',
+      type: 'article',
+      publishedTime: post.created_at,
+      modifiedTime: post.updated_at,
+      authors: [post.author || 'ShareVault Team'],
+      section: post.category || 'Shayari',
+      tags: post.tags,
     },
     twitter: {
-        card: 'summary_large_image',
-        title: title,
-        description: description,
-        images: [imageUrl],
-    }
+      card: 'summary_large_image',
+      title: postTitle,
+      description: postDescription,
+      images: [postImage],
+      creator: SEO_CONFIG.social.twitter,
+      site: SEO_CONFIG.social.twitter,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
+    other: {
+      'article:published_time': post.created_at,
+      'article:modified_time': post.updated_at,
+      'article:author': post.author || 'ShareVault Team',
+      'article:section': post.category || 'Shayari',
+      'article:tag': post.tags?.join(', ') || 'Hindi Shayari',
+    },
   };
 }
 
@@ -87,5 +160,27 @@ export default async function PostPage({ params }: PostPageProps) {
     notFound();
   }
 
-  return <PostDetail post={post} allPosts={allPosts} />;
+  // Generate structured data for the post
+  const structuredData = generateStructuredData('article', {
+    title: post.title,
+    description: post.meta_description || post.excerpt,
+    image: post.featured_image_url,
+    url: `${SEO_CONFIG.siteUrl}/${post.slug}`,
+    publishedAt: post.created_at,
+    updatedAt: post.updated_at,
+    author: post.author || 'ShareVault Team'
+  });
+
+  return (
+    <>
+      {/* Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+
+      {/* Main Content */}
+      <PostDetail post={post} allPosts={allPosts} />
+    </>
+  );
 }

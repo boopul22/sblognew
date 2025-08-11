@@ -1,7 +1,7 @@
-# Sayari Blog - दिल के जज़्बात
+# ShareVault - शायरी ब्लॉग
 ## Full-Stack Next.js Blog Application
 
-A beautiful Hindi and Hinglish shayari blog built with Next.js 15, featuring a clean design, Supabase backend, and Cloudflare R2 storage.
+ShareVault - A beautiful Hindi and Hinglish shayari blog built with Next.js 15, featuring a clean design, Supabase backend, and Cloudflare R2 storage.
 
 ## 🚀 Quick Start
 
